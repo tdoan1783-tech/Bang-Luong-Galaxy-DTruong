@@ -296,20 +296,20 @@
                         </div>
                     </div>
 
-                    <!-- Time Inputs -->
-                    <div class="space-y-4">
-                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">2. Thời gian làm việc:</label>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-400 mb-1">Giờ bắt đầu:</label>
-                                <input type="time" id="todayStartTime" onchange="calculateAndDisplayToday()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white font-mono text-lg focus:outline-none focus:border-orange-500">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] font-bold text-slate-400 mb-1">Giờ kết thúc:</label>
-                                <input type="time" id="todayEndTime" onchange="calculateAndDisplayToday()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white font-mono text-lg focus:outline-none focus:border-orange-500">
-                            </div>
-                        </div>
-
+<!-- Time Inputs -->
+<div class="space-y-4">
+    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">2. Thời gian làm việc:</label>
+    <div class="grid grid-cols-2 gap-4">
+        <div>
+            <label class="block text-[11px] font-bold text-slate-400 mb-1">Giờ bắt đầu:</label>
+            <input type="time" id="todayStartTime" onchange="calculateAndDisplayToday()" class="w-full min-w-0 box-border bg-slate-950 border border-slate-700 rounded-xl px-2 py-3 text-white font-mono text-base focus:outline-none focus:border-orange-500">
+        </div>
+        <div>
+            <label class="block text-[11px] font-bold text-slate-400 mb-1">Giờ kết thúc:</label>
+            <input type="time" id="todayEndTime" onchange="calculateAndDisplayToday()" class="w-full min-w-0 box-border bg-slate-950 border border-slate-700 rounded-xl px-2 py-3 text-white font-mono text-base focus:outline-none focus:border-orange-500">
+        </div>
+    </div>
+</div>
                         <!-- Quick Presets -->
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-400 mb-1.5">Mẫu ca phổ biến (Bấm chọn nhanh):</label>
