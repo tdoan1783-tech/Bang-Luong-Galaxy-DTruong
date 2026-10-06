@@ -286,16 +286,23 @@
             </div>
 
             <!-- Greeting & Settings Button -->
-            <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 border-orange-400/50 pt-2 sm:pt-0">
-                <div class="text-left sm:text-right">
-                    <span id="headerGreetingText" class="text-sm font-extrabold text-slate-950 block">Xin Chào 👋</span>
-                    <span class="text-[10px] text-slate-900 font-semibold opacity-90">26k/h OT +30%</span>
-                </div>
-                <button onclick="openSettingsModal()" class="p-2.5 bg-slate-950/80 hover:bg-slate-950 text-amber-300 hover:text-white rounded-2xl transition border border-amber-400/40 shadow-md flex items-center justify-center" title="Cài đặt & Dữ liệu">
-                    <i class="fa-solid fa-gear text-lg"></i>
-                </button>
-            </div>
-        </div>
+<div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 border-orange-400/50 pt-2 sm:pt-0">
+    <div class="text-left sm:text-right">
+        <span id="headerGreetingText" class="text-sm font-extrabold text-slate-950 block">
+            Xin Chào 👋
+        </span>
+
+        <span id="realtimeDateTime"
+              class="text-[11px] font-black text-slate-900 opacity-90 block mt-0.5 whitespace-nowrap">
+            --/--/---- • --:--:--
+        </span>
+    </div>
+
+    <button onclick="openSettingsModal()" class="p-2.5 bg-slate-950/80 hover:bg-slate-950 text-amber-300 hover:text-white rounded-2xl transition border border-amber-400/40 shadow-md flex items-center justify-center" title="Cài đặt & Dữ liệu">
+        <i class="fa-solid fa-gear text-lg"></i>
+    </button>
+</div>
+</div>
 
         <!-- MAIN NAVIGATION TABS -->
         <div class="max-w-6xl mx-auto px-4 pb-3 pt-1">
