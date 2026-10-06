@@ -1075,19 +1075,24 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
 // BIỂU ĐỒ LƯƠNG 4 THÁNG GẦN NHẤT
 // ==========================================
 // ==========================================
-// SO SÁNH LƯƠNG 3 KỲ GẦN NHẤT
+// SO SÁNH LƯƠNG 4 KỲ GẦN NHẤT
 // KỲ LƯƠNG: 26 → 25
 // ==========================================
 
-function getLast3PayrollPeriods() {
+// ==========================================
+// SO SÁNH LƯƠNG 4 KỲ GẦN NHẤT
+// KỲ LƯƠNG: 26 → 25
+// ==========================================
+
+function getLast4PayrollPeriods() {
     const today = new Date();
     const periods = [];
 
     // Lấy kỳ hiện tại
     let currentPeriod = getPayrollPeriodRange(today);
 
-    // Tạo 3 kỳ: kỳ hiện tại + 2 kỳ trước
-    for (let i = 0; i < 3; i++) {
+    // Tạo 4 kỳ: kỳ hiện tại + 3 kỳ trước
+    for (let i = 0; i < 4; i++) {
 
         const startDate = new Date(currentPeriod.startDate);
         const endDate = new Date(currentPeriod.endDate);
@@ -1153,7 +1158,7 @@ function renderSalary4MonthChart() {
 
     if (!barsContainer || !labelsContainer || !summaryContainer) return;
 
-    const periods = getLast3PayrollPeriods();
+    const periods = getLast4PayrollPeriods();
 
     const maxSalary = Math.max(
         ...periods.map(item => item.totalPay),
