@@ -1254,121 +1254,225 @@
             renderWeekView();
         }
 
-        function renderMonthView() {
-            const year = selectedDate.getFullYear();
-            const month = selectedDate.getMonth();
+function renderMonthView() {
+    // KỲ LƯƠNG: ngày 26 tháng trước → ngày 25 tháng hiện tại
+    const { startDate, endDate } = getPayrollPeriodRange(selectedDate);
 
-            document.getElementById('monthViewTitle').innerText = `THÁNG ${month + 1} NĂM ${year}`;
+    const startDay = String(startDate.getDate()).padStart(2, '0');
+    const startMonth = String(startDate.getMonth() + 1).padStart(2, '0');
+    const startYear = startDate.getFullYear();
 
-            let monthTotalPay = 0;
-            let monthRegPay = 0;
-            let monthOtPay = 0;
-            let monthTotalHours = 0;
-            let monthRegHours = 0;
-            let monthOtHours = 0;
-            let monthWorkDays = 0;
-            let monthOffDays = 0;
+    const endDay = String(endDate.getDate()).padStart(2, '0');
+    const endMonth = String(endDate.getMonth() + 1).padStart(2, '0');
+    const endYear = endDate.getFullYear();
 
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
+    document.getElementById('monthViewTitle').innerText =
+        `KỲ LƯƠNG ${startDay}/${startMonth}/${startYear} → ${endDay}/${endMonth}/${endYear}`;
 
-            for (let day = 1; day <= daysInMonth; day++) {
-                const d = new Date(year, month, day);
-                const dateStr = formatDateISO(d);
-                const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+    let monthTotalPay = 0;
+    let monthRegPay = 0;
+    let monthOtPay = 0;
+    let monthTotalHours = 0;
+    let monthRegHours = 0;
+    let monthOtHours = 0;
+    let monthWorkDays = 0;
+    let monthOffDays = 0;
 
-                if (record.shift !== 'OFF') {
-                    monthWorkDays++;
-                } else {
-                    monthOffDays++;
-                }
+    // Tính tổng CHỈ trong kỳ lương 26 → 25
+    let totalPointer = new Date(startDate);
 
-                monthTotalPay += calc.totalPay;
-                monthRegPay += calc.regularPay;
-                monthOtPay += calc.otPay;
-                monthTotalHours += calc.totalHours;
-                monthRegHours += calc.regularHours;
-                monthOtHours += calc.otHours;
-            }
+    while (totalPointer <= endDate) {
+        const dateStr = formatDateISO(totalPointer);
+        const record = attendanceDB[dateStr];
 
-            document.getElementById('monthTotalPayHero').innerText = formatVND(monthTotalPay);
-            document.getElementById('monthWorkDays').innerText = `${monthWorkDays} ngày`;
-            document.getElementById('monthOffDays').innerText = `(${monthOffDays} ngày OFF)`;
-            document.getElementById('monthTotalHours').innerText = `${monthTotalHours.toFixed(1)}h`;
-            document.getElementById('monthOtHours').innerText = monthOtHours.toFixed(1);
-            document.getElementById('monthRegPay').innerText = formatVND(monthRegPay);
-            document.getElementById('monthOtPay').innerText = formatVND(monthOtPay);
+        // Chưa đăng ký = OFF, không tự cộng lương
+        if (record && record.shift !== 'OFF') {
+            const calc = calculateSalary(
+                record.shift,
+                record.startTime,
+                record.endTime
+            );
 
-            const tableBody = document.getElementById('monthTableBody');
-            tableBody.innerHTML = '';
-
-            const firstOfMonth = new Date(year, month, 1);
-            let currentPointer = new Date(getWorkWeekRange(firstOfMonth).startFriday);
-            const lastOfMonth = new Date(year, month, daysInMonth);
-
-            let weekCounter = 1;
-
-            while (currentPointer <= lastOfMonth) {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-800/40 transition";
-
-                let weekRowPayInMonth = 0;
-                let weekRowHours = 0;
-                let weekRowOt = 0;
-
-                for (let i = 0; i < 7; i++) {
-                    const cellDate = new Date(currentPointer);
-                    const cellDateStr = formatDateISO(cellDate);
-                    const isCurrentMonth = cellDate.getMonth() === month && cellDate.getFullYear() === year;
-
-                    const record = attendanceDB[cellDateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                    const calc = calculateSalary(record.shift, record.startTime, record.endTime);
-
-                    if (isCurrentMonth) {
-                        weekRowPayInMonth += calc.totalPay;
-                        weekRowHours += calc.totalHours;
-                        weekRowOt += calc.otHours;
-                    }
-
-                    const td = document.createElement('td');
-                    td.className = `p-2 border-r border-slate-800 align-top cursor-pointer transition ${isCurrentMonth ? 'bg-slate-900/60 hover:bg-slate-800' : 'bg-slate-950 text-slate-600 opacity-40'}`;
-                    td.onclick = () => openRetroEditModal(cellDateStr);
-
-                    let badgeColor = "bg-slate-800 text-slate-400 border-slate-700";
-                    if (record.shift === 'CO') badgeColor = "bg-amber-500/20 text-amber-300 border-amber-500/40";
-                    else if (record.shift === 'US') badgeColor = "bg-rose-500/20 text-rose-300 border-rose-500/40";
-                    else if (record.shift === 'LB') badgeColor = "bg-purple-500/20 text-purple-300 border-purple-500/40";
-
-                    td.innerHTML = `
-                        <div class="flex justify-between items-center mb-1">
-                            <span class="font-black text-xs ${isCurrentMonth ? 'text-orange-400' : 'text-slate-500'} font-mono">${String(cellDate.getDate()).padStart(2, '0')}/${String(cellDate.getMonth() + 1).padStart(2, '0')}</span>
-                            <span class="px-1.5 py-0.2 rounded text-[9px] font-extrabold border ${badgeColor}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
-                        </div>
-                        <div class="text-[10px] font-mono ${isCurrentMonth ? 'text-slate-300' : 'text-slate-600'}">
-                            ${record.shift === 'OFF' ? '---' : `${record.startTime}-${record.endTime}`}
-                        </div>
-                        <div class="text-[10px] font-mono font-bold mt-1 ${isCurrentMonth ? 'text-emerald-400' : 'text-slate-600'}">
-                            ${record.shift === 'OFF' ? '0 ₫' : formatVND(calc.totalPay)}
-                        </div>
-                    `;
-
-                    tr.appendChild(td);
-                    currentPointer.setDate(currentPointer.getDate() + 1);
-                }
-
-                const tdTotal = document.createElement('td');
-                tdTotal.className = "p-3 bg-orange-500/10 border-l border-orange-500/30 text-center align-middle font-mono";
-                tdTotal.innerHTML = `
-                    <div class="text-[9px] uppercase font-black text-orange-400">Tuần ${weekCounter}</div>
-                    <div class="text-xs font-black text-white mt-0.5">${formatVND(weekRowPayInMonth)}</div>
-                    <div class="text-[10px] text-slate-400 mt-0.5">${weekRowHours.toFixed(1)}h (${weekRowOt.toFixed(1)}h OT)</div>
-                `;
-                tr.appendChild(tdTotal);
-
-                tableBody.appendChild(tr);
-                weekCounter++;
-            }
+            monthWorkDays++;
+            monthTotalPay += calc.totalPay;
+            monthRegPay += calc.regularPay;
+            monthOtPay += calc.otPay;
+            monthTotalHours += calc.totalHours;
+            monthRegHours += calc.regularHours;
+            monthOtHours += calc.otHours;
+        } else {
+            monthOffDays++;
         }
+
+        totalPointer.setDate(totalPointer.getDate() + 1);
+    }
+
+    document.getElementById('monthTotalPayHero').innerText =
+        formatVND(monthTotalPay);
+
+    document.getElementById('monthWorkDays').innerText =
+        `${monthWorkDays} ngày`;
+
+    document.getElementById('monthOffDays').innerText =
+        `(${monthOffDays} ngày OFF)`;
+
+    document.getElementById('monthTotalHours').innerText =
+        `${monthTotalHours.toFixed(1)}h`;
+
+    document.getElementById('monthOtHours').innerText =
+        monthOtHours.toFixed(1);
+
+    document.getElementById('monthRegPay').innerText =
+        formatVND(monthRegPay);
+
+    document.getElementById('monthOtPay').innerText =
+        formatVND(monthOtPay);
+
+    const tableBody = document.getElementById('monthTableBody');
+    tableBody.innerHTML = '';
+
+    // Bắt đầu từ THỨ 6 của tuần chứa ngày 26
+    const calendarStart =
+        new Date(getWorkWeekRange(startDate).startFriday);
+
+    // Kết thúc ở THỨ 5 của tuần chứa ngày 25
+    const calendarEnd =
+        new Date(getWorkWeekRange(endDate).endThursday);
+
+    let currentPointer = new Date(calendarStart);
+    let weekCounter = 1;
+
+    while (currentPointer <= calendarEnd) {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-800/40 transition";
+
+        let weekRowPayInMonth = 0;
+        let weekRowHours = 0;
+        let weekRowOt = 0;
+
+        for (let i = 0; i < 7; i++) {
+            const cellDate = new Date(currentPointer);
+            const cellDateStr = formatDateISO(cellDate);
+
+            // Chỉ những ngày nằm trong kỳ 26 → 25 mới được hiển thị dữ liệu
+            const isInPayroll =
+                cellDate >= startDate &&
+                cellDate <= endDate;
+
+            const td = document.createElement('td');
+
+            // Ngày nằm ngoài kỳ lương → để trống
+            if (!isInPayroll) {
+                td.className =
+                    "p-2 border-r border-slate-800 align-top bg-slate-950 text-slate-600 opacity-40";
+
+                td.innerHTML = '';
+
+                tr.appendChild(td);
+
+                currentPointer.setDate(
+                    currentPointer.getDate() + 1
+                );
+
+                continue;
+            }
+
+            // Chỉ lấy dữ liệu nếu người dùng đã đăng ký
+            const record = attendanceDB[cellDateStr];
+
+            const shift = record ? record.shift : 'OFF';
+            const startTime = record ? record.startTime : '00:00';
+            const endTime = record ? record.endTime : '00:00';
+
+            const calc = calculateSalary(
+                shift,
+                startTime,
+                endTime
+            );
+
+            if (record && shift !== 'OFF') {
+                weekRowPayInMonth += calc.totalPay;
+                weekRowHours += calc.totalHours;
+                weekRowOt += calc.otHours;
+            }
+
+            td.className =
+                "p-2 border-r border-slate-800 align-top cursor-pointer transition bg-slate-900/60 hover:bg-slate-800";
+
+            td.onclick = () =>
+                openRetroEditModal(cellDateStr);
+
+            let badgeColor =
+                "bg-slate-800 text-slate-400 border-slate-700";
+
+            if (shift === 'CO') {
+                badgeColor =
+                    "bg-amber-500/20 text-amber-300 border-amber-500/40";
+            } else if (shift === 'US') {
+                badgeColor =
+                    "bg-rose-500/20 text-rose-300 border-rose-500/40";
+            } else if (shift === 'LB') {
+                badgeColor =
+                    "bg-purple-500/20 text-purple-300 border-purple-500/40";
+            }
+
+            td.innerHTML = `
+                <div class="flex justify-between items-center mb-1">
+                    <span class="font-black text-xs text-orange-400 font-mono">
+                        ${String(cellDate.getDate()).padStart(2, '0')}/${String(cellDate.getMonth() + 1).padStart(2, '0')}
+                    </span>
+
+                    <span class="px-1.5 py-0.2 rounded text-[9px] font-extrabold border ${badgeColor}">
+                        ${shift === 'OFF' ? 'OFF ⚪' : shift}
+                    </span>
+                </div>
+
+                <div class="text-[10px] font-mono text-slate-300">
+                    ${shift === 'OFF'
+                        ? '---'
+                        : `${startTime}-${endTime}`}
+                </div>
+
+                <div class="text-[10px] font-mono font-bold mt-1 text-emerald-400">
+                    ${shift === 'OFF'
+                        ? '0 ₫'
+                        : formatVND(calc.totalPay)}
+                </div>
+            `;
+
+            tr.appendChild(td);
+
+            currentPointer.setDate(
+                currentPointer.getDate() + 1
+            );
+        }
+
+        const tdTotal = document.createElement('td');
+
+        tdTotal.className =
+            "p-3 bg-orange-500/10 border-l border-orange-500/30 text-center align-middle font-mono";
+
+        tdTotal.innerHTML = `
+            <div class="text-[9px] uppercase font-black text-orange-400">
+                Tuần ${weekCounter}
+            </div>
+
+            <div class="text-xs font-black text-white mt-0.5">
+                ${formatVND(weekRowPayInMonth)}
+            </div>
+
+            <div class="text-[10px] text-slate-400 mt-0.5">
+                ${weekRowHours.toFixed(1)}h
+                (${weekRowOt.toFixed(1)}h OT)
+            </div>
+        `;
+
+        tr.appendChild(tdTotal);
+        tableBody.appendChild(tr);
+
+        weekCounter++;
+    }
+}}
 
         function renderPayrollView() {
             const { startDate, endDate } = getPayrollPeriodRange(selectedPayrollDate);
