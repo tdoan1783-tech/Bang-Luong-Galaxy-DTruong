@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Cinema • GO! An Lạc - Attendance & Payroll Tracker</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        galaxy: {
+                            orange: '#ff5e00',
+                            orangeDark: '#d94e00',
+                            deepOrange: '#b33c00',
+                            yellow: '#ffb800',
+                            gold: '#fbbf24',
+                            brightYellow: '#ffe600',
+                            bg: '#0d0f17',
+                            card: '#161926',
+                            cardLight: '#1f2436',
+                            border: '#2e354f'
+                        },
+                        shift: {
+                            co: '#f59e0b',
+                            us: '#ef4444',
+                            lb: '#a855f7',
+                            off: '#64748b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glow-orange': '0 0 25px rgba(255, 94, 0, 0.35)',
+                        'glow-gold': '0 0 25px rgba(255, 184, 0, 0.30)',
+                        'glow-red': '0 0 20px rgba(239, 68, 68, 0.30)',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0d0f17;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(255, 94, 0, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(255, 184, 0, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(13, 15, 23, 1) 0%, rgba(9, 10, 16, 1) 100%);
+            background-attachment: fixed;
+            color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Film strip pattern overlay accent */
+        .film-strip-border {
+            background-image: repeating-linear-gradient(
+                90deg,
+                #161926,
+                #161926 12px,
+                #0d0f17 12px,
+                #0d0f17 18px
+            );
+        }
+
+        /* Sparkle animation */
+        @keyframes floatSparkle {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-6px) rotate(12deg) scale(1.1); opacity: 1; }
+        }
+
+        .sparkle-icon {
+            animation: floatSparkle 3s ease-in-out infinite;
+        }
+
+        /* Ticket stub edge effect */
+        .ticket-card {
+            position: relative;
+        }
+        .ticket-card::before, .ticket-card::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            background-color: #0d0f17;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+        .ticket-card::before { left: -8px; }
+        .ticket-card::after { right: -8px; }
+
+        ::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #161926;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff5e00;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffb800;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white pb-12">
+
+    <!-- ========================================== -->
+    <!-- MÀN HÌNH MỞ ĐẦU (ONBOARDING WELCOME) -->
+    <!-- ========================================== -->
+    <div id="welcomeOverlay" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300">
+        <div class="bg-gradient-to-b from-galaxy-card to-slate-900 border-2 border-orange-500/50 rounded-3xl p-8 max-w-md w-full text-center space-y-6 shadow-glow-orange relative overflow-hidden">
+            <!-- Decorative film background badge -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-orange-500/10 rounded-full blur-2xl"></div>
+
+            <div class="w-20 h-20 bg-gradient-to-tr from-galaxy-orange via-amber-500 to-galaxy-brightYellow rounded-3xl mx-auto flex items-center justify-center text-slate-950 text-4xl font-black shadow-xl transform rotate-3">
+                <i class="fa-solid fa-film text-white drop-shadow-md"></i>
+            </div>
+            
+            <div>
+                <span class="px-3 py-1 bg-orange-500/20 text-orange-400 font-extrabold text-xs tracking-wider rounded-full uppercase border border-orange-500/30">Galaxy Cinema • GO! An Lạc</span>
+                <h1 class="text-2xl font-black text-white tracking-tight mt-2">Xin chào Bạn! 👋</h1>
+                <p class="text-slate-300 text-xs mt-1">Sổ chấm công & Tính lương tự động dành riêng cho nhân viên Galaxy Cinema</p>
+            </div>
+
+            <div class="space-y-3 text-left">
+                <label class="block text-xs font-bold text-orange-300 uppercase tracking-wider">Nhập họ tên của bạn:</label>
+                <input type="text" id="welcomeNameInput" placeholder="Ví dụ: Phạm Minh Anh" onkeyup="if(event.key === 'Enter') submitWelcomeName()" class="w-full bg-slate-950/80 border border-orange-500/40 rounded-2xl px-4 py-3.5 text-white font-semibold text-base focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20 transition">
+                <p id="welcomeError" class="text-rose-400 text-xs hidden">Vui lòng nhập tên để tiếp tục!</p>
+            </div>
+
+            <button onclick="submitWelcomeName()" class="w-full py-4 bg-gradient-to-r from-galaxy-orange via-amber-500 to-galaxy-yellow hover:from-orange-600 hover:to-amber-400 text-slate-950 font-black text-base rounded-2xl shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+                <span>Vào ứng dụng</span> <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- BRANDED HEADER -->
+    <!-- ========================================== -->
+    <header class="bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 text-slate-950 shadow-2xl rounded-b-3xl relative overflow-hidden border-b-2 border-yellow-300/40">
+        <!-- Film strip top bar accent -->
+        <div class="h-1.5 film-strip-border opacity-40"></div>
+
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 relative z-10">
+            
+            <!-- BRAND LOGO AREA (Emulating Official Galaxy Cinema GO! AN LẠC Logo) -->
+            <div class="flex items-center space-x-3.5">
+                <!-- Galaxy Star Icon Badge -->
+                <div class="bg-slate-950 text-amber-400 p-2.5 rounded-2xl flex items-center justify-center shadow-lg border border-amber-400/30 transform hover:scale-105 transition">
+                    <svg class="w-8 h-8 fill-current text-amber-400 sparkle-icon" viewBox="0 0 24 24">
+                        <path d="M12 2l2.4 6.6L21 11l-5.4 4.8L17 22l-5-3.8L7 22l1.4-6.2L3 11l6.6-2.4L12 2z"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <!-- Galaxy Cinema Main Text -->
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-xl sm:text-2xl font-black tracking-tight text-white uppercase italic drop-shadow-md font-sans">GALAXY</span>
+                        <span class="text-xl sm:text-2xl font-black tracking-tight text-slate-950 uppercase italic font-sans">CINEMA</span>
+                    </div>
+                    <!-- GO! AN LẠC Subtext Badge -->
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 bg-slate-950 text-amber-300 text-[11px] font-black tracking-widest rounded-md uppercase border border-amber-400/40 shadow-sm">
+                            GO! AN LẠC
+                        </span>
+                        <span class="text-[11px] font-bold text-slate-900 tracking-wide">• Attendance & Payroll</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Greeting & Settings Button -->
+            <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 border-orange-400/50 pt-2 sm:pt-0">
+                <div class="text-left sm:text-right">
+                    <span id="headerGreetingText" class="text-sm font-extrabold text-slate-950 block">Xin Chào 👋</span>
+                    <span class="text-[10px] text-slate-900 font-semibold opacity-90">Bảng lương R26k + OT 130%</span>
+                </div>
+                <button onclick="openSettingsModal()" class="p-2.5 bg-slate-950/80 hover:bg-slate-950 text-amber-300 hover:text-white rounded-2xl transition border border-amber-400/40 shadow-md flex items-center justify-center" title="Cài đặt & Dữ liệu">
+                    <i class="fa-solid fa-gear text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MAIN NAVIGATION TABS -->
+        <div class="max-w-6xl mx-auto px-4 pb-3 pt-1">
+            <div class="bg-slate-950/90 p-1.5 rounded-2xl border border-amber-400/30 flex space-x-1 shadow-2xl backdrop-blur-md">
+                <button id="tabBtnToday" onclick="switchTab('TODAY')" class="flex-1 py-2.5 px-2 sm:px-3 rounded-xl font-black text-xs sm:text-sm transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-calendar-check text-amber-400"></i> Hôm Nay
+                </button>
+                <button id="tabBtnWeek" onclick="switchTab('WEEK')" class="flex-1 py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-calendar-week"></i> Theo Tuần
+                </button>
+                <button id="tabBtnMonth" onclick="switchTab('MONTH')" class="flex-1 py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-calendar-days"></i> Lịch Tháng
+                </button>
+                <button id="tabBtnPayroll" onclick="switchTab('PAYROLL')" class="flex-1 py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5">
+                    <i class="fa-solid fa-receipt"></i> Kỳ Lương
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- ========================================== -->
+        <!-- 1. TAB: CHẤM CÔNG HÔM NAY / CHỌN NGÀY -->
+        <!-- ========================================== -->
+        <section id="viewToday" class="space-y-6">
+            
+            <!-- Dynamic Date Navigator -->
+            <div class="bg-galaxy-card border border-galaxy-border rounded-2xl p-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                <button onclick="navigateDay(-1)" class="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition border border-slate-700 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chevron-left text-orange-400"></i> NGÀY TRƯỚC
+                </button>
+                
+                <div class="text-center">
+                    <div id="todayDateHeader" class="text-lg font-black text-amber-400 uppercase tracking-wide">
+                        -- / -- / ----
+                    </div>
+                    <button onclick="navigateDayToToday()" class="mt-1 px-3 py-0.5 bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 text-[11px] font-extrabold rounded-full border border-orange-500/30 transition">
+                        VỀ HÔM NAY
+                    </button>
+                </div>
+
+                <button onclick="navigateDay(1)" class="w-full sm:w-auto px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition border border-slate-700 flex items-center justify-center gap-2">
+                    NGÀY SAU <i class="fa-solid fa-chevron-right text-orange-400"></i>
+                </button>
+            </div>
+
+            <!-- "Hôm nay bạn có đi làm không?" CARD -->
+            <div id="quickCheckinCard" class="bg-gradient-to-r from-galaxy-card via-slate-900 to-galaxy-card border-2 border-orange-500/50 rounded-2xl p-6 shadow-glow-orange space-y-4 relative overflow-hidden">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-2 text-xs font-black text-orange-400 uppercase tracking-wider mb-1">
+                            <i class="fa-solid fa-ticket text-amber-400"></i> Trạng thái ca làm
+                        </div>
+                        <h2 id="checkinCardTitle" class="text-lg font-black text-white">Hôm nay bạn có đi làm không?</h2>
+                    </div>
+                    <span id="todayStatusBadge" class="px-3 py-1 rounded-full text-xs font-black tracking-wider border">
+                        CHƯA CHẤM
+                    </span>
+                </div>
+
+                <!-- Quick YES/NO Choice -->
+                <div class="grid grid-cols-2 gap-4 pt-2">
+                    <button onclick="handleQuickWorkChoice(true)" id="btnChoiceYes" class="py-3.5 px-4 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-extrabold text-sm rounded-xl transition shadow-lg flex items-center justify-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-circle-check text-lg"></i> CÓ (ĐI LÀM)
+                    </button>
+                    <button onclick="handleQuickWorkChoice(false)" id="btnChoiceNo" class="py-3.5 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-extrabold text-sm rounded-xl transition border border-slate-700 flex items-center justify-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-circle-xmark text-lg text-slate-400"></i> KHÔNG (OFF ⚪)
+                    </button>
+                </div>
+            </div>
+
+            <!-- FORM CHẤM CÔNG CHI TIẾT -->
+            <div id="detailedWorkForm" class="grid grid-cols-1 lg:grid-cols-12 gap-6 transition-all duration-300">
+                
+                <!-- Attendance Input Section -->
+                <div class="lg:col-span-7 bg-galaxy-card border border-galaxy-border rounded-2xl p-6 shadow-xl space-y-6">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                        <h3 class="text-sm font-extrabold text-orange-400 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-pen-to-square"></i> Nhập Thông Tin Ca Làm
+                        </h3>
+                        <span class="text-xs text-slate-400">Lương cơ bản: <strong class="text-amber-400">26.000đ/h</strong></span>
+                    </div>
+
+                    <!-- Shift selector -->
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">1. Chọn loại ca làm việc:</label>
+                        <div class="grid grid-cols-3 gap-3">
+                            <button type="button" onclick="selectShift('CO')" id="shiftBtnCO" class="py-3 rounded-xl font-black text-sm border-2 transition flex flex-col items-center justify-center">
+                                <span>CO</span>
+                                <span class="text-[10px] font-medium opacity-80">Màu Vàng</span>
+                            </button>
+                            <button type="button" onclick="selectShift('US')" id="shiftBtnUS" class="py-3 rounded-xl font-black text-sm border-2 transition flex flex-col items-center justify-center">
+                                <span>US</span>
+                                <span class="text-[10px] font-medium opacity-80">Màu Đỏ</span>
+                            </button>
+                            <button type="button" onclick="selectShift('LB')" id="shiftBtnLB" class="py-3 rounded-xl font-black text-sm border-2 transition flex flex-col items-center justify-center">
+                                <span>LB</span>
+                                <span class="text-[10px] font-medium opacity-80">Màu Tím</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Time Inputs -->
+                    <div class="space-y-4">
+                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">2. Thời gian làm việc:</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 mb-1">Giờ bắt đầu:</label>
+                                <input type="time" id="todayStartTime" onchange="calculateAndDisplayToday()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white font-mono text-lg focus:outline-none focus:border-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-bold text-slate-400 mb-1">Giờ kết thúc:</label>
+                                <input type="time" id="todayEndTime" onchange="calculateAndDisplayToday()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white font-mono text-lg focus:outline-none focus:border-orange-500">
+                            </div>
+                        </div>
+
+                        <!-- Quick Presets -->
+                        <div>
+                            <label class="block text-[11px] font-semibold text-slate-400 mb-1.5">Mẫu ca phổ biến (Bấm chọn nhanh):</label>
+                            <div class="flex flex-wrap gap-2">
+                                <button type="button" onclick="applyPreset('18:00', '00:30')" class="px-2.5 py-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-lg text-xs font-mono text-amber-300 transition">
+                                    18:00 → 00:30 (6,5h)
+                                </button>
+                                <button type="button" onclick="applyPreset('14:00', '22:30')" class="px-2.5 py-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-lg text-xs font-mono text-amber-300 transition">
+                                    14:00 → 22:30 (8,5h)
+                                </button>
+                                <button type="button" onclick="applyPreset('09:00', '22:00')" class="px-2.5 py-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-lg text-xs font-mono text-amber-300 transition">
+                                    09:00 → 22:00 (13h)
+                                </button>
+                                <button type="button" onclick="applyPreset('21:00', '02:00')" class="px-2.5 py-1.5 bg-slate-950 hover:bg-slate-800 border border-slate-700 rounded-lg text-xs font-mono text-amber-300 transition">
+                                    21:00 → 02:00 (5h)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p id="todayFormError" class="text-xs text-rose-400 font-bold hidden"></p>
+
+                    <button onclick="saveTodayAttendance()" class="w-full py-4 bg-gradient-to-r from-galaxy-orange via-amber-500 to-galaxy-yellow hover:from-orange-600 hover:to-amber-400 text-slate-950 font-black rounded-xl shadow-lg transition duration-200 transform active:scale-95 flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-floppy-disk"></i> XÁC NHẬN CHẤM CÔNG
+                    </button>
+                </div>
+
+                <!-- Daily Breakdown Result Card -->
+                <div class="lg:col-span-5 bg-gradient-to-b from-galaxy-card to-slate-900 border border-orange-500/40 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="border-b border-slate-800 pb-3 mb-4 flex justify-between items-center">
+                            <h3 class="text-xs font-extrabold tracking-widest text-orange-400 uppercase">CHI TIẾT LƯƠNG NGÀY</h3>
+                            <span id="todayCalcTimeRange" class="text-xs font-mono text-amber-300">--:-- → --:--</span>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center py-2 border-b border-slate-800/80">
+                                <span class="text-sm text-slate-300">Tổng giờ làm:</span>
+                                <span id="todayDisplayTotalHours" class="text-base font-bold font-mono text-white">0.0 giờ</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-slate-800/80">
+                                <span class="text-sm text-slate-300">Giờ thường (<span class="text-xs text-slate-400">26k/h</span>):</span>
+                                <span id="todayDisplayRegHours" class="text-base font-bold font-mono text-emerald-400">0.0 giờ</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-slate-800/80">
+                                <span class="text-sm text-slate-300">Giờ OT (<span class="text-xs text-amber-400">Sau 22h @33.8k</span>):</span>
+                                <span id="todayDisplayOtHours" class="text-base font-bold font-mono text-amber-400">0.0 giờ</span>
+                            </div>
+
+                            <div class="pt-2 space-y-1.5">
+                                <div class="flex justify-between text-xs text-slate-400">
+                                    <span>Lương thường:</span>
+                                    <span id="todayDisplayRegPay" class="font-mono text-slate-200">0 ₫</span>
+                                </div>
+                                <div class="flex justify-between text-xs text-slate-400">
+                                    <span>Lương OT (130%):</span>
+                                    <span id="todayDisplayOtPay" class="font-mono text-amber-300">0 ₫</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-800 bg-slate-950/90 p-4 rounded-2xl text-center border-orange-500/30 glow-gold">
+                        <span class="text-xs font-black uppercase tracking-widest text-orange-400 block mb-1">TỔNG LƯƠNG NGÀY</span>
+                        <div id="todayDisplayTotalPay" class="text-3xl font-black font-mono text-white">0 ₫</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 2. TAB: THEO TUẦN (Friday -> Thursday) -->
+        <!-- ========================================== -->
+        <section id="viewWeek" class="space-y-6 hidden">
+            <!-- Week Navigator -->
+            <div class="bg-galaxy-card border border-galaxy-border rounded-2xl p-4 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+                <button onclick="navigateWeek(-1)" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chevron-left text-orange-400"></i> TUẦN TRƯỚC
+                </button>
+                
+                <div class="text-center">
+                    <div class="text-[10px] font-black text-orange-400 uppercase tracking-widest">TUẦN LÀM VIỆC (T6 → T5)</div>
+                    <div id="weekViewRangeHeader" class="text-base font-black text-white font-mono mt-0.5">
+                        --/-- → --/--/----
+                    </div>
+                    <button onclick="navigateWeekToCurrent()" class="mt-1 px-3 py-0.5 bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 text-[11px] font-extrabold rounded-full border border-orange-500/30 transition">
+                        TUẦN HIỆN TẠI
+                    </button>
+                </div>
+
+                <button onclick="navigateWeek(1)" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                    TUẦN SAU <i class="fa-solid fa-chevron-right text-orange-400"></i>
+                </button>
+            </div>
+
+            <!-- Weekly Hero Summary Card -->
+            <div class="bg-gradient-to-r from-galaxy-card via-slate-900 to-galaxy-card border-2 border-orange-500/60 rounded-2xl p-6 shadow-glow-orange relative overflow-hidden">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div>
+                        <div class="flex items-center gap-2 text-orange-400 font-extrabold text-xs tracking-widest uppercase mb-1">
+                            <i class="fa-solid fa-wallet"></i> TỔNG LƯƠNG TUẦN NÀY
+                        </div>
+                        <div id="weekTotalPayHero" class="text-4xl sm:text-5xl font-black font-mono text-white tracking-tight">
+                            0 ₫
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Tính theo chu kỳ làm việc Thứ 6 → Thứ 5 hàng tuần</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full md:w-auto">
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                            <span class="text-[10px] font-bold uppercase text-slate-400 block">Số ngày làm</span>
+                            <span id="weekWorkDays" class="text-base font-bold text-white font-mono">0 ngày</span>
+                        </div>
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                            <span class="text-[10px] font-bold uppercase text-slate-400 block">Tổng giờ làm</span>
+                            <span id="weekTotalHours" class="text-base font-bold text-white font-mono">0.0h</span>
+                        </div>
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                            <span class="text-[10px] font-bold uppercase text-slate-400 block">Lương thường</span>
+                            <span id="weekRegPay" class="text-base font-bold text-emerald-400 font-mono">0 ₫</span>
+                        </div>
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                            <span class="text-[10px] font-bold uppercase text-slate-400 block">Lương OT</span>
+                            <span id="weekOtPay" class="text-base font-bold text-amber-400 font-mono">0 ₫</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-slate-800 flex justify-between items-center">
+                    <span class="text-xs text-slate-400">Giờ thường: <span id="weekRegHours" class="font-mono text-slate-200">0.0h</span> | OT: <span id="weekOtHours" class="font-mono text-amber-300">0.0h</span></span>
+                    <button onclick="exportWeekCSV()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-lg transition border border-slate-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-csv text-emerald-400"></i> XUẤT CSV TUẦN
+                    </button>
+                </div>
+            </div>
+
+            <!-- Weekly Days List -->
+            <div class="bg-galaxy-card border border-galaxy-border rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-xs font-extrabold tracking-wider text-slate-300 uppercase flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-orange-400"></i> DANH SÁCH CHI TIẾT THEO NGÀY (T6 → T5)
+                </h3>
+
+                <div id="weekDaysListContainer" class="space-y-3">
+                    <!-- Dynamic daily row cards inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3. TAB: LỊCH THÁNG (Sheet Grid) -->
+        <!-- ========================================== -->
+        <section id="viewMonth" class="space-y-6 hidden">
+            <!-- Month Picker & Navigation -->
+            <div class="bg-galaxy-card border border-galaxy-border rounded-2xl p-4 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+                <button onclick="navigateMonth(-1)" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chevron-left text-orange-400"></i> THÁNG TRƯỚC
+                </button>
+                
+                <div class="flex items-center gap-2 text-center">
+                    <button onclick="navigateMonth(-1)" class="p-2 text-slate-400 hover:text-white"><i class="fa-solid fa-caret-left text-lg"></i></button>
+                    <div>
+                        <div class="text-[10px] font-black text-orange-400 uppercase tracking-widest">LỊCH THÁNG DƯƠNG LỊCH</div>
+                        <div id="monthViewTitle" class="text-xl font-black text-white uppercase tracking-tight font-mono">
+                            THÁNG -- NĂM ----
+                        </div>
+                    </div>
+                    <button onclick="navigateMonth(1)" class="p-2 text-slate-400 hover:text-white"><i class="fa-solid fa-caret-right text-lg"></i></button>
+                </div>
+
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="navigateMonthToCurrent()" class="flex-1 sm:flex-none px-3 py-2 bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 text-xs font-bold rounded-xl border border-orange-500/30 transition">
+                        THÁNG NÀY
+                    </button>
+                    <button onclick="exportMonthCSV()" class="flex-1 sm:flex-none px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-file-csv"></i> XUẤT CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- TỔNG LƯƠNG THÁNG DƯƠNG LỊCH -->
+            <div class="bg-gradient-to-r from-galaxy-card via-slate-900 to-galaxy-card border-2 border-orange-500/60 rounded-2xl p-6 shadow-glow-gold relative overflow-hidden">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                    <div class="space-y-1">
+                        <span class="text-xs font-black tracking-widest text-orange-400 uppercase flex items-center gap-2">
+                            <i class="fa-solid fa-coins"></i> TỔNG THU NHẬP THEO THÁNG DƯƠNG LỊCH (01 → CUỐI THÁNG)
+                        </span>
+                        <div id="monthTotalPayHero" class="text-4xl sm:text-6xl font-black font-mono text-white tracking-tight">
+                            0 ₫
+                        </div>
+                        <p class="text-xs text-slate-400">Tất cả ca làm trong tháng lịch được chọn</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full lg:w-auto">
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                            <span class="text-[10px] font-bold text-slate-400 block uppercase">Ngày công</span>
+                            <span id="monthWorkDays" class="text-base font-bold font-mono text-white">0 ngày</span>
+                            <span id="monthOffDays" class="text-[11px] text-slate-400 block font-mono">(0 ngày OFF)</span>
+                        </div>
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                            <span class="text-[10px] font-bold text-slate-400 block uppercase">Tổng giờ làm</span>
+                            <span id="monthTotalHours" class="text-base font-bold font-mono text-white">0.0h</span>
+                            <span class="text-[11px] text-amber-300 block font-mono"><span id="monthOtHours">0.0</span>h OT</span>
+                        </div>
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl col-span-2 sm:col-span-1">
+                            <span class="text-[10px] font-bold text-slate-400 block uppercase">Chi tiết lương</span>
+                            <div class="text-xs font-mono text-emerald-400">Thường: <span id="monthRegPay">0 ₫</span></div>
+                            <div class="text-xs font-mono text-amber-400">OT: <span id="monthOtPay">0 ₫</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BẢNG LỊCH THÁNG (STRUCTURE: T6 | T7 | CN | T2 | T3 | T4 | T5 | TỔNG TUẦN) -->
+            <div class="bg-galaxy-card border border-galaxy-border rounded-2xl p-6 shadow-xl space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                    <div>
+                        <h3 class="text-sm font-extrabold tracking-wider text-slate-200 uppercase flex items-center gap-2">
+                            <i class="fa-solid fa-table text-orange-400"></i> BẢNG CHẤM CÔNG THÁNG DƯƠNG LỊCH
+                        </h3>
+                        <p class="text-xs text-slate-400">Cấu trúc cột: Thứ 6 (T6) → Thứ 5 (T5) chuẩn chu kỳ làm việc</p>
+                    </div>
+                    <span class="text-xs bg-orange-500/10 text-orange-300 px-3 py-1 rounded-lg border border-orange-500/20">
+                        💡 Bấm vào ô bất kỳ để <strong>Chấm Công Bù</strong>
+                    </span>
+                </div>
+
+                <!-- Responsive Sheet Table -->
+                <div class="overflow-x-auto border border-slate-800 rounded-xl shadow-inner">
+                    <table class="w-full text-left border-collapse min-w-[850px]">
+                        <thead>
+                            <tr class="bg-slate-950 text-slate-300 text-xs uppercase font-black text-center border-b border-slate-800">
+                                <th class="p-3 w-28 border-r border-slate-800">T6</th>
+                                <th class="p-3 w-28 border-r border-slate-800">T7</th>
+                                <th class="p-3 w-28 border-r border-slate-800">CN</th>
+                                <th class="p-3 w-28 border-r border-slate-800">T2</th>
+                                <th class="p-3 w-28 border-r border-slate-800">T3</th>
+                                <th class="p-3 w-28 border-r border-slate-800">T4</th>
+                                <th class="p-3 w-28 border-r border-slate-800">T5</th>
+                                <th class="p-3 w-36 bg-orange-500/10 text-orange-300">TỔNG TUẦN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthTableBody" class="divide-y divide-slate-800 text-xs">
+                            <!-- Dynamic Table Rows generated via JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. TAB: KỲ LƯƠNG (26th -> 25th Payroll Period) -->
+        <!-- ========================================== -->
+        <section id="viewPayroll" class="space-y-6 hidden">
+            <!-- Payroll Period Navigator -->
+            <div class="bg-galaxy-card border border-galaxy-border rounded-2xl p-4 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+                <button onclick="navigatePayrollPeriod(-1)" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chevron-left text-orange-400"></i> KỲ TRƯỚC
+                </button>
+                
+                <div class="text-center">
+                    <div class="text-[10px] font-black text-orange-400 uppercase tracking-widest">CHU KỲ TÍNH LƯƠNG GALAXY CINEMA</div>
+                    <div id="payrollPeriodHeader" class="text-base font-black text-white font-mono mt-0.5">
+                        KỲ LƯƠNG --/--/---- → --/--/----
+                    </div>
+                    <button onclick="navigatePayrollToCurrent()" class="mt-1 px-3 py-0.5 bg-orange-500/20 hover:bg-orange-500/30 text-orange-300 text-[11px] font-extrabold rounded-full border border-orange-500/30 transition">
+                        KỲ HIỆN TẠI
+                    </button>
+                </div>
+
+                <div class="flex gap-2 w-full sm:w-auto">
+                    <button onclick="navigatePayrollPeriod(1)" class="flex-1 sm:flex-none px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                        KỲ SAU <i class="fa-solid fa-chevron-right text-orange-400"></i>
+                    </button>
+                    <button onclick="exportPayrollCSV()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-file-csv"></i> XUẤT CSV KỲ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Payroll Period Hero Summary Card -->
+            <div class="bg-gradient-to-r from-galaxy-card via-slate-900 to-galaxy-card border-2 border-orange-500/60 rounded-2xl p-6 shadow-glow-orange relative overflow-hidden">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                    <div class="space-y-1">
+                        <span class="text-xs font-black tracking-widest text-orange-400 uppercase flex items-center gap-2">
+                            <i class="fa-solid fa-calculator"></i> TỔNG TỔNG KẾT KỲ LƯƠNG
+                        </span>
+                        <div id="payrollTotalPayHero" class="text-4xl sm:text-6xl font-black font-mono text-white tracking-tight">
+                            0 ₫
+                        </div>
+                        <p id="payrollRangeSubtitle" class="text-xs text-slate-400">Bao gồm tất cả ca làm từ ngày 26 tháng này đến 25 tháng sau</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full lg:w-auto">
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                            <span class="text-[10px] font-bold text-slate-400 block uppercase">Số ngày làm</span>
+                            <span id="payrollWorkDays" class="text-base font-bold font-mono text-white">0 ngày</span>
+                        </div>
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                            <span class="text-[10px] font-bold text-slate-400 block uppercase">Tổng giờ làm</span>
+                            <span id="payrollTotalHours" class="text-base font-bold font-mono text-white">0.0h</span>
+                            <span class="text-[11px] text-amber-300 block font-mono"><span id="payrollOtHours">0.0</span>h OT</span>
+                        </div>
+                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl col-span-2 sm:col-span-1">
+                            <span class="text-[10px] font-bold text-slate-400 block uppercase">Phân rã lương</span>
+                            <div class="text-xs font-mono text-emerald-400">Thường: <span id="payrollRegPay">0 ₫</span></div>
+                            <div class="text-xs font-mono text-amber-400">OT: <span id="payrollOtPay">0 ₫</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payroll Breakdown List -->
+            <div class="bg-galaxy-card border border-galaxy-border rounded-2xl p-6 shadow-xl space-y-4">
+                <h3 class="text-xs font-extrabold tracking-wider text-slate-300 uppercase flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-orange-400"></i> CHI TIẾT CA LÀM TRONG KỲ LƯƠNG (26 → 25)
+                </h3>
+
+                <div id="payrollDaysListContainer" class="space-y-3">
+                    <!-- Dynamic daily row cards inserted here -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========================================== -->
+    <!-- MODAL 1: CHẤM CÔNG BÙ (QUICK EDIT DAY) -->
+    <!-- ========================================== -->
+    <div id="retroEditModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-galaxy-card border border-orange-500/50 rounded-2xl w-full max-w-md p-6 shadow-2xl space-y-5 relative">
+            <button onclick="closeRetroEditModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div>
+                <h3 class="text-base font-extrabold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-calendar-pen text-orange-400"></i> CHẤM CÔNG BÙ
+                </h3>
+                <p id="retroModalDateText" class="text-xs text-amber-300 font-mono mt-1">Ngày: --/--/----</p>
+            </div>
+
+            <!-- Shift Selection -->
+            <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase mb-2">Chọn ca:</label>
+                <div class="grid grid-cols-4 gap-2">
+                    <button type="button" onclick="retroSelectShift('CO')" id="retroBtnCO" class="py-2.5 rounded-xl font-bold text-xs border transition">CO</button>
+                    <button type="button" onclick="retroSelectShift('US')" id="retroBtnUS" class="py-2.5 rounded-xl font-bold text-xs border transition">US</button>
+                    <button type="button" onclick="retroSelectShift('LB')" id="retroBtnLB" class="py-2.5 rounded-xl font-bold text-xs border transition">LB</button>
+                    <button type="button" onclick="retroSelectShift('OFF')" id="retroBtnOFF" class="py-2.5 rounded-xl font-bold text-xs border transition">OFF ⚪</button>
+                </div>
+            </div>
+
+            <!-- Time Inputs -->
+            <div id="retroTimeInputsArea" class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 mb-1">Giờ bắt đầu:</label>
+                    <input type="time" id="retroStartTime" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-sm focus:outline-none focus:border-orange-500">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-400 mb-1">Giờ kết thúc:</label>
+                    <input type="time" id="retroEndTime" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-sm focus:outline-none focus:border-orange-500">
+                </div>
+            </div>
+
+            <p id="retroModalError" class="text-xs text-rose-400 font-bold hidden"></p>
+
+            <div class="flex gap-2 pt-2">
+                <button onclick="closeRetroEditModal()" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition">
+                    HỦY BỎ
+                </button>
+                <button onclick="saveRetroAttendance()" class="flex-1 py-3 bg-gradient-to-r from-galaxy-orange to-amber-500 hover:from-orange-600 hover:to-amber-400 text-slate-950 text-xs font-black rounded-xl transition shadow">
+                    LƯU THAY ĐỔI
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL 2: SETTINGS & BACKUP DATA -->
+    <!-- ========================================== -->
+    <div id="settingsModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-galaxy-card border border-orange-500/50 rounded-2xl w-full max-w-lg p-6 shadow-2xl space-y-6 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeSettingsModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="border-b border-slate-800 pb-3">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-orange-400"></i> Cài Đặt & Quản Lý Dữ Liệu
+                </h3>
+                <p class="text-xs text-slate-400">Galaxy Cinema • GO! An Lạc Personal Payroll</p>
+            </div>
+
+            <!-- Profile Name -->
+            <div>
+                <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Tên nhân viên:</label>
+                <input type="text" id="settingsUserNameInput" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-white font-semibold text-sm focus:outline-none focus:border-orange-500">
+            </div>
+
+            <!-- Wage Rules Overview -->
+            <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2 text-xs">
+                <div class="font-bold text-orange-400 uppercase text-[11px] flex items-center justify-between">
+                    <span>Quy Tắc Tính Lương</span>
+                    <span class="text-emerald-400 font-mono">ĐANG ÁP DỤNG</span>
+                </div>
+                <div class="flex justify-between text-slate-300">
+                    <span>Lương cơ bản:</span>
+                    <span class="font-mono text-white font-bold">26.000 ₫ / giờ</span>
+                </div>
+                <div class="flex justify-between text-slate-300">
+                    <span>Mốc tính OT:</span>
+                    <span class="font-mono text-white font-bold">Từ 22:00 đêm</span>
+                </div>
+                <div class="flex justify-between text-slate-300">
+                    <span>Hệ số OT:</span>
+                    <span class="font-mono text-amber-300 font-bold">+30% (33.800 ₫ / giờ)</span>
+                </div>
+            </div>
+
+            <!-- Backup JSON -->
+            <div class="space-y-3 pt-2 border-t border-slate-800">
+                <label class="block text-xs font-bold text-slate-300 uppercase">Sao lưu dữ liệu cá nhân:</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="exportBackupJSON()" class="py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center justify-center gap-2 border border-slate-700">
+                        <i class="fa-solid fa-download"></i> TẢI BACKUP (JSON)
+                    </button>
+                    
+                    <label class="py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition flex items-center justify-center gap-2 border border-slate-700 cursor-pointer">
+                        <i class="fa-solid fa-upload"></i> NHẬP BACKUP
+                        <input type="file" id="importFileInput" accept=".json" onchange="importBackupJSON(event)" class="hidden">
+                    </label>
+                </div>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
+                <button onclick="resetSampleData()" class="text-xs text-rose-400 hover:text-rose-300 underline font-semibold">
+                    Khôi phục dữ liệu mẫu
+                </button>
+                <button onclick="saveSettings()" class="px-5 py-2.5 bg-gradient-to-r from-galaxy-orange to-amber-500 hover:from-orange-600 hover:to-amber-400 text-slate-950 font-black text-xs rounded-xl transition shadow">
+                    LƯU CÀI ĐẶT
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="max-w-6xl mx-auto px-4 mt-8 text-center text-xs text-slate-500 flex items-center justify-center gap-2">
+        <span>Galaxy Cinema • GO! An Lạc</span> &bull; <span>Sổ Chấm Công & Tính Lương Tự Động</span>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT ENGINE & SALARY LOGIC -->
+    <!-- ========================================== -->
+    <script>
+        // CONSTANTS
+        const BASE_HOURLY_RATE = 26000;
+        const OT_MULTIPLIER = 1.30;
+        const OT_HOURLY_RATE = BASE_HOURLY_RATE * OT_MULTIPLIER; // 33,800 VND
+
+        const STORAGE_KEY = 'galaxy_cinema_payroll_db_v2';
+        const SETTINGS_KEY = 'galaxy_cinema_settings_v2';
+
+        // APPLICATION STATE
+        let activeTab = 'TODAY'; // 'TODAY' | 'WEEK' | 'MONTH' | 'PAYROLL'
+        let selectedDate = new Date(); // Date object currently in focus
+        let selectedPayrollDate = new Date(); // Anchor date for Payroll period logic
+        let selectedShift = 'CO';
+
+        let retroModalActiveDateStr = '';
+        let retroModalShift = 'OFF';
+
+        let appSettings = {
+            userName: ''
+        };
+
+        // Attendance Database: { "YYYY-MM-DD": { shift: 'CO'|'US'|'LB'|'OFF', startTime: '18:00', endTime: '00:30' } }
+        let attendanceDB = {};
+
+        function getDefaultSampleData() {
+            const data = {};
+            const now = new Date();
+            const y = now.getFullYear();
+            const m = now.getMonth();
+
+            for (let day = 1; day <= 31; day++) {
+                const d = new Date(y, m, day);
+                if (d.getMonth() !== m) break;
+                
+                const dateStr = formatDateISO(d);
+                const dayOfWeek = d.getDay();
+
+                if (dayOfWeek === 1 || dayOfWeek === 4) {
+                    data[dateStr] = { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
+                } else if (dayOfWeek === 6 || dayOfWeek === 0) {
+                    data[dateStr] = { shift: 'US', startTime: '14:00', endTime: '22:30' };
+                } else if (dayOfWeek === 5) {
+                    data[dateStr] = { shift: 'CO', startTime: '18:00', endTime: '00:30' };
+                } else {
+                    data[dateStr] = { shift: day % 2 === 0 ? 'LB' : 'CO', startTime: '18:00', endTime: '23:00' };
+                }
+            }
+
+            // Also add previous month end days for payroll context
+            for (let day = 26; day <= 31; day++) {
+                const d = new Date(y, m - 1, day);
+                if (d.getMonth() !== (m - 1 + 12) % 12) break;
+                const dateStr = formatDateISO(d);
+                data[dateStr] = { shift: 'CO', startTime: '18:00', endTime: '00:30' };
+            }
+
+            return data;
+        }
+
+        function calculateSalary(shift, startTimeStr, endTimeStr) {
+            if (shift === 'OFF' || !startTimeStr || !endTimeStr) {
+                return {
+                    totalHours: 0,
+                    regularHours: 0,
+                    otHours: 0,
+                    regularPay: 0,
+                    otPay: 0,
+                    totalPay: 0
+                };
+            }
+
+            const [startH, startM] = startTimeStr.split(':').map(Number);
+            const [endH, endM] = endTimeStr.split(':').map(Number);
+
+            let startMins = startH * 60 + startM;
+            let endMins = endH * 60 + endM;
+
+            // Overnight shift crossing 00:00
+            if (endMins <= startMins) {
+                endMins += 24 * 60;
+            }
+
+            let regMins = 0;
+            let otMins = 0;
+
+            for (let m = startMins; m < endMins; m++) {
+                let hourOfDay = Math.floor(m / 60) % 24;
+                if (hourOfDay >= 22 || hourOfDay < 6) {
+                    otMins++;
+                } else {
+                    regMins++;
+                }
+            }
+
+            const regularHours = Math.round((regMins / 60) * 100) / 100;
+            const otHours = Math.round((otMins / 60) * 100) / 100;
+            const totalHours = Math.round(((regMins + otMins) / 60) * 100) / 100;
+
+            const regularPay = Math.round(regularHours * BASE_HOURLY_RATE);
+            const otPay = Math.round(otHours * OT_HOURLY_RATE);
+            const totalPay = regularPay + otPay;
+
+            return {
+                totalHours,
+                regularHours,
+                otHours,
+                regularPay,
+                otPay,
+                totalPay
+            };
+        }
+
+        function formatDateISO(dateObj) {
+            const y = dateObj.getFullYear();
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        function formatVND(amount) {
+            return new Intl.NumberFormat('vi-VN').format(amount) + ' ₫';
+        }
+
+        function getDayOfWeekName(dateObj, mode = 'full') {
+            const daysFull = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+            const daysShort = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
+            const idx = dateObj.getDay();
+            return mode === 'short' ? daysShort[idx] : daysFull[idx];
+        }
+
+        // Returns { startFriday, endThursday } for the work week (Fri -> Thu)
+        function getWorkWeekRange(dateObj) {
+            const temp = new Date(dateObj.getFullYear(), dateObj.getMonth(), dateObj.getDate());
+            const dayIdx = temp.getDay();
+            let daysBackToFriday = (dayIdx + 2) % 7;
+            
+            const fridayDate = new Date(temp);
+            fridayDate.setDate(temp.getDate() - daysBackToFriday);
+
+            const thursdayDate = new Date(fridayDate);
+            thursdayDate.setDate(fridayDate.getDate() + 6);
+
+            return {
+                startFriday: fridayDate,
+                endThursday: thursdayDate
+            };
+        }
+
+        // Returns { startDate, endDate } for Payroll Period (26th -> 25th)
+        function getPayrollPeriodRange(refDate) {
+            const y = refDate.getFullYear();
+            const m = refDate.getMonth();
+            const d = refDate.getDate();
+
+            let startDate, endDate;
+            if (d >= 26) {
+                startDate = new Date(y, m, 26);
+                endDate = new Date(y, m + 1, 25);
+            } else {
+                startDate = new Date(y, m - 1, 26);
+                endDate = new Date(y, m, 25);
+            }
+            return { startDate, endDate };
+        }
+
+        function loadDataFromStorage() {
+            try {
+                const storedSettings = localStorage.getItem(SETTINGS_KEY);
+                if (storedSettings) {
+                    appSettings = JSON.parse(storedSettings);
+                }
+
+                const storedDB = localStorage.getItem(STORAGE_KEY);
+                if (storedDB) {
+                    attendanceDB = JSON.parse(storedDB);
+                } else {
+                    attendanceDB = getDefaultSampleData();
+                    saveDataToStorage();
+                }
+            } catch (e) {
+                console.error("Storage load error:", e);
+                attendanceDB = getDefaultSampleData();
+            }
+
+            checkOnboarding();
+        }
+
+        function saveDataToStorage() {
+            try {
+                localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(attendanceDB));
+            } catch (e) {
+                console.error("Storage save error:", e);
+            }
+        }
+
+        function checkOnboarding() {
+            const welcomeOverlay = document.getElementById('welcomeOverlay');
+            if (!appSettings.userName || appSettings.userName.trim() === '') {
+                welcomeOverlay.classList.remove('hidden');
+            } else {
+                welcomeOverlay.classList.add('hidden');
+                updateGreetingHeader();
+            }
+        }
+
+        function submitWelcomeName() {
+            const nameInput = document.getElementById('welcomeNameInput').value.trim();
+            const errorEl = document.getElementById('welcomeError');
+            if (!nameInput) {
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            errorEl.classList.add('hidden');
+            appSettings.userName = nameInput;
+            saveDataToStorage();
+            updateGreetingHeader();
+            document.getElementById('welcomeOverlay').classList.add('hidden');
+        }
+
+        function updateGreetingHeader() {
+            document.getElementById('headerGreetingText').innerText = `Xin Chào ${appSettings.userName} 👋`;
+            document.getElementById('settingsUserNameInput').value = appSettings.userName || '';
+        }
+
+        function switchTab(tabName) {
+            activeTab = tabName;
+            const tabs = ['TODAY', 'WEEK', 'MONTH', 'PAYROLL'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tabBtn${t.charAt(0) + t.slice(1).toLowerCase()}`);
+                const view = document.getElementById(`view${t.charAt(0) + t.slice(1).toLowerCase()}`);
+                if (!btn || !view) return;
+                
+                if (t === tabName) {
+                    btn.className = "flex-1 py-2.5 px-2 sm:px-3 rounded-xl font-black text-xs sm:text-sm transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-galaxy-orange via-amber-500 to-galaxy-yellow text-slate-950 shadow-lg";
+                    view.classList.remove('hidden');
+                } else {
+                    btn.className = "flex-1 py-2.5 px-2 sm:px-3 rounded-xl font-bold text-xs sm:text-sm transition flex items-center justify-center gap-1.5 text-slate-400 hover:text-slate-200 hover:bg-slate-900/60";
+                    view.classList.add('hidden');
+                }
+            });
+
+            renderActiveTab();
+        }
+
+        function renderActiveTab() {
+            if (activeTab === 'TODAY') renderTodayView();
+            else if (activeTab === 'WEEK') renderWeekView();
+            else if (activeTab === 'MONTH') renderMonthView();
+            else if (activeTab === 'PAYROLL') renderPayrollView();
+        }
+
+        function renderTodayView() {
+            const dateStr = formatDateISO(selectedDate);
+            const dayName = getDayOfWeekName(selectedDate);
+            const dayNum = String(selectedDate.getDate()).padStart(2, '0');
+            const monthNum = String(selectedDate.getMonth() + 1).padStart(2, '0');
+            const year = selectedDate.getFullYear();
+
+            document.getElementById('todayDateHeader').innerHTML = `${dayName}, <span class="text-white">${dayNum}/${monthNum}/${year}</span>`;
+
+            const record = attendanceDB[dateStr];
+            const badge = document.getElementById('todayStatusBadge');
+
+            if (!record) {
+                badge.className = "px-3 py-1 rounded-full text-xs font-black tracking-wider bg-slate-800 text-slate-400 border-slate-700";
+                badge.innerText = "CHƯA CHẤM";
+                selectedShift = 'CO';
+                document.getElementById('todayStartTime').value = '18:00';
+                document.getElementById('todayEndTime').value = '00:30';
+                showDetailedForm(true);
+            } else {
+                selectedShift = record.shift;
+                document.getElementById('todayStartTime').value = record.startTime || '18:00';
+                document.getElementById('todayEndTime').value = record.endTime || '00:30';
+
+                if (record.shift === 'OFF') {
+                    badge.className = "px-3 py-1 rounded-full text-xs font-black tracking-wider bg-slate-800 text-slate-300 border-slate-700";
+                    badge.innerText = "ĐÃ CHỌN OFF ⚪";
+                    showDetailedForm(false);
+                } else {
+                    let shiftClass = "bg-amber-500/20 text-amber-300 border-amber-500/50";
+                    if (record.shift === 'US') shiftClass = "bg-rose-500/20 text-rose-300 border-rose-500/50";
+                    if (record.shift === 'LB') shiftClass = "bg-purple-500/20 text-purple-300 border-purple-500/50";
+                    badge.className = `px-3 py-1 rounded-full text-xs font-black tracking-wider border ${shiftClass}`;
+                    badge.innerText = `CA ${record.shift}`;
+                    showDetailedForm(true);
+                }
+            }
+
+            updateShiftButtonsUI(selectedShift);
+            calculateAndDisplayToday();
+        }
+
+        function showDetailedForm(show) {
+            const form = document.getElementById('detailedWorkForm');
+            if (show) {
+                form.classList.remove('opacity-40', 'pointer-events-none');
+            } else {
+                form.classList.add('opacity-40', 'pointer-events-none');
+            }
+        }
+
+        function handleQuickWorkChoice(didWork) {
+            const dateStr = formatDateISO(selectedDate);
+            if (!didWork) {
+                attendanceDB[dateStr] = {
+                    shift: 'OFF',
+                    startTime: '00:00',
+                    endTime: '00:00'
+                };
+                saveDataToStorage();
+                renderTodayView();
+            } else {
+                if (attendanceDB[dateStr] && attendanceDB[dateStr].shift === 'OFF') {
+                    delete attendanceDB[dateStr];
+                }
+                renderTodayView();
+                showDetailedForm(true);
+            }
+        }
+
+        function updateShiftButtonsUI(shift) {
+            const shifts = [
+                { key: 'CO', btn: 'shiftBtnCO', active: 'bg-amber-500/20 text-amber-300 border-amber-500 shadow-md' },
+                { key: 'US', btn: 'shiftBtnUS', active: 'bg-rose-500/20 text-rose-300 border-rose-500 shadow-md' },
+                { key: 'LB', btn: 'shiftBtnLB', active: 'bg-purple-500/20 text-purple-300 border-purple-500 shadow-md' }
+            ];
+
+            shifts.forEach(s => {
+                const el = document.getElementById(s.btn);
+                if (s.key === shift) {
+                    el.className = `py-3 rounded-xl font-black text-sm border-2 transition flex flex-col items-center justify-center ${s.active}`;
+                } else {
+                    el.className = "py-3 rounded-xl font-bold text-sm border-2 border-slate-800 bg-slate-950 text-slate-400 hover:border-slate-700 transition flex flex-col items-center justify-center";
+                }
+            });
+        }
+
+        function selectShift(shiftKey) {
+            selectedShift = shiftKey;
+            updateShiftButtonsUI(shiftKey);
+            calculateAndDisplayToday();
+        }
+
+        function applyPreset(start, end) {
+            document.getElementById('todayStartTime').value = start;
+            document.getElementById('todayEndTime').value = end;
+            calculateAndDisplayToday();
+        }
+
+        function calculateAndDisplayToday() {
+            const start = document.getElementById('todayStartTime').value;
+            const end = document.getElementById('todayEndTime').value;
+
+            const dateStr = formatDateISO(selectedDate);
+            const isOff = attendanceDB[dateStr] && attendanceDB[dateStr].shift === 'OFF';
+
+            const calc = calculateSalary(isOff ? 'OFF' : selectedShift, start, end);
+
+            document.getElementById('todayDisplayTotalHours').innerText = `${calc.totalHours.toFixed(1)}h`;
+            document.getElementById('todayDisplayRegHours').innerText = `${calc.regularHours.toFixed(1)}h`;
+            document.getElementById('todayDisplayOtHours').innerText = `${calc.otHours.toFixed(1)}h`;
+
+            document.getElementById('todayDisplayRegPay').innerText = formatVND(calc.regularPay);
+            document.getElementById('todayDisplayOtPay').innerText = formatVND(calc.otPay);
+            document.getElementById('todayDisplayTotalPay').innerText = formatVND(calc.totalPay);
+
+            if (isOff) {
+                document.getElementById('todayCalcTimeRange').innerText = 'OFF';
+            } else {
+                document.getElementById('todayCalcTimeRange').innerText = `${start} → ${end}`;
+            }
+        }
+
+        function saveTodayAttendance() {
+            const start = document.getElementById('todayStartTime').value;
+            const end = document.getElementById('todayEndTime').value;
+            const errorEl = document.getElementById('todayFormError');
+
+            if (!selectedShift) {
+                errorEl.innerText = "Vui lòng chọn loại ca (CO, US, LB)!";
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            if (!start || !end) {
+                errorEl.innerText = "Vui lòng nhập giờ bắt đầu và kết thúc!";
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            errorEl.classList.add('hidden');
+
+            const dateStr = formatDateISO(selectedDate);
+            attendanceDB[dateStr] = {
+                shift: selectedShift,
+                startTime: start,
+                endTime: end
+            };
+
+            saveDataToStorage();
+            renderTodayView();
+
+            const btn = document.querySelector('button[onclick="saveTodayAttendance()"]');
+            const origHTML = btn.innerHTML;
+            btn.innerHTML = `<i class="fa-solid fa-check"></i> ĐÃ LƯU THÀNH CÔNG!`;
+            btn.className = "w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 font-black rounded-xl shadow-lg transition duration-200 flex items-center justify-center gap-2 text-base";
+            setTimeout(() => {
+                btn.innerHTML = origHTML;
+                btn.className = "w-full py-4 bg-gradient-to-r from-galaxy-orange via-amber-500 to-galaxy-yellow hover:from-orange-600 hover:to-amber-400 text-slate-950 font-black rounded-xl shadow-lg transition duration-200 transform active:scale-95 flex items-center justify-center gap-2 text-base";
+            }, 1200);
+        }
+
+        function navigateDay(offset) {
+            selectedDate.setDate(selectedDate.getDate() + offset);
+            renderTodayView();
+        }
+
+        function navigateDayToToday() {
+            selectedDate = new Date();
+            renderTodayView();
+        }
+
+        function renderWeekView() {
+            const { startFriday, endThursday } = getWorkWeekRange(selectedDate);
+
+            const startStr = `${String(startFriday.getDate()).padStart(2, '0')}/${String(startFriday.getMonth() + 1).padStart(2, '0')}`;
+            const endStr = `${String(endThursday.getDate()).padStart(2, '0')}/${String(endThursday.getMonth() + 1).padStart(2, '0')}/${endThursday.getFullYear()}`;
+            document.getElementById('weekViewRangeHeader').innerText = `${startStr} → ${endStr}`;
+
+            let totalWeekPay = 0;
+            let totalRegPay = 0;
+            let totalOtPay = 0;
+            let totalHours = 0;
+            let totalRegHours = 0;
+            let totalOtHours = 0;
+            let workDays = 0;
+
+            const listContainer = document.getElementById('weekDaysListContainer');
+            listContainer.innerHTML = '';
+
+            const temp = new Date(startFriday);
+
+            for (let i = 0; i < 7; i++) {
+                const dateStr = formatDateISO(temp);
+                const dayName = getDayOfWeekName(temp);
+                const dayShort = getDayOfWeekName(temp, 'short');
+                const dateNumStr = `${String(temp.getDate()).padStart(2, '0')}/${String(temp.getMonth() + 1).padStart(2, '0')}`;
+
+                const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
+                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+
+                if (record.shift !== 'OFF') workDays++;
+
+                totalWeekPay += calc.totalPay;
+                totalRegPay += calc.regularPay;
+                totalOtPay += calc.otPay;
+                totalHours += calc.totalHours;
+                totalRegHours += calc.regularHours;
+                totalOtHours += calc.otHours;
+
+                let badgeClass = "bg-slate-800 text-slate-400 border-slate-700";
+                if (record.shift === 'CO') badgeClass = "bg-amber-500/20 text-amber-300 border-amber-500/40";
+                else if (record.shift === 'US') badgeClass = "bg-rose-500/20 text-rose-300 border-rose-500/40";
+                else if (record.shift === 'LB') badgeClass = "bg-purple-500/20 text-purple-300 border-purple-500/40";
+
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition hover:border-orange-500/40";
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="text-center min-w-[50px] bg-slate-950 p-2 rounded-lg border border-slate-800">
+                            <span class="text-[10px] font-black text-orange-400 block uppercase">${dayShort}</span>
+                            <span class="text-xs font-bold text-slate-300 font-mono">${dateNumStr}</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-sm text-white">${dayName}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
+                            </div>
+                            <div class="text-xs text-slate-400 font-mono mt-0.5">
+                                ${record.shift === 'OFF' ? 'Không đi làm' : `${record.startTime} → ${record.endTime}`}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
+                        <div class="text-left sm:text-right font-mono">
+                            <div class="text-sm font-bold text-white">${formatVND(calc.totalPay)}</div>
+                            <div class="text-[11px] text-slate-400">${calc.totalHours.toFixed(1)}h ${calc.otHours > 0 ? `<span class="text-amber-400">(OT ${calc.otHours.toFixed(1)}h)</span>` : ''}</div>
+                        </div>
+                        <button onclick="openRetroEditModal('${dateStr}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-semibold border border-slate-700 transition flex items-center gap-1">
+                            <i class="fa-solid fa-pen text-[10px]"></i> Sửa
+                        </button>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+
+                temp.setDate(temp.getDate() + 1);
+            }
+
+            document.getElementById('weekTotalPayHero').innerText = formatVND(totalWeekPay);
+            document.getElementById('weekWorkDays').innerText = `${workDays} ngày`;
+            document.getElementById('weekTotalHours').innerText = `${totalHours.toFixed(1)}h`;
+            document.getElementById('weekRegPay').innerText = formatVND(totalRegPay);
+            document.getElementById('weekOtPay').innerText = formatVND(totalOtPay);
+
+            document.getElementById('weekRegHours').innerText = `${totalRegHours.toFixed(1)}h`;
+            document.getElementById('weekOtHours').innerText = `${totalOtHours.toFixed(1)}h`;
+        }
+
+        function navigateWeek(offset) {
+            selectedDate.setDate(selectedDate.getDate() + (offset * 7));
+            renderWeekView();
+        }
+
+        function navigateWeekToCurrent() {
+            selectedDate = new Date();
+            renderWeekView();
+        }
+
+        function renderMonthView() {
+            const year = selectedDate.getFullYear();
+            const month = selectedDate.getMonth();
+
+            document.getElementById('monthViewTitle').innerText = `THÁNG ${month + 1} NĂM ${year}`;
+
+            let monthTotalPay = 0;
+            let monthRegPay = 0;
+            let monthOtPay = 0;
+            let monthTotalHours = 0;
+            let monthRegHours = 0;
+            let monthOtHours = 0;
+            let monthWorkDays = 0;
+            let monthOffDays = 0;
+
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const d = new Date(year, month, day);
+                const dateStr = formatDateISO(d);
+                const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
+                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+
+                if (record.shift !== 'OFF') {
+                    monthWorkDays++;
+                } else {
+                    monthOffDays++;
+                }
+
+                monthTotalPay += calc.totalPay;
+                monthRegPay += calc.regularPay;
+                monthOtPay += calc.otPay;
+                monthTotalHours += calc.totalHours;
+                monthRegHours += calc.regularHours;
+                monthOtHours += calc.otHours;
+            }
+
+            document.getElementById('monthTotalPayHero').innerText = formatVND(monthTotalPay);
+            document.getElementById('monthWorkDays').innerText = `${monthWorkDays} ngày`;
+            document.getElementById('monthOffDays').innerText = `(${monthOffDays} ngày OFF)`;
+            document.getElementById('monthTotalHours').innerText = `${monthTotalHours.toFixed(1)}h`;
+            document.getElementById('monthOtHours').innerText = monthOtHours.toFixed(1);
+            document.getElementById('monthRegPay').innerText = formatVND(monthRegPay);
+            document.getElementById('monthOtPay').innerText = formatVND(monthOtPay);
+
+            const tableBody = document.getElementById('monthTableBody');
+            tableBody.innerHTML = '';
+
+            const firstOfMonth = new Date(year, month, 1);
+            let currentPointer = new Date(getWorkWeekRange(firstOfMonth).startFriday);
+            const lastOfMonth = new Date(year, month, daysInMonth);
+
+            let weekCounter = 1;
+
+            while (currentPointer <= lastOfMonth) {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/40 transition";
+
+                let weekRowPayInMonth = 0;
+                let weekRowHours = 0;
+                let weekRowOt = 0;
+
+                for (let i = 0; i < 7; i++) {
+                    const cellDate = new Date(currentPointer);
+                    const cellDateStr = formatDateISO(cellDate);
+                    const isCurrentMonth = cellDate.getMonth() === month && cellDate.getFullYear() === year;
+
+                    const record = attendanceDB[cellDateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
+                    const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+
+                    if (isCurrentMonth) {
+                        weekRowPayInMonth += calc.totalPay;
+                        weekRowHours += calc.totalHours;
+                        weekRowOt += calc.otHours;
+                    }
+
+                    const td = document.createElement('td');
+                    td.className = `p-2 border-r border-slate-800 align-top cursor-pointer transition ${isCurrentMonth ? 'bg-slate-900/60 hover:bg-slate-800' : 'bg-slate-950 text-slate-600 opacity-40'}`;
+                    td.onclick = () => openRetroEditModal(cellDateStr);
+
+                    let badgeColor = "bg-slate-800 text-slate-400 border-slate-700";
+                    if (record.shift === 'CO') badgeColor = "bg-amber-500/20 text-amber-300 border-amber-500/40";
+                    else if (record.shift === 'US') badgeColor = "bg-rose-500/20 text-rose-300 border-rose-500/40";
+                    else if (record.shift === 'LB') badgeColor = "bg-purple-500/20 text-purple-300 border-purple-500/40";
+
+                    td.innerHTML = `
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-black text-xs ${isCurrentMonth ? 'text-orange-400' : 'text-slate-500'} font-mono">${String(cellDate.getDate()).padStart(2, '0')}/${String(cellDate.getMonth() + 1).padStart(2, '0')}</span>
+                            <span class="px-1.5 py-0.2 rounded text-[9px] font-extrabold border ${badgeColor}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
+                        </div>
+                        <div class="text-[10px] font-mono ${isCurrentMonth ? 'text-slate-300' : 'text-slate-600'}">
+                            ${record.shift === 'OFF' ? '---' : `${record.startTime}-${record.endTime}`}
+                        </div>
+                        <div class="text-[10px] font-mono font-bold mt-1 ${isCurrentMonth ? 'text-emerald-400' : 'text-slate-600'}">
+                            ${record.shift === 'OFF' ? '0 ₫' : formatVND(calc.totalPay)}
+                        </div>
+                    `;
+
+                    tr.appendChild(td);
+                    currentPointer.setDate(currentPointer.getDate() + 1);
+                }
+
+                const tdTotal = document.createElement('td');
+                tdTotal.className = "p-3 bg-orange-500/10 border-l border-orange-500/30 text-center align-middle font-mono";
+                tdTotal.innerHTML = `
+                    <div class="text-[9px] uppercase font-black text-orange-400">Tuần ${weekCounter}</div>
+                    <div class="text-xs font-black text-white mt-0.5">${formatVND(weekRowPayInMonth)}</div>
+                    <div class="text-[10px] text-slate-400 mt-0.5">${weekRowHours.toFixed(1)}h (${weekRowOt.toFixed(1)}h OT)</div>
+                `;
+                tr.appendChild(tdTotal);
+
+                tableBody.appendChild(tr);
+                weekCounter++;
+            }
+        }
+
+        function renderPayrollView() {
+            const { startDate, endDate } = getPayrollPeriodRange(selectedPayrollDate);
+
+            const startStr = `${String(startDate.getDate()).padStart(2, '0')}/${String(startDate.getMonth() + 1).padStart(2, '0')}/${startDate.getFullYear()}`;
+            const endStr = `${String(endDate.getDate()).padStart(2, '0')}/${String(endDate.getMonth() + 1).padStart(2, '0')}/${endDate.getFullYear()}`;
+
+            document.getElementById('payrollPeriodHeader').innerText = `KỲ LƯƠNG: ${startStr} → ${endStr}`;
+            document.getElementById('payrollRangeSubtitle').innerText = `Bao gồm tất cả ca làm từ 26/${String(startDate.getMonth() + 1).padStart(2, '0')}/${startDate.getFullYear()} đến 25/${String(endDate.getMonth() + 1).padStart(2, '0')}/${endDate.getFullYear()}`;
+
+            let totalPay = 0;
+            let totalRegPay = 0;
+            let totalOtPay = 0;
+            let totalHours = 0;
+            let totalRegHours = 0;
+            let totalOtHours = 0;
+            let workDays = 0;
+
+            const listContainer = document.getElementById('payrollDaysListContainer');
+            listContainer.innerHTML = '';
+
+            const temp = new Date(startDate);
+
+            while (temp <= endDate) {
+                const dateStr = formatDateISO(temp);
+                const dayName = getDayOfWeekName(temp);
+                const dayShort = getDayOfWeekName(temp, 'short');
+                const dateNumStr = `${String(temp.getDate()).padStart(2, '0')}/${String(temp.getMonth() + 1).padStart(2, '0')}/${temp.getFullYear()}`;
+
+                const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
+                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+
+                if (record.shift !== 'OFF') workDays++;
+
+                totalPay += calc.totalPay;
+                totalRegPay += calc.regularPay;
+                totalOtPay += calc.otPay;
+                totalHours += calc.totalHours;
+                totalRegHours += calc.regularHours;
+                totalOtHours += calc.otHours;
+
+                let badgeClass = "bg-slate-800 text-slate-400 border-slate-700";
+                if (record.shift === 'CO') badgeClass = "bg-amber-500/20 text-amber-300 border-amber-500/40";
+                else if (record.shift === 'US') badgeClass = "bg-rose-500/20 text-rose-300 border-rose-500/40";
+                else if (record.shift === 'LB') badgeClass = "bg-purple-500/20 text-purple-300 border-purple-500/40";
+
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition hover:border-orange-500/40";
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="text-center min-w-[60px] bg-slate-950 p-2 rounded-lg border border-slate-800">
+                            <span class="text-[10px] font-black text-orange-400 block uppercase">${dayShort}</span>
+                            <span class="text-xs font-bold text-slate-300 font-mono">${dateNumStr}</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-sm text-white">${dayName}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
+                            </div>
+                            <div class="text-xs text-slate-400 font-mono mt-0.5">
+                                ${record.shift === 'OFF' ? 'Không đi làm' : `${record.startTime} → ${record.endTime}`}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-800">
+                        <div class="text-left sm:text-right font-mono">
+                            <div class="text-sm font-bold text-white">${formatVND(calc.totalPay)}</div>
+                            <div class="text-[11px] text-slate-400">${calc.totalHours.toFixed(1)}h ${calc.otHours > 0 ? `<span class="text-amber-400">(OT ${calc.otHours.toFixed(1)}h)</span>` : ''}</div>
+                        </div>
+                        <button onclick="openRetroEditModal('${dateStr}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg text-xs font-semibold border border-slate-700 transition flex items-center gap-1">
+                            <i class="fa-solid fa-pen text-[10px]"></i> Sửa
+                        </button>
+                    </div>
+                `;
+                listContainer.appendChild(card);
+
+                temp.setDate(temp.getDate() + 1);
+            }
+
+            document.getElementById('payrollTotalPayHero').innerText = formatVND(totalPay);
+            document.getElementById('payrollWorkDays').innerText = `${workDays} ngày`;
+            document.getElementById('payrollTotalHours').innerText = `${totalHours.toFixed(1)}h`;
+            document.getElementById('payrollOtHours').innerText = totalOtHours.toFixed(1);
+            document.getElementById('payrollRegPay').innerText = formatVND(totalRegPay);
+            document.getElementById('payrollOtPay').innerText = formatVND(totalOtPay);
+        }
+
+        function navigatePayrollPeriod(offset) {
+            const { startDate, endDate } = getPayrollPeriodRange(selectedPayrollDate);
+            if (offset > 0) {
+                const nextAnchor = new Date(endDate);
+                nextAnchor.setDate(endDate.getDate() + 5);
+                selectedPayrollDate = nextAnchor;
+            } else {
+                const prevAnchor = new Date(startDate);
+                prevAnchor.setDate(startDate.getDate() - 5);
+                selectedPayrollDate = prevAnchor;
+            }
+            renderPayrollView();
+        }
+
+        function navigatePayrollToCurrent() {
+            selectedPayrollDate = new Date();
+            renderPayrollView();
+        }
+
+        function navigateMonth(offset) {
+            selectedDate.setMonth(selectedDate.getMonth() + offset);
+            renderMonthView();
+        }
+
+        function navigateMonthToCurrent() {
+            selectedDate = new Date();
+            renderMonthView();
+        }
+
+        function openRetroEditModal(dateStr) {
+            retroModalActiveDateStr = dateStr;
+            const [y, m, d] = dateStr.split('-').map(Number);
+            const dateObj = new Date(y, m - 1, d);
+            const dayName = getDayOfWeekName(dateObj);
+
+            document.getElementById('retroModalDateText').innerText = `Ngày: ${dayName}, ${String(d).padStart(2, '0')}/${String(m).padStart(2, '0')}/${y}`;
+
+            const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '18:00', endTime: '00:30' };
+            retroModalShift = record.shift;
+
+            retroUpdateShiftButtons(retroModalShift);
+
+            document.getElementById('retroStartTime').value = record.startTime || '18:00';
+            document.getElementById('retroEndTime').value = record.endTime || '00:30';
+
+            document.getElementById('retroModalError').classList.add('hidden');
+            document.getElementById('retroEditModal').classList.remove('hidden');
+        }
+
+        function retroUpdateShiftButtons(shift) {
+            const shifts = [
+                { key: 'CO', btn: 'retroBtnCO', active: 'bg-amber-500/20 text-amber-300 border-amber-500' },
+                { key: 'US', btn: 'retroBtnUS', active: 'bg-rose-500/20 text-rose-300 border-rose-500' },
+                { key: 'LB', btn: 'retroBtnLB', active: 'bg-purple-500/20 text-purple-300 border-purple-500' },
+                { key: 'OFF', btn: 'retroBtnOFF', active: 'bg-slate-800 text-slate-200 border-slate-600' }
+            ];
+
+            shifts.forEach(s => {
+                const el = document.getElementById(s.btn);
+                if (s.key === shift) {
+                    el.className = `py-2.5 rounded-xl font-bold text-xs border transition ${s.active}`;
+                } else {
+                    el.className = "py-2.5 rounded-xl font-bold text-xs border border-slate-800 bg-slate-950 text-slate-400 transition";
+                }
+            });
+
+            const timeArea = document.getElementById('retroTimeInputsArea');
+            if (shift === 'OFF') {
+                timeArea.classList.add('opacity-40', 'pointer-events-none');
+            } else {
+                timeArea.classList.remove('opacity-40', 'pointer-events-none');
+            }
+        }
+
+        function retroSelectShift(shiftKey) {
+            retroModalShift = shiftKey;
+            retroUpdateShiftButtons(shiftKey);
+        }
+
+        function closeRetroEditModal() {
+            document.getElementById('retroEditModal').classList.add('hidden');
+        }
+
+        function saveRetroAttendance() {
+            if (!retroModalActiveDateStr) return;
+
+            const start = document.getElementById('retroStartTime').value;
+            const end = document.getElementById('retroEndTime').value;
+            const errorEl = document.getElementById('retroModalError');
+
+            if (retroModalShift !== 'OFF' && (!start || !end)) {
+                errorEl.innerText = "Vui lòng nhập đầy đủ giờ làm!";
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            errorEl.classList.add('hidden');
+
+            attendanceDB[retroModalActiveDateStr] = {
+                shift: retroModalShift,
+                startTime: retroModalShift === 'OFF' ? '00:00' : start,
+                endTime: retroModalShift === 'OFF' ? '00:00' : end
+            };
+
+            saveDataToStorage();
+            closeRetroEditModal();
+
+            const [y, m, d] = retroModalActiveDateStr.split('-').map(Number);
+            selectedDate = new Date(y, m - 1, d);
+
+            renderActiveTab();
+        }
+
+        function exportWeekCSV() {
+            const { startFriday, endThursday } = getWorkWeekRange(selectedDate);
+            let csv = "Ngày,Thứ,Ca,Giờ Bắt Đầu,Giờ Kết Thúc,Tổng Giờ,Giờ Thường,Giờ OT,Lương Thường (VND),Lương OT (VND),Tổng Lương (VND)\n";
+
+            let totalPaySum = 0;
+            const temp = new Date(startFriday);
+
+            for (let i = 0; i < 7; i++) {
+                const dateStr = formatDateISO(temp);
+                const dayName = getDayOfWeekName(temp);
+                const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
+                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+
+                totalPaySum += calc.totalPay;
+                csv += `"${dateStr}","${dayName}","${record.shift}","${record.startTime}","${record.endTime}",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
+
+                temp.setDate(temp.getDate() + 1);
+            }
+
+            csv += `\n"TỔNG TUẦN",,,,,,,,,${totalPaySum}\n`;
+            downloadFile(csv, `GalaxyCinema_Tuan_${formatDateISO(startFriday)}.csv`, 'text/csv');
+        }
+
+        function exportMonthCSV() {
+            const year = selectedDate.getFullYear();
+            const month = selectedDate.getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            let csv = "Ngày,Thứ,Ca,Giờ Bắt Đầu,Giờ Kết Thúc,Tổng Giờ,Giờ Thường,Giờ OT,Lương Thường (VND),Lương OT (VND),Tổng Lương (VND)\n";
+            let monthTotalPay = 0;
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const d = new Date(year, month, day);
+                const dateStr = formatDateISO(d);
+                const dayName = getDayOfWeekName(d);
+                const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
+                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+
+                monthTotalPay += calc.totalPay;
+                csv += `"${dateStr}","${dayName}","${record.shift}","${record.startTime}","${record.endTime}",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
+            }
+
+            csv += `\n"TỔNG THÁNG",,,,,,,,,${monthTotalPay}\n`;
+            downloadFile(csv, `GalaxyCinema_Thang_${month + 1}_${year}.csv`, 'text/csv');
+        }
+
+        function exportPayrollCSV() {
+            const { startDate, endDate } = getPayrollPeriodRange(selectedPayrollDate);
+            let csv = "Ngày,Thứ,Ca,Giờ Bắt Đầu,Giờ Kết Thúc,Tổng Giờ,Giờ Thường,Giờ OT,Lương Thường (VND),Lương OT (VND),Tổng Lương (VND)\n";
+
+            let totalPaySum = 0;
+            const temp = new Date(startDate);
+
+            while (temp <= endDate) {
+                const dateStr = formatDateISO(temp);
+                const dayName = getDayOfWeekName(temp);
+                const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
+                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+
+                totalPaySum += calc.totalPay;
+                csv += `"${dateStr}","${dayName}","${record.shift}","${record.startTime}","${record.endTime}",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
+
+                temp.setDate(temp.getDate() + 1);
+            }
+
+            csv += `\n"TỔNG KỲ LƯƠNG",,,,,,,,,${totalPaySum}\n`;
+            downloadFile(csv, `GalaxyCinema_KyLuong_${formatDateISO(startDate)}_den_${formatDateISO(endDate)}.csv`, 'text/csv');
+        }
+
+        function exportBackupJSON() {
+            const data = {
+                settings: appSettings,
+                attendanceDB: attendanceDB,
+                exportDate: new Date().toISOString()
+            };
+            downloadFile(JSON.stringify(data, null, 2), `GalaxyCinema_Backup_${formatDateISO(new Date())}.json`, 'application/json');
+        }
+
+        function importBackupJSON(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const parsed = JSON.parse(evt.target.result);
+                    if (parsed.attendanceDB) {
+                        attendanceDB = parsed.attendanceDB;
+                        if (parsed.settings) appSettings = parsed.settings;
+                        saveDataToStorage();
+                        updateGreetingHeader();
+                        renderActiveTab();
+                        closeSettingsModal();
+                    }
+                } catch (err) {
+                    console.error("Backup file error:", err);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function downloadFile(content, fileName, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function openSettingsModal() {
+            document.getElementById('settingsModal').classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            document.getElementById('settingsModal').classList.add('hidden');
+        }
+
+        function saveSettings() {
+            const val = document.getElementById('settingsUserNameInput').value.trim();
+            if (val) {
+                appSettings.userName = val;
+                saveDataToStorage();
+                updateGreetingHeader();
+            }
+            closeSettingsModal();
+        }
+
+        function resetSampleData() {
+            attendanceDB = getDefaultSampleData();
+            saveDataToStorage();
+            renderActiveTab();
+            closeSettingsModal();
+        }
+
+        window.onload = function() {
+            loadDataFromStorage();
+            switchTab('TODAY');
+        };
+    </script>
+</body>
+</html>
