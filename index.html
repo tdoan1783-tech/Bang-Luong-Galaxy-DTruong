@@ -1994,10 +1994,37 @@ function renderMonthView() {
     renderActiveTab();
 }
 
-        window.onload = function() {
-            loadDataFromStorage();
-            switchTab('TODAY');
-        };
+  function updateRealtimeDateTime() {
+    const dateTimeEl = document.getElementById('realtimeDateTime');
+
+    if (!dateTimeEl) return;
+
+    const now = new Date();
+
+    const date = now.toLocaleDateString('vi-VN', {
+        weekday: 'long',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    });
+
+    const time = now.toLocaleTimeString('vi-VN', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    });
+
+    dateTimeEl.textContent = `${date} • ${time}`;
+}
+
+window.onload = function() {
+    loadDataFromStorage();
+    switchTab('TODAY');
+
+    updateRealtimeDateTime();
+    setInterval(updateRealtimeDateTime, 1000);
+};
         /* =========================================================
    MOOD CHECK-IN
    Hiển thị mỗi lần mở app
