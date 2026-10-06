@@ -1074,73 +1074,89 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
 // ==========================================
 // BIỂU ĐỒ LƯƠNG 4 THÁNG GẦN NHẤT
 // ==========================================
+// ==========================================
+// SO SÁNH LƯƠNG 3 KỲ GẦN NHẤT
+// KỲ LƯƠNG: 26 → 25
+// ==========================================
 
-function getLast4MonthsSalary() {
+function getLast3PayrollPeriods() {
     const today = new Date();
-    const months = [];
+    const periods = [];
 
-    for (let i = 3; i >= 0; i--) {
-        const date = new Date(
-            today.getFullYear(),
-            today.getMonth() - i,
-            1
-        );
+    // Lấy kỳ hiện tại
+    let currentPeriod = getPayrollPeriodRange(today);
 
-        const year = date.getFullYear();
-        const month = date.getMonth();
+    // Tạo 3 kỳ: kỳ hiện tại + 2 kỳ trước
+    for (let i = 0; i < 3; i++) {
+
+        const startDate = new Date(currentPeriod.startDate);
+        const endDate = new Date(currentPeriod.endDate);
 
         let totalPay = 0;
         let totalHours = 0;
         let totalOtHours = 0;
         let workDays = 0;
 
-        Object.keys(attendanceDB).forEach(dateStr => {
-            const [y, m, d] = dateStr.split('-').map(Number);
+        const temp = new Date(startDate);
 
-            if (y !== year || m !== month + 1) return;
+        while (temp <= endDate) {
 
+            const dateStr = formatDateISO(temp);
             const record = attendanceDB[dateStr];
 
-            if (!record || record.shift === 'OFF') return;
+            if (record && record.shift !== 'OFF') {
 
-            const calc = calculateSalary(
-                record.shift,
-                record.startTime,
-                record.endTime
-            );
+                const calc = calculateSalary(
+                    record.shift,
+                    record.startTime,
+                    record.endTime
+                );
 
-            totalPay += calc.totalPay;
-            totalHours += calc.totalHours;
-            totalOtHours += calc.otHours;
-            workDays++;
-        });
+                totalPay += calc.totalPay;
+                totalHours += calc.totalHours;
+                totalOtHours += calc.otHours;
+                workDays++;
+            }
 
-        months.push({
-            year,
-            month,
-            label: `T${month + 1}`,
+            temp.setDate(temp.getDate() + 1);
+        }
+
+        periods.push({
+            startDate,
+            endDate,
             totalPay,
             totalHours,
             totalOtHours,
             workDays
         });
+
+        // Lùi về kỳ trước
+        currentPeriod = getPayrollPeriodRange(
+            new Date(
+                startDate.getFullYear(),
+                startDate.getMonth(),
+                25
+            )
+        );
     }
 
-    return months;
+    // Đảo lại để kỳ cũ → kỳ mới
+    return periods.reverse();
 }
 
 
 function renderSalary4MonthChart() {
+
     const barsContainer = document.getElementById('salaryChartBars');
     const labelsContainer = document.getElementById('salaryChartLabels');
     const summaryContainer = document.getElementById('salaryChartSummary');
 
     if (!barsContainer || !labelsContainer || !summaryContainer) return;
 
-    const months = getLast4MonthsSalary();
+    const periods = getLast3PayrollPeriods();
 
     const maxSalary = Math.max(
-        ...months.map(item => item.totalPay),
+        ...periods.map(item => item.totalPay),
         1000000
     );
 
@@ -1148,7 +1164,7 @@ function renderSalary4MonthChart() {
     labelsContainer.innerHTML = '';
     summaryContainer.innerHTML = '';
 
-    months.forEach(item => {
+    periods.forEach((item, index) => {
 
         const height = item.totalPay > 0
             ? Math.max((item.totalPay / maxSalary) * 100, 4)
@@ -1166,22 +1182,30 @@ function renderSalary4MonthChart() {
             barClass = 'bg-gradient-to-t from-orange-700 to-orange-400';
         }
 
+        const start = item.startDate;
+        const end = item.endDate;
+
+        const periodLabel =
+            `${String(start.getDate()).padStart(2, '0')}/${String(start.getMonth() + 1).padStart(2, '0')} → ` +
+            `${String(end.getDate()).padStart(2, '0')}/${String(end.getMonth() + 1).padStart(2, '0')}`;
+
         const barWrapper = document.createElement('div');
 
         barWrapper.className =
             'flex-1 h-full flex items-end justify-center relative group';
 
         barWrapper.innerHTML = `
-            <div class="absolute bottom-0 w-full max-w-[55px]
-                        rounded-t-xl ${barClass}
-                        transition-all duration-700 ease-out
-                        shadow-lg"
-                 style="height:${height}%">
+            <div
+                class="absolute bottom-0 w-full max-w-[65px]
+                       rounded-t-xl ${barClass}
+                       transition-all duration-700 ease-out
+                       shadow-lg"
+                style="height:${height}%">
 
-                <div class="absolute -top-8 left-1/2 -translate-x-1/2
-                            whitespace-nowrap text-[10px]
-                            font-black text-white opacity-0
-                            group-hover:opacity-100 transition">
+                <div class="absolute -top-8 left-1/2
+                            -translate-x-1/2 whitespace-nowrap
+                            text-[10px] font-black text-white
+                            opacity-0 group-hover:opacity-100 transition">
                     ${formatVND(item.totalPay)}
                 </div>
             </div>
@@ -1191,21 +1215,20 @@ function renderSalary4MonthChart() {
 
         labelsContainer.innerHTML += `
             <div>
-                <div class="text-xs font-black text-white">
-                    ${item.label}
+                <div class="text-[10px] sm:text-xs font-black text-white">
+                    KỲ ${index + 1}
                 </div>
-                <div class="text-[10px] text-slate-500">
-                    ${item.year}
+                <div class="text-[9px] sm:text-[10px] text-slate-500 leading-tight mt-1">
+                    ${periodLabel}
                 </div>
             </div>
         `;
 
         summaryContainer.innerHTML += `
-            <div class="bg-slate-950/70 border border-slate-800
-                        rounded-xl p-3">
+            <div class="bg-slate-950/70 border border-slate-800 rounded-xl p-3">
 
-                <div class="text-[10px] font-black text-slate-500 uppercase">
-                    ${item.label}/${item.year}
+                <div class="text-[10px] font-black text-orange-400 uppercase">
+                    ${periodLabel}
                 </div>
 
                 <div class="text-sm font-black font-mono text-orange-400 mt-1">
@@ -1217,6 +1240,7 @@ function renderSalary4MonthChart() {
                     ${item.totalHours.toFixed(1)}h •
                     ${item.totalOtHours.toFixed(1)}h OT
                 </div>
+
             </div>
         `;
     });
