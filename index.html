@@ -789,40 +789,9 @@
         // Attendance Database: { "YYYY-MM-DD": { shift: 'CO'|'US'|'LB'|'OFF', startTime: '18:00', endTime: '00:30' } }
         let attendanceDB = {};
 
-        function getDefaultSampleData() {
-            const data = {};
-            const now = new Date();
-            const y = now.getFullYear();
-            const m = now.getMonth();
-
-            for (let day = 1; day <= 31; day++) {
-                const d = new Date(y, m, day);
-                if (d.getMonth() !== m) break;
-                
-                const dateStr = formatDateISO(d);
-                const dayOfWeek = d.getDay();
-
-                if (dayOfWeek === 1 || dayOfWeek === 4) {
-                    data[dateStr] = { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                } else if (dayOfWeek === 6 || dayOfWeek === 0) {
-                    data[dateStr] = { shift: 'US', startTime: '14:00', endTime: '22:30' };
-                } else if (dayOfWeek === 5) {
-                    data[dateStr] = { shift: 'CO', startTime: '18:00', endTime: '00:30' };
-                } else {
-                    data[dateStr] = { shift: day % 2 === 0 ? 'LB' : 'CO', startTime: '18:00', endTime: '23:00' };
-                }
-            }
-
-            // Also add previous month end days for payroll context
-            for (let day = 26; day <= 31; day++) {
-                const d = new Date(y, m - 1, day);
-                if (d.getMonth() !== (m - 1 + 12) % 12) break;
-                const dateStr = formatDateISO(d);
-                data[dateStr] = { shift: 'CO', startTime: '18:00', endTime: '00:30' };
-            }
-
-            return data;
-        }
+       function getDefaultSampleData() {
+    return {};
+}
 
         function calculateSalary(shift, startTimeStr, endTimeStr) {
             if (shift === 'OFF' || !startTimeStr || !endTimeStr) {
