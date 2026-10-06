@@ -701,39 +701,119 @@
                 </div>
             </div>
 
-            <!-- Payroll Period Hero Summary Card -->
-            <div class="bg-gradient-to-r from-galaxy-card via-slate-900 to-galaxy-card border-2 border-orange-500/60 rounded-2xl p-6 shadow-glow-orange relative overflow-hidden">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-                    <div class="space-y-1">
-                        <span class="text-xs font-black tracking-widest text-orange-400 uppercase flex items-center gap-2">
-                            <i class="fa-solid fa-calculator"></i> TỔNG TỔNG KẾT KỲ LƯƠNG
-                        </span>
-                        <div id="payrollTotalPayHero" class="text-4xl sm:text-6xl font-black font-mono text-white tracking-tight">
-                            0 ₫
-                        </div>
-                        <p id="payrollRangeSubtitle" class="text-xs text-slate-400">Bao gồm tất cả ca làm từ ngày 26 tháng này đến 25 tháng sau</p>
-                    </div>
+   <!-- Payroll Period Hero Summary Card -->
+<div class="bg-gradient-to-r from-galaxy-card via-slate-900 to-galaxy-card border-2 border-orange-500/60 rounded-2xl p-6 shadow-glow-orange relative overflow-hidden">
+    <div class="flex flex-col gap-5">
 
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full lg:w-auto">
-                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
-                            <span class="text-[10px] font-bold text-slate-400 block uppercase">Số ngày làm</span>
-                            <span id="payrollWorkDays" class="text-base font-bold font-mono text-white">0 ngày</span>
-                        </div>
-                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
-                            <span class="text-[10px] font-bold text-slate-400 block uppercase">Tổng giờ làm</span>
-                            <span id="payrollTotalHours" class="text-base font-bold font-mono text-white">0.0h</span>
-                            <span class="text-[11px] text-amber-300 block font-mono"><span id="payrollOtHours">0.0</span>h OT</span>
-                        </div>
-                        <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl col-span-2 sm:col-span-1">
-                            <span class="text-[10px] font-bold text-slate-400 block uppercase">Phân rã lương</span>
-                            <div class="text-xs font-mono text-emerald-400">Thường: <span id="payrollRegPay">0 ₫</span></div>
-                            <div class="text-xs font-mono text-amber-400">OT: <span id="payrollOtPay">0 ₫</span></div>
-                        </div>
-                    </div>
+        <!-- Tổng thu nhập -->
+        <div class="space-y-1">
+            <span class="text-xs font-black tracking-widest text-orange-400 uppercase flex items-center gap-2">
+                <i class="fa-solid fa-calculator"></i> TỔNG TỔNG KẾT KỲ LƯƠNG
+            </span>
+
+            <div id="payrollTotalPayHero" class="text-4xl sm:text-6xl font-black font-mono text-white tracking-tight">
+                0 ₫
+            </div>
+
+            <p id="payrollRangeSubtitle" class="text-xs text-slate-400">
+                Bao gồm tất cả ca làm từ ngày 26 tháng này đến 25 tháng sau
+            </p>
+        </div>
+
+        <!-- Ngày công / Tổng giờ / Chi tiết lương -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full">
+
+            <!-- Ngày công -->
+            <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                <span class="text-[10px] font-bold text-slate-400 block uppercase">
+                    Số ngày làm
+                </span>
+                <span id="payrollWorkDays" class="text-base font-bold font-mono text-white">
+                    0 ngày
+                </span>
+            </div>
+
+            <!-- Tổng giờ -->
+            <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl">
+                <span class="text-[10px] font-bold text-slate-400 block uppercase">
+                    Tổng giờ làm
+                </span>
+
+                <span id="payrollTotalHours" class="text-base font-bold font-mono text-white">
+                    0.0h
+                </span>
+
+                <span class="text-[11px] text-amber-300 block font-mono">
+                    <span id="payrollOtHours">0.0</span>h OT
+                </span>
+            </div>
+
+            <!-- Chi tiết lương -->
+            <div class="bg-slate-950/80 border border-slate-800 p-3 rounded-xl col-span-2 sm:col-span-1">
+                <span class="text-[10px] font-bold text-slate-400 block uppercase">
+                    Phân rã lương
+                </span>
+
+                <div class="text-xs font-mono text-emerald-400">
+                    Thường:
+                    <span id="payrollRegPay">0 ₫</span>
+                </div>
+
+                <div class="text-xs font-mono text-amber-400">
+                    OT:
+                    <span id="payrollOtPay">0 ₫</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- LƯƠNG KHÁC -->
+        <div class="bg-slate-950/80 border border-orange-500/30 p-4 rounded-xl">
+
+            <div class="flex items-center justify-between gap-3 mb-2">
+                <div>
+                    <span class="text-xs font-black text-orange-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-wallet"></i>
+                        LƯƠNG KHÁC
+                    </span>
+
+                    <span class="text-[10px] text-slate-500 block mt-0.5">
+                        Nhập tổng các khoản thu nhập ngoài lương Galaxy
+                    </span>
                 </div>
             </div>
 
-            <!-- Payroll Breakdown List -->
+            <div class="relative">
+                <input
+                    type="number"
+                    id="payrollOtherIncome"
+                    min="0"
+                    step="1000"
+                    value="0"
+                    oninput="updatePayrollOtherIncome(this.value)"
+                    class="w-full bg-slate-900 border border-slate-700 focus:border-orange-500 rounded-xl px-4 py-3 pr-12 text-white font-mono text-lg font-bold focus:outline-none"
+                    placeholder="0"
+                >
+
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">
+                    ₫
+                </span>
+            </div>
+
+            <div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-800">
+                <span class="text-xs text-slate-400 font-bold">
+                    Tổng lương khác
+                </span>
+
+                <span id="payrollOtherIncomeDisplay" class="text-sm font-black font-mono text-orange-300">
+                    0 ₫
+                </span>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Payroll Breakdown List -->
             <div class="bg-galaxy-card border border-galaxy-border rounded-2xl p-6 shadow-xl space-y-4">
                 <h3 class="text-xs font-extrabold tracking-wider text-slate-300 uppercase flex items-center gap-2">
                     <i class="fa-solid fa-list-check text-orange-400"></i> CHI TIẾT CA LÀM TRONG KỲ LƯƠNG (26 → 25)
@@ -883,7 +963,7 @@
 
         const STORAGE_KEY = 'galaxy_cinema_payroll_db_v2';
         const SETTINGS_KEY = 'galaxy_cinema_settings_v2';
-
+const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
         // APPLICATION STATE
         let activeTab = 'TODAY'; // 'TODAY' | 'WEEK' | 'MONTH' | 'PAYROLL'
         let selectedDate = new Date(); // Date object currently in focus
@@ -967,7 +1047,108 @@
         function formatVND(amount) {
             return new Intl.NumberFormat('vi-VN').format(amount) + ' ₫';
         }
+// ==========================================
+// LƯƠNG KHÁC - THEO TỪNG KỲ LƯƠNG
+// ==========================================
 
+function getPayrollPeriodKey(startDate, endDate) {
+    return `${formatDateISO(startDate)}_${formatDateISO(endDate)}`;
+}
+
+function getPayrollOtherIncome(startDate, endDate) {
+    const key = getPayrollPeriodKey(startDate, endDate);
+
+    try {
+        const data = JSON.parse(
+            localStorage.getItem(OTHER_INCOME_STORAGE_KEY) || '{}'
+        );
+
+        return Number(data[key] || 0);
+    } catch (error) {
+        return 0;
+    }
+}
+
+function savePayrollOtherIncome(startDate, endDate, amount) {
+    const key = getPayrollPeriodKey(startDate, endDate);
+
+    let data = {};
+
+    try {
+        data = JSON.parse(
+            localStorage.getItem(OTHER_INCOME_STORAGE_KEY) || '{}'
+        );
+    } catch (error) {
+        data = {};
+    }
+
+    data[key] = Number(amount) || 0;
+
+    localStorage.setItem(
+        OTHER_INCOME_STORAGE_KEY,
+        JSON.stringify(data)
+    );
+}
+
+function updatePayrollOtherIncome(value) {
+    const { startDate, endDate } =
+        getPayrollPeriodRange(selectedPayrollDate);
+
+    const amount = Math.max(0, Number(value) || 0);
+
+    // Lưu riêng theo kỳ lương
+    savePayrollOtherIncome(startDate, endDate, amount);
+
+    // Hiển thị khoản Lương khác
+    const otherDisplay =
+        document.getElementById('payrollOtherIncomeDisplay');
+
+    if (otherDisplay) {
+        otherDisplay.innerText = formatVND(amount);
+    }
+
+    // Lấy lương Galaxy hiện tại
+    const currentGalaxyPay =
+        calculatePayrollGalaxyTotal(startDate, endDate);
+
+    // Tổng thu nhập = Lương Galaxy + Lương khác
+    const finalTotal = currentGalaxyPay + amount;
+
+    const hero =
+        document.getElementById('payrollTotalPayHero');
+
+    if (hero) {
+        hero.innerText = formatVND(finalTotal);
+    }
+}
+
+function calculatePayrollGalaxyTotal(startDate, endDate) {
+    let totalPay = 0;
+
+    const temp = new Date(startDate);
+
+    while (temp <= endDate) {
+        const dateStr = formatDateISO(temp);
+
+        const record = attendanceDB[dateStr] || {
+            shift: 'OFF',
+            startTime: '00:00',
+            endTime: '00:00'
+        };
+
+        const calc = calculateSalary(
+            record.shift,
+            record.startTime,
+            record.endTime
+        );
+
+        totalPay += calc.totalPay;
+
+        temp.setDate(temp.getDate() + 1);
+    }
+
+    return totalPay;
+}
         function getDayOfWeekName(dateObj, mode = 'full') {
             const daysFull = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
             const daysShort = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'];
