@@ -1701,12 +1701,29 @@
             closeSettingsModal();
         }
 
-        function resetSampleData() {
-            attendanceDB = getDefaultSampleData();
-            saveDataToStorage();
-            renderActiveTab();
-            closeSettingsModal();
-        }
+      function resetAllAppData() {
+    if (!confirm('Bạn có chắc muốn xóa toàn bộ dữ liệu không?')) return;
+
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(SETTINGS_KEY);
+
+    attendanceDB = {};
+    appSettings = {
+        userName: ''
+    };
+
+    document.getElementById('settingsModal').classList.add('hidden');
+
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    welcomeOverlay.classList.remove('hidden');
+
+    const nameInput = document.getElementById('welcomeNameInput');
+    if (nameInput) {
+        nameInput.value = '';
+    }
+
+    renderActiveTab();
+}
 
         window.onload = function() {
             loadDataFromStorage();
