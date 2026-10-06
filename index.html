@@ -899,60 +899,114 @@
             return { startDate, endDate };
         }
 
-        function loadDataFromStorage() {
-            try {
-                const storedSettings = localStorage.getItem(SETTINGS_KEY);
-                if (storedSettings) {
-                    appSettings = JSON.parse(storedSettings);
-                }
+ function loadDataFromStorage() {
+    try {
+        const storedSettings = localStorage.getItem(SETTINGS_KEY);
 
-                const storedDB = localStorage.getItem(STORAGE_KEY);
-                if (storedDB) {
-                    attendanceDB = JSON.parse(storedDB);
-                } else {
-                    attendanceDB = getDefaultSampleData();
-                    saveDataToStorage();
-                }
-            } catch (e) {
-                console.error("Storage load error:", e);
-                attendanceDB = getDefaultSampleData();
-            }
-
-            checkOnboarding();
+        if (storedSettings) {
+            appSettings = JSON.parse(storedSettings);
         }
 
-        function saveDataToStorage() {
-            try {
-                localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(attendanceDB));
-            } catch (e) {
-                console.error("Storage save error:", e);
-            }
-        }
+        const storedDB = localStorage.getItem(STORAGE_KEY);
 
-        function checkOnboarding() {
-            const welcomeOverlay = document.getElementById('welcomeOverlay');
-            if (!appSettings.userName || appSettings.userName.trim() === '') {
-                welcomeOverlay.classList.remove('hidden');
-            } else {
-                welcomeOverlay.classList.add('hidden');
-                updateGreetingHeader();
-            }
-        }
-
-        function submitWelcomeName() {
-            const nameInput = document.getElementById('welcomeNameInput').value.trim();
-            const errorEl = document.getElementById('welcomeError');
-            if (!nameInput) {
-                errorEl.classList.remove('hidden');
-                return;
-            }
-            errorEl.classList.add('hidden');
-            appSettings.userName = nameInput;
+        if (storedDB) {
+            attendanceDB = JSON.parse(storedDB);
+        } else {
+            attendanceDB = getDefaultSampleData();
             saveDataToStorage();
-            updateGreetingHeader();
-            document.getElementById('welcomeOverlay').classList.add('hidden');
         }
+
+    } catch (e) {
+        console.error("Storage load error:", e);
+        attendanceDB = getDefaultSampleData();
+    }
+
+    checkOnboarding();
+}
+
+
+function saveDataToStorage() {
+    try {
+        localStorage.setItem(
+            SETTINGS_KEY,
+            JSON.stringify(appSettings)
+        );
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(attendanceDB)
+        );
+
+    } catch (e) {
+        console.error("Storage save error:", e);
+    }
+}
+
+
+function checkOnboarding() {
+
+    const welcomeOverlay =
+        document.getElementById('welcomeOverlay');
+
+    // Chưa có tên → hiện màn hình nhập tên
+    if (!appSettings.userName || appSettings.userName.trim() === '') {
+
+        welcomeOverlay.classList.remove('hidden');
+
+    }
+
+    // Đã có tên → bỏ màn hình nhập tên
+    // và HIỆN MOOD CHECK-IN
+    else {
+
+        welcomeOverlay.classList.add('hidden');
+
+        updateGreetingHeader();
+
+        showMoodOverlay();
+    }
+}
+
+
+function submitWelcomeName() {
+
+    const nameInput =
+        document.getElementById('welcomeNameInput').value.trim();
+
+    const errorEl =
+        document.getElementById('welcomeError');
+
+
+    // Không nhập tên
+    if (!nameInput) {
+
+        errorEl.classList.remove('hidden');
+
+        return;
+    }
+
+
+    errorEl.classList.add('hidden');
+
+
+    // Lưu tên
+    appSettings.userName = nameInput;
+
+    saveDataToStorage();
+
+    updateGreetingHeader();
+
+
+    // Đóng màn hình nhập tên
+    document
+        .getElementById('welcomeOverlay')
+        .classList.add('hidden');
+
+
+    // Sau khi nhập tên lần đầu
+    // → chuyển sang MOOD CHECK-IN
+    showMoodOverlay();
+}
 
         function updateGreetingHeader() {
             document.getElementById('headerGreetingText').innerText = `Xin Chào ${appSettings.userName} 👋`;
