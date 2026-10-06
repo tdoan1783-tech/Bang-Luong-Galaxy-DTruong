@@ -1833,6 +1833,225 @@ function renderMonthView() {
             loadDataFromStorage();
             switchTab('TODAY');
         };
+        /* =========================================================
+   MOOD CHECK-IN
+   Hiển thị mỗi lần mở app
+   Không lưu mood, không ảnh hưởng chấm công / tính lương
+   ========================================================= */
+
+const happyMessages = [
+    "Hôm nay mood quá đẹp! Giữ năng lượng này và chiến hết ca nhé! 🔥",
+    "Vui là đúng rồi! Hôm nay chắc chắn sẽ là một ngày thật xịn. ✨",
+    "Năng lượng này mà vào ca thì KPI cũng phải né! 🚀",
+    "Mood hôm nay: 100% năng lượng, 0% drama. Quẩy thôi! 😎",
+    "Một ngày vui bắt đầu bằng một nụ cười. Chúc bạn hôm nay thật tuyệt! 🌟",
+    "Hôm nay bạn sáng hơn cả màn hình LED của Galaxy! 💫",
+    "Giữ nụ cười này nhé, hôm nay chắc chắn có nhiều điều hay ho đang chờ bạn. 🧡",
+    "Vibe hôm nay quá ổn! Cứ thế mà chiến thôi! 🔥",
+    "Năng lượng tích cực đã được sạc đầy. Ready for work! ⚡",
+    "Hôm nay bạn đúng kiểu on fire! 🔥",
+    "Mood tốt thế này thì hôm nay chắc chắn sẽ trôi thật mượt! ✨",
+    "Một ngày mới, một mood mới, một phiên bản xịn hơn của bạn. 🚀",
+    "Hôm nay cứ tận hưởng từng khoảnh khắc nhé. 🌈",
+    "Nụ cười đã bật, năng lượng đã đầy. Let's go! 💥",
+    "Mood này xứng đáng được phát huy hết công suất! 🔋",
+    "Chúc bạn một ngày vừa vui vừa hiệu quả. Làm hết mình nhưng vẫn phải vui nha! 😎",
+    "Hôm nay bạn có năng lượng của nhân vật chính rồi đó! 🎬✨",
+    "Vui thế này thì popcorn cũng phải giòn hơn! 🍿😂",
+    "Một chiếc mood quá đẹp để bắt đầu ngày hôm nay. Keep going! 🧡",
+    "Hôm nay không cần hoàn hảo, chỉ cần vui là đủ! 🌟",
+    "Positive mode: ON. Let's go! 🚀",
+    "Hôm nay hãy biến một ngày bình thường thành một ngày đáng nhớ nhé! ✨",
+    "Năng lượng này mà lan ra cả team thì khỏi cần cà phê! ☕😂",
+    "Bạn đang có một mood rất đáng yêu. Giữ nguyên nhé! 🥹🧡",
+    "Chúc mừng! Bạn đã unlock mood: Hôm nay tôi ổn áp. 🔓✨",
+    "Hôm nay cứ tự tin, vui vẻ và làm điều mình giỏi nhất nhé! 💪",
+    "Một ngày vui là một ngày đáng để tận hưởng. 🌟",
+    "Mood hôm nay rất có tiềm năng thành một ngày huyền thoại! 🔥",
+    "Bạn vui, tôi vui, Galaxy cũng vui! 🧡✨",
+    "Hôm nay cứ bước vào ca với nụ cười thật to nhé! 😁",
+    "Năng lượng tích cực đã được kích hoạt. Không được tắt! ⚡",
+    "Chúc hôm nay gặp toàn khách dễ thương và đồng nghiệp đáng yêu! 😂🧡",
+    "Mood này mà chấm điểm thì phải 10/10! ⭐",
+    "Hôm nay bạn chính thức được cấp phép để vui hết cỡ! 🎉",
+    "Keep that energy! Một ngày tuyệt vời đang loading... ⏳✨",
+    "Hôm nay cứ chill một chút, vui một chút và làm việc thật chất nhé! 😎",
+    "Bạn đang có đúng thứ năng lượng mà một ngày làm việc cần có. 🔥",
+    "Một chiếc mood sáng hơn cả spotlight sân khấu! 🎥✨",
+    "Chúc bạn hôm nay làm việc thuận lợi, tinh thần thoải mái và cười thật nhiều! 🧡",
+    "Hôm nay cứ tự tin bước vào ca. Bạn đã sẵn sàng rồi! 🚀",
+    "Mood tốt là lợi thế. Năng lượng tốt là vũ khí. Triển thôi! ⚡",
+    "Chúc mừng bạn đã bắt đầu ngày hôm nay bằng một cảm xúc thật đẹp! 🌈",
+    "Hôm nay hãy để những điều tích cực dẫn đường nhé! ✨",
+    "Good mood detected! Hệ thống khuyến nghị: tiếp tục vui. 🟢✨",
+    "Chúc hôm nay két luôn đủ tiền, kho luôn đủ hàng, ca làm luôn đủ vui! 💰📦🧡",
+    "Chúc khách vui, team vui, quản lý vui, và bạn vui từ đầu đến cuối ca! 😎🧡",
+    "Vía hôm nay: két không lệch, kho không thiếu, khách không complain! ✨💰📦",
+    "Chúc tiền vào két đều đều, hàng trong kho đầy đầy, công việc nhẹ nhàng! 💰📦🔥",
+    "Két đủ tiền, kho đủ hàng, tâm trạng cũng phải đủ đầy! 😎💰📦",
+    "Chúc một ngày đẹp: khách dễ thương, ca chạy mượt và cuối ca thật vui! 🎟️✨"
+];
+
+const sadMessages = [
+    "Không sao đâu. Hôm nay mệt một chút cũng được, bạn không cần phải luôn mạnh mẽ. 🫂",
+    "Nếu hôm nay không ổn, cứ cho bản thân một chút thời gian nhé. Ngày mai sẽ khác. 🌱",
+    "Buồn cũng là một cảm xúc bình thường. Đừng trách bản thân vì điều đó nhé. 🧡",
+    "Hôm nay có thể chưa phải ngày tốt nhất, nhưng nó rồi sẽ qua. 🫂",
+    "Bạn không cần phải vui ngay đâu. Cứ từ từ, tôi vẫn ở đây. 🤍",
+    "Một ngày tệ không có nghĩa là cuộc sống tệ. Hôm nay chỉ là một ngày thôi. 🌙",
+    "Nếu mệt thì đi chậm lại một chút nhé. Không cần phải chạy mãi. 🫶",
+    "Bạn đã cố gắng rất nhiều rồi. Hôm nay hãy nhẹ nhàng với chính mình hơn nhé. 🤍",
+    "Không sao nếu hôm nay bạn không có nhiều năng lượng. Ai cũng có những ngày như vậy. 🌧️",
+    "Hít một hơi thật sâu. Mọi chuyện chưa cần phải giải quyết hết ngay hôm nay đâu. 🫂",
+    "Bạn không thất bại chỉ vì hôm nay bạn cảm thấy buồn. Nhớ điều đó nhé. 🧡",
+    "Có những ngày chỉ cần hoàn thành một ngày thôi cũng đã là một thành công rồi. 🌱",
+    "Đừng ép mình phải ổn khi trong lòng đang mệt. Cho bản thân được nghỉ một chút nhé. 🤍",
+    "Hôm nay khó khăn một chút cũng không sao. Bạn vẫn đang tiến về phía trước. 🫶",
+    "Mọi cảm xúc đều có thời gian của nó. Cứ để nỗi buồn đi qua thật tự nhiên nhé. 🌙",
+    "Bạn không cần phải giải quyết cả thế giới trong một ngày. Từng chút một thôi. 🧡",
+    "Nếu hôm nay lòng hơi nặng, hãy nhớ rằng bạn không phải mang nó một mình. 🫂",
+    "Ngày hôm nay có thể xám, nhưng không có nghĩa ngày mai cũng vậy. 🌤️",
+    "Cho bản thân một chút dịu dàng nhé. Bạn xứng đáng với điều đó. 🤍",
+    "Mệt thì nghỉ một nhịp. Không phải lúc nào cố thêm cũng là câu trả lời. 🌿",
+    "Có thể hôm nay chưa ổn, nhưng bạn vẫn còn rất nhiều ngày đẹp phía trước. ✨",
+    "Đừng vội đánh giá bản thân trong một ngày bạn đang mệt. 🫶",
+    "Bạn đã đi được rất xa rồi. Đừng vì một ngày buồn mà quên mất điều đó. 🧡",
+    "Hôm nay cứ làm những gì cần làm, phần còn lại để ngày mai tính nhé. 🌙",
+    "Một chút buồn không thể định nghĩa con người bạn. Bạn vẫn là bạn. 🤍",
+    "Nếu hôm nay chỉ muốn im lặng một chút, cũng hoàn toàn ổn. 🫂",
+    "Mọi chuyện rồi sẽ có cách để tốt hơn. Chậm một chút cũng được. 🌱",
+    "Bạn không cần phải chứng minh mình ổn với bất kỳ ai. 🧡",
+    "Hôm nay hãy ưu tiên bản thân một chút. Bạn cũng cần được chăm sóc. 🤍",
+    "Đừng quên uống nước, ăn gì đó và thở thật sâu nhé. 🌿",
+    "Bạn có quyền có một ngày không hoàn hảo. Không ai lúc nào cũng ổn cả. 🫶",
+    "Nếu hôm nay là một bộ phim buồn, thì nó vẫn chưa phải cảnh cuối. 🎬🤍",
+    "Mọi cơn mưa đều có lúc tạnh. Hôm nay cứ trú mưa một chút nhé. 🌧️➡️🌤️",
+    "Bạn không cần phải mạnh mẽ 24/7. Cho phép mình yếu lòng một chút cũng được. 🫂",
+    "Hôm nay chưa tốt không có nghĩa bạn không tốt. Nhớ kỹ nhé. 🧡",
+    "Cứ từ từ thôi. Bạn không bị trễ khỏi cuộc đời của mình đâu. 🌱",
+    "Có những ngày chỉ cần không bỏ cuộc đã là rất đáng tự hào rồi. 🤍",
+    "Nếu lòng đang rối, đừng cố gỡ tất cả cùng lúc. Từng nút một thôi nhé. 🫶",
+    "Bạn vẫn đang làm tốt hơn bạn nghĩ đấy. Chỉ là hôm nay bạn hơi mệt thôi. 🧡",
+    "Hãy cho mình một khoảng thở. Bạn không cần phải chạy liên tục. 🌿",
+    "Ngày buồn rồi cũng sẽ thành một ngày đã từng buồn. Bạn sẽ bước qua được. 🌤️",
+    "Không sao nếu hôm nay bạn cần thêm một chút thời gian để lấy lại năng lượng. 🔋🤍",
+    "Bạn đã cố hết sức trong khả năng của mình rồi. Như vậy đã đáng quý lắm rồi. 🫂",
+    "Đừng để một khoảnh khắc tệ khiến bạn quên mất những điều tốt đẹp mình đã làm. ✨",
+    "Nếu hôm nay không thể vui, hãy thử bình yên trước. Vậy là đủ rồi. 🌙",
+    "Tôi là bò sáng phải rống, bạn là người sống phải ráng. 🐄🔥",
+    "Tạm pause một chút cũng được. Cuộc sống không phải lúc nào cũng cần chạy ở chế độ turbo. ⏸️🤍",
+    "Ngày hôm nay có thể nặng nề, nhưng bạn không cần mang nó mãi. 🫂",
+    "Take it easy nhé. Ngày mai mình lại thử thêm một lần nữa. 🌱✨"
+];
+
+
+/* Hiện màn hình mood */
+function showMoodOverlay() {
+    const overlay = document.getElementById('moodOverlay');
+
+    if (!overlay || !appSettings.userName) return;
+
+    document.getElementById('moodGreeting').innerText =
+        `Xin chào ${appSettings.userName}! 👋`;
+
+    document.getElementById('moodChoices').classList.remove('hidden');
+    document.getElementById('moodResponse').classList.add('hidden');
+
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+}
+
+
+/* Người dùng chọn VUI / BUỒN */
+function selectMood(mood) {
+
+    const messages = mood === 'happy'
+        ? happyMessages
+        : sadMessages;
+
+    const randomIndex = Math.floor(Math.random() * messages.length);
+    const randomMessage = messages[randomIndex];
+
+    document.getElementById('moodMessage').innerText = randomMessage;
+
+    document.getElementById('moodResponseEmoji').innerText =
+        mood === 'happy' ? '✨' : '🫂';
+
+    document.getElementById('moodChoices').classList.add('hidden');
+    document.getElementById('moodResponse').classList.remove('hidden');
+}
+
+
+/* Đi vào app sau khi chọn mood */
+function enterAppFromMood() {
+
+    const overlay = document.getElementById('moodOverlay');
+
+    if (overlay) {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+    }
+
+    renderActiveTab();
+}
+
+
+/* =========================================================
+   OVERRIDE ONBOARDING
+   Không lưu mood.
+   Chỉ lưu tên như hệ thống cũ.
+   ========================================================= */
+
+function checkOnboarding() {
+
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+
+    if (!appSettings.userName || appSettings.userName.trim() === '') {
+
+        welcomeOverlay.classList.remove('hidden');
+
+    } else {
+
+        welcomeOverlay.classList.add('hidden');
+
+        updateGreetingHeader();
+
+        // Mỗi lần mở app đều hiện mood
+        showMoodOverlay();
+    }
+}
+
+
+/* Khi nhập tên lần đầu */
+function submitWelcomeName() {
+
+    const nameInput =
+        document.getElementById('welcomeNameInput').value.trim();
+
+    const errorEl =
+        document.getElementById('welcomeError');
+
+    if (!nameInput) {
+
+        errorEl.classList.remove('hidden');
+
+        return;
+    }
+
+    errorEl.classList.add('hidden');
+
+    appSettings.userName = nameInput;
+
+    // Chỉ lưu tên như hệ thống cũ
+    saveDataToStorage();
+
+    updateGreetingHeader();
+
+    document.getElementById('welcomeOverlay').classList.add('hidden');
+
+    // Sau khi nhập tên lần đầu -> hiện Mood Check-in
+    showMoodOverlay();
+}
     </script>
 </body>
 </html>
