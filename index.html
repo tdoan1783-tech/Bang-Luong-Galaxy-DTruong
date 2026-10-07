@@ -1816,34 +1816,62 @@ function getPayrollPeriodKey(startDate, endDate) {
     return `${formatDateISO(startDate)}_${formatDateISO(endDate)}`;
 }
 
-function getPayrollOtherIncome(startDate, endDate) {
+// ==========================================
+// LƯƠNG KHÁC - NHIỀU KHOẢN THEO TỪNG KỲ
+// ==========================================
+
+function getPayrollOtherIncomeList(startDate, endDate) {
+
     const key = getPayrollPeriodKey(startDate, endDate);
 
     try {
+
         const data = JSON.parse(
             localStorage.getItem(OTHER_INCOME_STORAGE_KEY) || '{}'
         );
 
-        return Number(data[key] || 0);
+        const list = data[key];
+
+        // Nếu dữ liệu cũ là một con số
+        // thì chuyển thành một khoản Extra cũ
+        if (typeof list === 'number') {
+
+            return list > 0
+                ? [{
+                    id: Date.now(),
+                    name: 'Lương khác',
+                    amount: list
+                }]
+                : [];
+        }
+
+        return Array.isArray(list) ? list : [];
+
     } catch (error) {
-        return 0;
+
+        return [];
     }
 }
 
-function savePayrollOtherIncome(startDate, endDate, amount) {
+
+function savePayrollOtherIncomeList(startDate, endDate, list) {
+
     const key = getPayrollPeriodKey(startDate, endDate);
 
     let data = {};
 
     try {
+
         data = JSON.parse(
             localStorage.getItem(OTHER_INCOME_STORAGE_KEY) || '{}'
         );
+
     } catch (error) {
+
         data = {};
     }
 
-    data[key] = Number(amount) || 0;
+    data[key] = list;
 
     localStorage.setItem(
         OTHER_INCOME_STORAGE_KEY,
@@ -1851,22 +1879,182 @@ function savePayrollOtherIncome(startDate, endDate, amount) {
     );
 }
 
-function updatePayrollOtherIncome(value) {
+
+function getPayrollOtherIncomeTotal(startDate, endDate) {
+
+    const list =
+        getPayrollOtherIncomeList(startDate, endDate);
+
+    return list.reduce(
+        (total, item) =>
+            total + (Number(item.amount) || 0),
+        0
+    );
+}
+
+
+function addPayrollOtherIncome() {
+
+    const nameInput =
+        document.getElementById('payrollOtherIncomeName');
+
+    const amountInput =
+        document.getElementById('payrollOtherIncomeAmount');
+
+    const name =
+        nameInput.value.trim();
+
+    const amount =
+        Math.max(0, Number(amountInput.value) || 0);
+
+    if (!name) {
+        alert('Vui lòng nhập tên khoản thu nhập.');
+        nameInput.focus();
+        return;
+    }
+
+    if (amount <= 0) {
+        alert('Vui lòng nhập số tiền.');
+        amountInput.focus();
+        return;
+    }
+
     const { startDate, endDate } =
         getPayrollPeriodRange(selectedPayrollDate);
 
-    const amount = Math.max(0, Number(value) || 0);
+    const list =
+        getPayrollOtherIncomeList(startDate, endDate);
 
-    // Lưu riêng theo kỳ lương
-    savePayrollOtherIncome(startDate, endDate, amount);
+    list.push({
+        id: Date.now(),
+        name: name,
+        amount: amount
+    });
 
-    // Hiển thị khoản Lương khác
-    const otherDisplay =
-        document.getElementById('payrollOtherIncomeDisplay');
+    savePayrollOtherIncomeList(
+        startDate,
+        endDate,
+        list
+    );
 
-    if (otherDisplay) {
-        otherDisplay.innerText = formatVND(amount);
+    nameInput.value = '';
+    amountInput.value = '';
+
+    renderPayrollOtherIncome();
+}
+
+
+function deletePayrollOtherIncome(id) {
+
+    const { startDate, endDate } =
+        getPayrollPeriodRange(selectedPayrollDate);
+
+    let list =
+        getPayrollOtherIncomeList(startDate, endDate);
+
+    list = list.filter(
+        item => item.id !== id
+    );
+
+    savePayrollOtherIncomeList(
+        startDate,
+        endDate,
+        list
+    );
+
+    renderPayrollOtherIncome();
+}
+
+
+function renderPayrollOtherIncome() {
+
+    const { startDate, endDate } =
+        getPayrollPeriodRange(selectedPayrollDate);
+
+    const list =
+        getPayrollOtherIncomeList(startDate, endDate);
+
+    const container =
+        document.getElementById(
+            'payrollOtherIncomeList'
+        );
+
+    const display =
+        document.getElementById(
+            'payrollOtherIncomeDisplay'
+        );
+
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    let total = 0;
+
+    list.forEach(item => {
+
+        total += Number(item.amount) || 0;
+
+        container.innerHTML += `
+            <div class="flex items-center justify-between gap-3 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2">
+
+                <div class="min-w-0 flex-1">
+                    <div class="text-sm font-bold text-white truncate">
+                        ${escapeHtml(item.name)}
+                    </div>
+
+                    <div class="text-xs font-mono text-orange-300 mt-0.5">
+                        ${formatVND(item.amount)}
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    onclick="deletePayrollOtherIncome(${item.id})"
+                    class="w-8 h-8 shrink-0 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 hover:text-rose-300 font-black text-lg"
+                    title="Xóa khoản này"
+                >
+                    ×
+                </button>
+
+            </div>
+        `;
+    });
+
+    if (display) {
+        display.innerText = formatVND(total);
     }
+
+    // Tính lại tổng thu nhập
+    const currentGalaxyPay =
+        calculatePayrollGalaxyTotal(
+            startDate,
+            endDate
+        );
+
+    const finalTotal =
+        currentGalaxyPay + total;
+
+    const hero =
+        document.getElementById(
+            'payrollTotalPayHero'
+        );
+
+    if (hero) {
+        hero.innerText =
+            formatVND(finalTotal);
+    }
+}
+
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement('div');
+
+    div.innerText = text;
+
+    return div.innerHTML;
+}
 
     // Lấy lương Galaxy hiện tại
     const currentGalaxyPay =
