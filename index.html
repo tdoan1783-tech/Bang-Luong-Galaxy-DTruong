@@ -2056,21 +2056,6 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-    // Lấy lương Galaxy hiện tại
-    const currentGalaxyPay =
-        calculatePayrollGalaxyTotal(startDate, endDate);
-
-    // Tổng thu nhập = Lương Galaxy + Lương khác
-    const finalTotal = currentGalaxyPay + amount;
-
-    const hero =
-        document.getElementById('payrollTotalPayHero');
-
-    if (hero) {
-        hero.innerText = formatVND(finalTotal);
-    }
-}
-
 function calculatePayrollGalaxyTotal(startDate, endDate) {
     let totalPay = 0;
 
