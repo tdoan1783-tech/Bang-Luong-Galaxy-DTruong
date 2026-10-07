@@ -3271,9 +3271,7 @@ function submitWelcomeName() {
         document.getElementById('welcomeError');
 
     if (!nameInput) {
-
         errorEl.classList.remove('hidden');
-
         return;
     }
 
@@ -3281,15 +3279,27 @@ function submitWelcomeName() {
 
     appSettings.userName = nameInput;
 
-    // Chỉ lưu tên như hệ thống cũ
     saveDataToStorage();
-
     updateGreetingHeader();
 
     document.getElementById('welcomeOverlay').classList.add('hidden');
 
-    // Sau khi nhập tên lần đầu -> hiện Mood Check-in
-    showMoodOverlay();
+    // LẦN ĐẦU: tự động mở Hướng dẫn sử dụng
+    const hasSeenHowToUse =
+        localStorage.getItem(HOWTO_SEEN_KEY);
+
+    if (hasSeenHowToUse !== 'true') {
+
+        setTimeout(() => {
+            openHowToUse();
+        }, 250);
+
+    } else {
+
+        // Những lần sau: bỏ qua hướng dẫn
+        showMoodOverlay();
+
+    }
 }
     </script>
 </body>
