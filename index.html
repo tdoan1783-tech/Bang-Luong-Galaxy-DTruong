@@ -3289,14 +3289,16 @@ function submitWelcomeName() {
     saveDataToStorage();
     updateGreetingHeader();
 
+    // Đóng màn hình nhập tên
     document.getElementById('welcomeOverlay').classList.add('hidden');
 
-    // LẦN ĐẦU: tự động mở Hướng dẫn sử dụng
+    // Kiểm tra đã xem hướng dẫn chưa
     const hasSeenHowToUse =
         localStorage.getItem(HOWTO_SEEN_KEY);
 
     if (hasSeenHowToUse !== 'true') {
 
+        // Lần đầu: mở Hướng dẫn sử dụng
         setTimeout(() => {
             openHowToUse();
         }, 250);
