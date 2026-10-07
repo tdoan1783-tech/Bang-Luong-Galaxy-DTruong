@@ -113,6 +113,37 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #ffb800;
         }
+        /* ==========================================
+   HƯỚNG DẪN SỬ DỤNG
+========================================== */
+
+#howToUseModal {
+    touch-action: pan-y;
+}
+
+.howto-track {
+    display: flex;
+    transition: transform 0.35s ease;
+    will-change: transform;
+}
+
+.howto-slide {
+    min-width: 100%;
+    flex-shrink: 0;
+}
+
+.howto-icon {
+    animation: howtoFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes howtoFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white pb-12">
