@@ -1990,38 +1990,32 @@ function submitWelcomeName() {
     const errorEl =
         document.getElementById('welcomeError');
 
-
-    // Không nhập tên
     if (!nameInput) {
-
         errorEl.classList.remove('hidden');
-
         return;
     }
 
-
     errorEl.classList.add('hidden');
 
-
-    // Lưu tên
     appSettings.userName = nameInput;
 
     saveDataToStorage();
-
     updateGreetingHeader();
 
-
     // Đóng màn hình nhập tên
-    document
-        .getElementById('welcomeOverlay')
-        .classList.add('hidden');
+    document.getElementById('welcomeOverlay').classList.add('hidden');
 
+    // Sau khi nhập tên lần đầu,
+    // mở Hướng dẫn sử dụng nếu chưa từng xem
+    const hasSeenHowToUse =
+        localStorage.getItem(HOWTO_SEEN_KEY);
 
-    // Sau khi nhập tên lần đầu
-    // → chuyển sang MOOD CHECK-IN
-    showMoodOverlay();
+    if (hasSeenHowToUse !== 'true') {
+        setTimeout(() => {
+            openHowToUse();
+        }, 250);
+    }
 }
-
         function updateGreetingHeader() {
             document.getElementById('headerGreetingText').innerText = `Xin Chào ${appSettings.userName} 👋`;
             document.getElementById('settingsUserNameInput').value = appSettings.userName || '';
