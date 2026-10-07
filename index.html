@@ -2983,6 +2983,8 @@ function renderMonthView() {
             document.getElementById('payrollOtHours').innerText = totalOtHours.toFixed(1);
             document.getElementById('payrollRegPay').innerText = formatVND(totalRegPay);
             document.getElementById('payrollOtPay').innerText = formatVND(totalOtPay);
+            // Hiển thị lại các khoản Lương khác đã lưu
+renderPayrollOtherIncome();
         }
 
         function navigatePayrollPeriod(offset) {
