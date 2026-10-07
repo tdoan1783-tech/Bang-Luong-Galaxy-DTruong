@@ -2026,7 +2026,156 @@ function submitWelcomeName() {
             document.getElementById('headerGreetingText').innerText = `Xin Chào ${appSettings.userName} 👋`;
             document.getElementById('settingsUserNameInput').value = appSettings.userName || '';
         }
+// ==========================================
+// HƯỚNG DẪN SỬ DỤNG
+// ==========================================
 
+const HOWTO_SEEN_KEY = 'galaxy_cinema_howto_seen_v1';
+
+let howToCurrentSlide = 0;
+const HOWTO_TOTAL_SLIDES = 7;
+
+function openHowToUse() {
+    const modal = document.getElementById('howToUseModal');
+
+    if (!modal) return;
+
+    howToCurrentSlide = 0;
+    modal.classList.remove('hidden');
+
+    renderHowToSlide();
+}
+
+function closeHowToUse() {
+    const modal = document.getElementById('howToUseModal');
+
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
+
+function skipHowToUse() {
+    localStorage.setItem(HOWTO_SEEN_KEY, 'true');
+    closeHowToUse();
+}
+
+function finishHowToUse() {
+    localStorage.setItem(HOWTO_SEEN_KEY, 'true');
+    closeHowToUse();
+}
+
+function howToNext() {
+    if (howToCurrentSlide < HOWTO_TOTAL_SLIDES - 1) {
+        howToCurrentSlide++;
+        renderHowToSlide();
+    } else {
+        finishHowToUse();
+    }
+}
+
+function howToPrev() {
+    if (howToCurrentSlide > 0) {
+        howToCurrentSlide--;
+        renderHowToSlide();
+    }
+}
+
+function renderHowToSlide() {
+
+    const track = document.getElementById('howToTrack');
+    const dots = document.getElementById('howToDots');
+    const prevBtn = document.getElementById('howToPrevBtn');
+    const nextBtn = document.getElementById('howToNextBtn');
+    const skipBtn = document.getElementById('howToSkipBtn');
+
+    if (!track || !dots || !nextBtn) return;
+
+    // Di chuyển slide
+    track.style.transform =
+        `translateX(-${howToCurrentSlide * 100}%)`;
+
+    // Dots
+    dots.innerHTML = '';
+
+    for (let i = 0; i < HOWTO_TOTAL_SLIDES; i++) {
+
+        const dot = document.createElement('span');
+
+        dot.className =
+            `w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                i === howToCurrentSlide
+                    ? 'w-5 bg-orange-400'
+                    : 'bg-slate-700'
+            }`;
+
+        dots.appendChild(dot);
+    }
+
+    // Nút Previous
+    if (howToCurrentSlide === 0) {
+        prevBtn.classList.add('hidden');
+    } else {
+        prevBtn.classList.remove('hidden');
+    }
+
+    // Nút cuối
+    if (howToCurrentSlide === HOWTO_TOTAL_SLIDES - 1) {
+
+        nextBtn.innerHTML =
+            `BẮT ĐẦU SỬ DỤNG <i class="fa-solid fa-film ml-1"></i>`;
+
+        skipBtn.classList.add('hidden');
+
+    } else {
+
+        nextBtn.innerHTML =
+            `TIẾP THEO <i class="fa-solid fa-arrow-right ml-1"></i>`;
+
+        skipBtn.classList.remove('hidden');
+    }
+}
+
+
+// ==========================================
+// VUỐT TRÊN IPHONE
+// ==========================================
+
+let howToTouchStartX = 0;
+let howToTouchEndX = 0;
+
+document.addEventListener('touchstart', function(e) {
+
+    const modal = document.getElementById('howToUseModal');
+
+    if (!modal || modal.classList.contains('hidden')) return;
+
+    howToTouchStartX = e.changedTouches[0].screenX;
+
+}, { passive: true });
+
+
+document.addEventListener('touchend', function(e) {
+
+    const modal = document.getElementById('howToUseModal');
+
+    if (!modal || modal.classList.contains('hidden')) return;
+
+    howToTouchEndX = e.changedTouches[0].screenX;
+
+    const distance =
+        howToTouchStartX - howToTouchEndX;
+
+    // Vuốt sang trái
+    if (distance > 50) {
+        howToNext();
+    }
+
+    // Vuốt sang phải
+    if (distance < -50) {
+        howToPrev();
+    }
+
+}, { passive: true });
         function switchTab(tabName) {
             activeTab = tabName;
             const tabs = ['TODAY', 'WEEK', 'MONTH', 'PAYROLL'];
