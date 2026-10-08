@@ -2977,21 +2977,14 @@ function renderMonthView() {
                 temp.setDate(temp.getDate() + 1);
             }
 
-            // ===== LƯƠNG KHÁC =====
-const extraIncome = getPayrollOtherIncome(startDate, endDate);
-const finalTotal = totalPay + extraIncome;
-
-// Tổng thu nhập = Lương Galaxy + Lương khác
-document.getElementById('payrollTotalPayHero').innerText = formatVND(finalTotal);
-
+            document.getElementById('payrollTotalPayHero').innerText = formatVND(totalPay);
 document.getElementById('payrollWorkDays').innerText = `${workDays} ngày`;
 document.getElementById('payrollTotalHours').innerText = `${totalHours.toFixed(1)}h`;
 document.getElementById('payrollOtHours').innerText = totalOtHours.toFixed(1);
 document.getElementById('payrollRegPay').innerText = formatVND(totalRegPay);
 document.getElementById('payrollOtPay').innerText = formatVND(totalOtPay);
-
 // Hiển thị lại các khoản Lương khác đã lưu
-renderPayrollOtherIncomeItems();
+renderPayrollOtherIncome();
 
         function navigatePayrollPeriod(offset) {
             const { startDate, endDate } = getPayrollPeriodRange(selectedPayrollDate);
