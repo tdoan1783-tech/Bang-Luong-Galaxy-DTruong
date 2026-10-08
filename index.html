@@ -1825,47 +1825,7 @@ function renderSalary4MonthChart() {
             const d = String(dateObj.getDate()).padStart(2, '0');
             return `${y}-${m}-${d}`;
         }
-// 🔥 TÍNH CHUỖI ĐI LÀM LIÊN TIẾP
-function calculateWorkStreak() {
-    let streak = 0;
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const checkDate = new Date(today);
-
-    while (true) {
-        const dateStr = formatDateISO(checkDate);
-        const record = attendanceDB[dateStr];
-
-        // Không có dữ liệu hoặc là OFF → chuỗi dừng
-        if (!record || record.shift === 'OFF') {
-            break;
-        }
-
-        // Có ca làm → tăng chuỗi
-        streak++;
-
-        // Lùi lại 1 ngày
-        checkDate.setDate(checkDate.getDate() - 1);
-    }
-
-    return streak;
-}
-
-
-// 🔥 CẬP NHẬT Ô STREAK
-function updateWorkStreakBadge() {
-    const numberEl = document.getElementById('workStreakCount');
-    const fireEl = document.getElementById('workStreakFire');
-
-    if (!numberEl || !fireEl) return;
-
-    const streak = calculateWorkStreak();
-
-    numberEl.innerText = streak;
-    fireEl.innerText = streak > 0 ? '🔥' : '⚪';
-}
         function formatVND(amount) {
             return new Intl.NumberFormat('vi-VN').format(amount) + ' ₫';
         }
