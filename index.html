@@ -2814,7 +2814,7 @@ showDetailedForm(true);
 renderTodayView();
 
 updateWorkStreakBadge();
-checkWorkStreakMilestone();
+showWorkStreakCelebration(calculateWorkStreak());
 
             const btn = document.querySelector('button[onclick="saveTodayAttendance()"]');
             const origHTML = btn.innerHTML;
