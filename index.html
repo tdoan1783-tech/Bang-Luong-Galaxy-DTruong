@@ -306,7 +306,22 @@
                         <path d="M12 2l2.4 6.6L21 11l-5.4 4.8L17 22l-5-3.8L7 22l1.4-6.2L3 11l6.6-2.4L12 2z"/>
                     </svg>
                 </div>
+<!-- 🔥 WORK STREAK -->
+<div
+    id="workStreakBadge"
+    class="w-14 h-14 rounded-2xl bg-slate-950/90 border border-orange-400/40 shadow-lg flex flex-col items-center justify-center shrink-0">
 
+    <div id="workStreakFire" class="text-xl leading-none">
+        🔥
+    </div>
+
+    <div
+        id="workStreakNumber"
+        class="text-sm font-black text-white leading-none mt-0.5">
+        0
+    </div>
+
+</div>
                 <div>
                     <!-- Galaxy Cinema Main Text -->
                     <div class="flex items-center gap-1.5">
@@ -322,7 +337,21 @@
                     </div>
                 </div>
             </div>
+<!-- WORK STREAK -->
+<div id="workStreakBadge"
+     class="w-14 h-14 shrink-0 rounded-2xl bg-slate-950/90 border border-orange-400/40 shadow-lg flex flex-col items-center justify-center relative overflow-hidden">
 
+    <div id="workStreakFire"
+         class="text-2xl leading-none">
+        🔥
+    </div>
+
+    <div id="workStreakCount"
+         class="text-[9px] font-black text-white mt-0.5">
+        0 NGÀY
+    </div>
+
+</div>
             <!-- Greeting & Settings Button -->
 <div class="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 border-orange-400/50 pt-2 sm:pt-0">
     <div class="text-left sm:text-right">
@@ -1810,7 +1839,47 @@ function renderSalary4MonthChart() {
             const d = String(dateObj.getDate()).padStart(2, '0');
             return `${y}-${m}-${d}`;
         }
+// 🔥 TÍNH CHUỖI ĐI LÀM LIÊN TIẾP
+function calculateWorkStreak() {
+    let streak = 0;
 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const checkDate = new Date(today);
+
+    while (true) {
+        const dateStr = formatDateISO(checkDate);
+        const record = attendanceDB[dateStr];
+
+        // Không có dữ liệu hoặc là OFF → chuỗi dừng
+        if (!record || record.shift === 'OFF') {
+            break;
+        }
+
+        // Có ca làm → tăng chuỗi
+        streak++;
+
+        // Lùi lại 1 ngày
+        checkDate.setDate(checkDate.getDate() - 1);
+    }
+
+    return streak;
+}
+
+
+// 🔥 CẬP NHẬT Ô STREAK
+function updateWorkStreakBadge() {
+    const numberEl = document.getElementById('workStreakNumber');
+    const fireEl = document.getElementById('workStreakFire');
+
+    if (!numberEl || !fireEl) return;
+
+    const streak = calculateWorkStreak();
+
+    numberEl.innerText = streak;
+    fireEl.innerText = streak > 0 ? '🔥' : '⚪';
+}
         function formatVND(amount) {
             return new Intl.NumberFormat('vi-VN').format(amount) + ' ₫';
         }
@@ -2466,7 +2535,224 @@ document.addEventListener('touchend', function(e) {
                 form.classList.add('opacity-40', 'pointer-events-none');
             }
         }
+// ==========================================
+// 🔥 WORK STREAK - CHUỖI NGÀY ĐI LÀM
+// ==========================================
 
+function calculateWorkStreak() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let streak = 0;
+    const checkDate = new Date(today);
+
+    while (true) {
+        const dateStr = formatDateISO(checkDate);
+        const record = attendanceDB[dateStr];
+
+        // Không có dữ liệu hoặc OFF => đứt chuỗi
+        if (!record || record.shift === 'OFF') {
+            break;
+        }
+
+        streak++;
+
+        checkDate.setDate(checkDate.getDate() - 1);
+    }
+
+    return streak;
+}
+
+function updateWorkStreakBadge() {
+    const badge = document.getElementById('workStreakBadge');
+    const fire = document.getElementById('workStreakFire');
+    const count = document.getElementById('workStreakCount');
+
+    if (!badge || !fire || !count) return;
+
+    const streak = calculateWorkStreak();
+
+    count.innerText = `${streak} NGÀY`;
+
+    // Màu theo mốc chuỗi
+    if (streak >= 10) {
+        fire.innerText = '🔥';
+        fire.style.filter = 'hue-rotate(90deg) saturate(1.8)';
+        badge.style.borderColor = '#22c55e';
+    }
+    else if (streak >= 7) {
+        fire.innerText = '🔥';
+        fire.style.filter = 'hue-rotate(270deg) saturate(1.8)';
+        badge.style.borderColor = '#a855f7';
+    }
+    else if (streak >= 5) {
+        fire.innerText = '🔥';
+        fire.style.filter = 'hue-rotate(35deg) saturate(1.8)';
+        badge.style.borderColor = '#f59e0b';
+    }
+    else if (streak >= 3) {
+        fire.innerText = '🔥';
+        fire.style.filter = 'saturate(1.5)';
+        badge.style.borderColor = '#ff5e00';
+    }
+    else {
+        fire.innerText = '🔥';
+        fire.style.filter = 'none';
+        badge.style.borderColor = 'rgba(251,146,60,.4)';
+    }
+}// ==========================================
+// 🎉 WORK STREAK MILESTONE CELEBRATION
+// ==========================================
+
+function showWorkStreakCelebration(streak) {
+    const milestones = [3, 5, 7, 10];
+
+    if (!milestones.includes(streak)) return;
+
+    const messages = {
+        3: 'CHUỖI 3 NGÀY ĐI LÀM!',
+        5: 'CHUỖI 5 NGÀY ĐI LÀM!',
+        7: 'CHUỖI 7 NGÀY ĐI LÀM!',
+        10: 'CHUỖI 10 NGÀY ĐI LÀM!'
+    };
+
+    const colors = {
+        3: '#ff6b00',
+        5: '#f59e0b',
+        7: '#a855f7',
+        10: '#22c55e'
+    };
+
+    const oldCelebration = document.getElementById('workStreakCelebration');
+    if (oldCelebration) oldCelebration.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'workStreakCelebration';
+
+    overlay.innerHTML = `
+        <div class="work-streak-fire">🔥</div>
+
+        <div class="work-streak-number">
+            ${streak}
+        </div>
+
+        <div class="work-streak-title">
+            ${messages[streak]}
+        </div>
+
+        <div class="work-streak-subtitle">
+            Tuyệt vời! Tiếp tục giữ chuỗi nhé 🔥
+        </div>
+    `;
+
+    overlay.style.cssText = `
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(5, 8, 15, 0.94);
+        backdrop-filter: blur(12px);
+        pointer-events: none;
+        animation: streakOverlayIn 0.45s ease-out forwards;
+    `;
+
+    const style = document.createElement('style');
+
+    style.id = 'workStreakCelebrationStyle';
+
+    style.textContent = `
+        @keyframes streakOverlayIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+
+            20% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+
+            45% {
+                transform: scale(1);
+            }
+
+            85% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.15);
+            }
+        }
+
+        #workStreakCelebration .work-streak-fire {
+            font-size: 110px;
+            line-height: 1;
+            filter: drop-shadow(0 0 20px ${colors[streak]});
+            animation: streakFirePop 0.7s ease-out infinite alternate;
+        }
+
+        #workStreakCelebration .work-streak-number {
+            font-size: 110px;
+            line-height: 0.9;
+            font-weight: 1000;
+            color: white;
+            text-shadow:
+                0 0 10px ${colors[streak]},
+                0 0 30px ${colors[streak]},
+                0 0 60px ${colors[streak]};
+            margin-top: -5px;
+        }
+
+        #workStreakCelebration .work-streak-title {
+            margin-top: 22px;
+            padding: 10px 22px;
+            border-radius: 999px;
+            color: white;
+            background: ${colors[streak]};
+            font-size: 20px;
+            font-weight: 1000;
+            text-align: center;
+            box-shadow:
+                0 0 20px ${colors[streak]},
+                0 0 45px ${colors[streak]}66;
+        }
+
+        #workStreakCelebration .work-streak-subtitle {
+            margin-top: 12px;
+            color: rgba(255,255,255,.75);
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        @keyframes streakFirePop {
+            from {
+                transform: scale(0.92);
+            }
+
+            to {
+                transform: scale(1.08);
+            }
+        }
+    `;
+
+    document.head.appendChild(style);
+    document.body.appendChild(overlay);
+
+    setTimeout(() => {
+        overlay.remove();
+
+        const styleEl =
+            document.getElementById('workStreakCelebrationStyle');
+
+        if (styleEl) styleEl.remove();
+    }, 3000);
+}
         function handleQuickWorkChoice(didWork) {
             const dateStr = formatDateISO(selectedDate);
             if (!didWork) {
@@ -2477,12 +2763,14 @@ document.addEventListener('touchend', function(e) {
                 };
                 saveDataToStorage();
                 renderTodayView();
+                updateWorkStreakBadge();
             } else {
                 if (attendanceDB[dateStr] && attendanceDB[dateStr].shift === 'OFF') {
                     delete attendanceDB[dateStr];
                 }
                 renderTodayView();
-                showDetailedForm(true);
+updateWorkStreakBadge();
+showDetailedForm(true);
             }
         }
 
@@ -2565,7 +2853,10 @@ document.addEventListener('touchend', function(e) {
             };
 
             saveDataToStorage();
-            renderTodayView();
+renderTodayView();
+
+updateWorkStreakBadge();
+checkWorkStreakMilestone();
 
             const btn = document.querySelector('button[onclick="saveTodayAttendance()"]');
             const origHTML = btn.innerHTML;
