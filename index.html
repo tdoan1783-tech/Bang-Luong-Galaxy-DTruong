@@ -3523,5 +3523,952 @@ function submitWelcomeName() {
     }
 }
     </script>
+    <!-- =========================================================
+     GALAXY FACE QUIZ - FULL 9 MÀN
+========================================================= -->
+
+<div id="gameScreen"
+     class="hidden fixed inset-0 z-[99999] bg-slate-950 overflow-y-auto">
+
+    <div class="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-orange-950/30">
+
+        <!-- HEADER -->
+        <div class="sticky top-0 z-20 bg-slate-950/95 backdrop-blur-xl
+                    border-b border-orange-500/20">
+
+            <div class="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
+
+                <button
+                    type="button"
+                    onclick="closeGameScreen()"
+                    class="w-10 h-10 rounded-xl bg-slate-800
+                           border border-slate-700 text-white
+                           flex items-center justify-center">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+
+                <div class="text-center">
+                    <div class="text-[9px] font-black text-orange-400
+                                uppercase tracking-[0.25em]">
+                        GALAXY GAME
+                    </div>
+
+                    <div class="text-lg font-black text-white">
+                        FACE QUIZ 🎮
+                    </div>
+                </div>
+
+                <div class="text-center min-w-[55px]">
+                    <div class="text-[9px] text-slate-500 uppercase font-black">
+                        ĐIỂM
+                    </div>
+
+                    <div id="gameScore"
+                         class="text-lg font-black text-amber-400 font-mono">
+                        0
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- GAME BODY -->
+        <div class="max-w-lg mx-auto px-4 py-6">
+
+            <!-- ================= START ================= -->
+            <div id="gameStartScreen" class="text-center">
+
+                <div class="w-24 h-24 mx-auto rounded-[2rem]
+                            bg-orange-500/10
+                            border border-orange-500/30
+                            flex items-center justify-center
+                            text-5xl mb-5">
+                    🎮
+                </div>
+
+                <div class="text-[10px] font-black text-orange-400
+                            uppercase tracking-[0.25em]">
+                    GALAXY FACE QUIZ
+                </div>
+
+                <h1 class="text-3xl font-black text-white mt-2">
+                    ĐOÁN XEM LÀ AI?
+                </h1>
+
+                <p class="text-sm text-slate-400 mt-3 leading-relaxed">
+                    9 màn • 9 nhân vật • 20 giây mỗi màn
+                    <br>
+                    Ảnh sẽ từ từ rõ hơn theo thời gian.
+                </p>
+
+                <div class="mt-6 bg-slate-900/80
+                            border border-slate-800 rounded-2xl p-4 text-left">
+
+                    <div class="text-xs font-black text-white mb-3">
+                        🎯 LUẬT CHƠI
+                    </div>
+
+                    <div class="space-y-2 text-xs text-slate-400">
+
+                        <div>
+                            🌫️ Ảnh bắt đầu bị làm mờ
+                        </div>
+
+                        <div>
+                            ⏱️ Có 20 giây để đoán
+                        </div>
+
+                        <div>
+                            ✍️ Tự nhập tên nhân vật
+                        </div>
+
+                        <div>
+                            ⚡ Đoán càng nhanh càng nhiều điểm
+                        </div>
+
+                        <div>
+                            👑 Vượt qua 9 màn để trở thành MASTER
+                        </div>
+
+                    </div>
+                </div>
+
+                <button
+                    type="button"
+                    onclick="startFaceQuiz()"
+                    class="w-full mt-6 py-4 rounded-2xl
+                           bg-gradient-to-r from-orange-500 to-amber-400
+                           text-slate-950 font-black
+                           shadow-lg shadow-orange-500/20
+                           active:scale-[0.98] transition">
+
+                    <i class="fa-solid fa-play mr-2"></i>
+                    BẮT ĐẦU CHƠI
+                </button>
+
+            </div>
+
+
+            <!-- ================= QUIZ ================= -->
+            <div id="gameQuizScreen" class="hidden">
+
+                <!-- PROGRESS -->
+                <div class="flex items-center justify-between mb-3">
+
+                    <span id="gameQuestionNumber"
+                          class="text-xs font-black text-slate-400">
+                        MÀN 1 / 9
+                    </span>
+
+                    <div class="flex items-center gap-2">
+
+                        <span class="text-xs text-slate-500">
+                            THỜI GIAN
+                        </span>
+
+                        <span id="gameTimer"
+                              class="text-xl font-black text-orange-400 font-mono">
+                            20
+                        </span>
+
+                        <span class="text-xs text-slate-500">
+                            s
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PROGRESS BAR -->
+                <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden mb-5">
+
+                    <div id="gameProgressBar"
+                         class="h-full bg-gradient-to-r from-orange-500 to-amber-300
+                                transition-all duration-1000"
+                         style="width: 11.11%;">
+                    </div>
+
+                </div>
+
+
+                <!-- IMAGE CARD -->
+                <div class="relative rounded-3xl overflow-hidden
+                            border border-orange-500/20
+                            bg-slate-900 shadow-2xl">
+
+                    <div class="aspect-[4/5] relative">
+
+                        <img
+                            id="gameCharacterImage"
+                            src=""
+                            alt="Nhân vật"
+                            class="w-full h-full object-cover transition-all duration-1000"
+                            style="filter: blur(22px); transform: scale(1.05);">
+
+                        <!-- TIMER OVERLAY -->
+                        <div class="absolute top-3 right-3
+                                    bg-slate-950/80 backdrop-blur-md
+                                    border border-orange-400/30
+                                    rounded-xl px-3 py-2">
+
+                            <span id="gameTimerBig"
+                                  class="text-2xl font-black text-amber-300 font-mono">
+                                20
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUESTION -->
+                <div class="text-center mt-5">
+
+                    <div class="text-[10px] font-black
+                                text-orange-400 uppercase tracking-[0.2em]">
+                        NHÂN VẬT NÀY LÀ AI?
+                    </div>
+
+                    <div id="gameFeedback"
+                         class="min-h-[25px] mt-2 text-sm font-black">
+                    </div>
+
+                </div>
+
+
+                <!-- ANSWER -->
+                <div class="mt-4">
+
+                    <input
+                        id="gameAnswerInput"
+                        type="text"
+                        autocomplete="off"
+                        autocapitalize="words"
+                        placeholder="Nhập tên nhân vật..."
+                        class="w-full bg-slate-900
+                               border border-slate-700
+                               focus:border-orange-500
+                               rounded-2xl px-4 py-4
+                               text-white font-bold
+                               outline-none transition">
+
+                    <button
+                        type="button"
+                        onclick="checkFaceAnswer()"
+                        class="w-full mt-3 py-4 rounded-2xl
+                               bg-orange-500 hover:bg-orange-400
+                               text-slate-950 font-black
+                               transition active:scale-[0.98]">
+
+                        <i class="fa-solid fa-check mr-2"></i>
+                        TRẢ LỜI
+                    </button>
+
+                </div>
+
+
+                <!-- SCORE HINT -->
+                <div class="text-center mt-4">
+
+                    <span class="text-[10px] text-slate-500">
+                        Đoán càng sớm → càng nhiều điểm
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= RESULT ================= -->
+            <div id="gameResultScreen"
+                 class="hidden text-center">
+
+                <div class="text-7xl mb-4">
+                    👑
+                </div>
+
+                <div class="text-[10px] font-black
+                            text-orange-400 uppercase tracking-[0.25em]">
+                    9 / 9 MÀN HOÀN THÀNH
+                </div>
+
+                <h2 class="text-4xl font-black text-white mt-3">
+                    YOU ARE THE
+                </h2>
+
+                <div class="text-5xl font-black
+                            text-amber-400 mt-1">
+                    MASTER
+                </div>
+
+                <div class="mt-7">
+
+                    <div class="text-xs text-slate-500 uppercase font-black">
+                        TỔNG ĐIỂM
+                    </div>
+
+                    <div id="gameFinalScore"
+                         class="text-6xl font-black text-white font-mono mt-1">
+                        0
+                    </div>
+
+                    <div class="text-sm text-slate-500 mt-1">
+                        / 1800 điểm
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    onclick="startFaceQuiz()"
+                    class="w-full mt-8 py-4 rounded-2xl
+                           bg-gradient-to-r from-orange-500 to-amber-400
+                           text-slate-950 font-black">
+
+                    🔄 CHƠI LẠI
+                </button>
+
+                <button
+                    type="button"
+                    onclick="closeGameScreen()"
+                    class="w-full mt-2 py-3 rounded-2xl
+                           bg-slate-800 border border-slate-700
+                           text-white font-bold">
+
+                    ← QUAY LẠI APP
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+/* =========================================================
+   GALAXY FACE QUIZ
+   FULL 9 MÀN
+========================================================= */
+
+let gameScore = 0;
+let gameCurrentIndex = 0;
+let gameTimeLeft = 20;
+let gameTimerInterval = null;
+let gameAnswered = false;
+
+
+/* ================= NHÂN VẬT ================= */
+
+const gameCharacters = [
+
+    {
+        image: "images/IMG_2239.jpeg",
+        answers: [
+            "Sơn Tùng MTP",
+            "Sơn Tùng",
+            "Son Tung MTP",
+            "Son Tung"
+        ]
+    },
+
+    {
+        image: "images/IMG_2240.jpeg",
+        answers: [
+            "J97",
+            "Jack",
+            "Chây 97",
+            "Trịnh Trần Phương Tuấn",
+            "Phưn Tứn"
+        ]
+    },
+
+    {
+        image: "images/IMG_2241.jpeg",
+        answers: [
+            "Soobin",
+            "SOOBIN"
+        ]
+    },
+
+    {
+        image: "images/IMG_2242.jpeg",
+        answers: [
+            "Khánh Ngọc"
+        ]
+    },
+
+    {
+        image: "images/IMG_2243.jpeg",
+        answers: [
+            "An Khang"
+        ]
+    },
+
+    {
+        image: "images/IMG_2244.jpeg",
+        answers: [
+            "Đại Phúc",
+            "Hoàng Vũ",
+            "Đại Phúc - Hoàng Vũ",
+            "Dai Phuc",
+            "Hoang Vu"
+        ]
+    },
+
+    {
+        image: "images/IMG_2245.jpeg",
+        answers: [
+            "Doãn Trường",
+            "Doan Truong"
+        ]
+    },
+
+    {
+        image: "images/IMG_2246.jpeg",
+        answers: [
+            "Mỹ Quyên",
+            "My Quyen"
+        ]
+    },
+
+    {
+        image: "images/IMG_2247.jpeg",
+        answers: [
+            "Tuyết Ngân",
+            "Ty Nguyễn",
+            "Tuyet Ngan",
+            "Ty Nguyen"
+        ]
+    }
+
+];
+
+
+/* ================= MỞ GAME ================= */
+
+function openGameScreen() {
+
+    const screen = document.getElementById("gameScreen");
+
+    if (!screen) return;
+
+    screen.classList.remove("hidden");
+
+    document.body.style.overflow = "hidden";
+
+    showGameStartScreen();
+}
+
+
+/* ================= ĐÓNG GAME ================= */
+
+function closeGameScreen() {
+
+    clearInterval(gameTimerInterval);
+
+    const screen = document.getElementById("gameScreen");
+
+    if (!screen) return;
+
+    screen.classList.add("hidden");
+
+    document.body.style.overflow = "";
+
+}
+
+
+/* ================= MÀN START ================= */
+
+function showGameStartScreen() {
+
+    clearInterval(gameTimerInterval);
+
+    document.getElementById("gameStartScreen")
+        .classList.remove("hidden");
+
+    document.getElementById("gameQuizScreen")
+        .classList.add("hidden");
+
+    document.getElementById("gameResultScreen")
+        .classList.add("hidden");
+
+}
+
+
+/* ================= BẮT ĐẦU ================= */
+
+function startFaceQuiz() {
+
+    clearInterval(gameTimerInterval);
+
+    gameScore = 0;
+    gameCurrentIndex = 0;
+    gameTimeLeft = 20;
+    gameAnswered = false;
+
+    document.getElementById("gameScore").innerText = "0";
+
+    document.getElementById("gameStartScreen")
+        .classList.add("hidden");
+
+    document.getElementById("gameResultScreen")
+        .classList.add("hidden");
+
+    document.getElementById("gameQuizScreen")
+        .classList.remove("hidden");
+
+    showFaceQuestion();
+
+}
+
+
+/* ================= HIỂN THỊ MÀN ================= */
+
+function showFaceQuestion() {
+
+    clearInterval(gameTimerInterval);
+
+    const character =
+        gameCharacters[gameCurrentIndex];
+
+    if (!character) {
+
+        finishFaceQuiz();
+
+        return;
+    }
+
+    gameAnswered = false;
+    gameTimeLeft = 20;
+
+
+    /* SỐ MÀN */
+
+    document.getElementById("gameQuestionNumber").innerText =
+        `MÀN ${gameCurrentIndex + 1} / ${gameCharacters.length}`;
+
+
+    /* PROGRESS */
+
+    const progress =
+        ((gameCurrentIndex + 1) / gameCharacters.length) * 100;
+
+    document.getElementById("gameProgressBar")
+        .style.width = `${progress}%`;
+
+
+    /* ẢNH */
+
+    const image =
+        document.getElementById("gameCharacterImage");
+
+    image.src = character.image;
+
+    image.style.filter = "blur(22px)";
+    image.style.transform = "scale(1.05)";
+
+
+    /* FEEDBACK */
+
+    document.getElementById("gameFeedback").innerText = "";
+
+    document.getElementById("gameFeedback").className =
+        "min-h-[25px] mt-2 text-sm font-black";
+
+
+    /* INPUT */
+
+    const input =
+        document.getElementById("gameAnswerInput");
+
+    input.value = "";
+
+    input.disabled = false;
+
+
+    /* TIMER */
+
+    updateGameTimer();
+
+    startGameTimer();
+
+    setTimeout(() => {
+
+        if (!gameAnswered) {
+
+            input.focus();
+
+        }
+
+    }, 100);
+
+}
+
+
+/* ================= TIMER ================= */
+
+function startGameTimer() {
+
+    gameTimerInterval =
+        setInterval(() => {
+
+            if (gameAnswered) return;
+
+            gameTimeLeft--;
+
+            updateGameTimer();
+
+            /* ẢNH RÕ DẦN */
+
+            const blurAmount =
+                Math.max(0, gameTimeLeft * 1.1);
+
+            const image =
+                document.getElementById("gameCharacterImage");
+
+            if (image) {
+
+                image.style.filter =
+                    `blur(${blurAmount}px)`;
+
+                image.style.transform =
+                    `scale(${1 + (blurAmount / 250)})`;
+
+            }
+
+
+            /* HẾT GIỜ */
+
+            if (gameTimeLeft <= 0) {
+
+                clearInterval(gameTimerInterval);
+
+                timeOutFaceQuestion();
+
+            }
+
+        }, 1000);
+
+}
+
+
+/* ================= HIỂN THỊ TIMER ================= */
+
+function updateGameTimer() {
+
+    const timer =
+        document.getElementById("gameTimer");
+
+    const timerBig =
+        document.getElementById("gameTimerBig");
+
+    if (timer) {
+
+        timer.innerText =
+            gameTimeLeft;
+
+    }
+
+    if (timerBig) {
+
+        timerBig.innerText =
+            gameTimeLeft;
+
+    }
+
+
+    /* ĐỔI MÀU KHI SẮP HẾT GIỜ */
+
+    if (gameTimeLeft <= 5) {
+
+        if (timer) {
+
+            timer.className =
+                "text-xl font-black text-rose-400 font-mono";
+
+        }
+
+        if (timerBig) {
+
+            timerBig.className =
+                "text-2xl font-black text-rose-400 font-mono";
+
+        }
+
+    } else {
+
+        if (timer) {
+
+            timer.className =
+                "text-xl font-black text-orange-400 font-mono";
+
+        }
+
+        if (timerBig) {
+
+            timerBig.className =
+                "text-2xl font-black text-amber-300 font-mono";
+
+        }
+
+    }
+
+}
+
+
+/* ================= CHUẨN HÓA CÂU TRẢ LỜI ================= */
+
+function normalizeGameAnswer(value) {
+
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/đ/g, "d")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
+}
+
+
+/* ================= KIỂM TRA ================= */
+
+function checkFaceAnswer() {
+
+    if (gameAnswered) return;
+
+
+    const input =
+        document.getElementById("gameAnswerInput");
+
+    const feedback =
+        document.getElementById("gameFeedback");
+
+    const userAnswer =
+        normalizeGameAnswer(input.value);
+
+
+    if (!userAnswer) {
+
+        feedback.innerText =
+            "✍️ Hãy nhập câu trả lời!";
+
+        feedback.className =
+            "min-h-[25px] mt-2 text-sm font-black text-amber-400";
+
+        input.focus();
+
+        return;
+
+    }
+
+
+    const character =
+        gameCharacters[gameCurrentIndex];
+
+
+    const isCorrect =
+        character.answers.some(answer => {
+
+            return normalizeGameAnswer(answer) === userAnswer;
+
+        });
+
+
+    if (isCorrect) {
+
+        handleCorrectAnswer();
+
+    } else {
+
+        feedback.innerText =
+            "❌ Chưa đúng! Thử lại nhé.";
+
+        feedback.className =
+            "min-h-[25px] mt-2 text-sm font-black text-rose-400";
+
+        input.select();
+
+    }
+
+}
+
+
+/* ================= ĐÚNG ================= */
+
+function handleCorrectAnswer() {
+
+    clearInterval(gameTimerInterval);
+
+    gameAnswered = true;
+
+
+    const input =
+        document.getElementById("gameAnswerInput");
+
+    const feedback =
+        document.getElementById("gameFeedback");
+
+
+    input.disabled = true;
+
+
+    /*
+       Điểm:
+       20 giây = 200 điểm
+       19 giây = 195
+       ...
+       1 giây = 105
+
+       Tổng tối đa = 1800 điểm
+    */
+
+    const points =
+        100 + (gameTimeLeft * 5);
+
+
+    gameScore += points;
+
+
+    document.getElementById("gameScore").innerText =
+        gameScore;
+
+
+    feedback.innerText =
+        `🎉 CHÍNH XÁC! +${points} điểm`;
+
+    feedback.className =
+        "min-h-[25px] mt-2 text-sm font-black text-emerald-400";
+
+
+    /* ẢNH HIỆN RÕ */
+
+    const image =
+        document.getElementById("gameCharacterImage");
+
+    image.style.filter = "blur(0px)";
+    image.style.transform = "scale(1)";
+
+
+    setTimeout(() => {
+
+        nextFaceQuestion();
+
+    }, 1400);
+
+}
+
+
+/* ================= HẾT GIỜ ================= */
+
+function timeOutFaceQuestion() {
+
+    gameAnswered = true;
+
+
+    const input =
+        document.getElementById("gameAnswerInput");
+
+    const feedback =
+        document.getElementById("gameFeedback");
+
+    const character =
+        gameCharacters[gameCurrentIndex];
+
+
+    input.disabled = true;
+
+
+    /* ẢNH RÕ */
+
+    const image =
+        document.getElementById("gameCharacterImage");
+
+    image.style.filter = "blur(0px)";
+    image.style.transform = "scale(1)";
+
+
+    feedback.innerText =
+        `⏰ HẾT GIỜ! Đáp án: ${character.answers[0]}`;
+
+    feedback.className =
+        "min-h-[25px] mt-2 text-sm font-black text-amber-400";
+
+
+    setTimeout(() => {
+
+        nextFaceQuestion();
+
+    }, 2200);
+
+}
+
+
+/* ================= QUA MÀN ================= */
+
+function nextFaceQuestion() {
+
+    gameCurrentIndex++;
+
+
+    if (gameCurrentIndex >= gameCharacters.length) {
+
+        finishFaceQuiz();
+
+        return;
+
+    }
+
+
+    showFaceQuestion();
+
+}
+
+
+/* ================= KẾT THÚC ================= */
+
+function finishFaceQuiz() {
+
+    clearInterval(gameTimerInterval);
+
+    document.getElementById("gameQuizScreen")
+        .classList.add("hidden");
+
+    document.getElementById("gameResultScreen")
+        .classList.remove("hidden");
+
+    document.getElementById("gameFinalScore")
+        .innerText = gameScore;
+
+
+}
+
+
+/* ================= ENTER ĐỂ TRẢ LỜI ================= */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key !== "Enter") return;
+
+    const quizScreen =
+        document.getElementById("gameQuizScreen");
+
+    if (!quizScreen) return;
+
+    if (quizScreen.classList.contains("hidden")) return;
+
+    checkFaceAnswer();
+
+});
+
+</script>
 </body>
 </html>
