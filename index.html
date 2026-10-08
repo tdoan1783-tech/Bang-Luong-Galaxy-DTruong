@@ -2534,25 +2534,37 @@ document.addEventListener('touchend', function(e) {
 // 🔥 WORK STREAK - CHUỖI NGÀY ĐI LÀM
 // ==========================================
 
-function calculateWorkStreak() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+function calculateWorkStreak(referenceDate = new Date()) {
+    const current = new Date(referenceDate);
+    current.setHours(0, 0, 0, 0);
+
+    // Nếu hôm nay chưa đi làm thì bắt đầu kiểm tra từ ngày hôm qua
+    let dateStr = formatDateISO(current);
+    let record = attendanceDB[dateStr];
+
+    if (!record || record.shift === 'OFF') {
+        current.setDate(current.getDate() - 1);
+    }
 
     let streak = 0;
-    const checkDate = new Date(today);
 
     while (true) {
-        const dateStr = formatDateISO(checkDate);
-        const record = attendanceDB[dateStr];
+        const checkDate = new Date(current);
+        checkDate.setHours(0, 0, 0, 0);
 
-        // Không có dữ liệu hoặc OFF => đứt chuỗi
-        if (!record || record.shift === 'OFF') {
+        const checkDateStr = formatDateISO(checkDate);
+        const workRecord = attendanceDB[checkDateStr];
+
+        // Không có record hoặc OFF = chuỗi kết thúc
+        if (!workRecord || workRecord.shift === 'OFF') {
             break;
         }
 
+        // Có đi làm
         streak++;
 
-        checkDate.setDate(checkDate.getDate() - 1);
+        // Lùi về ngày trước
+        current.setDate(current.getDate() - 1);
     }
 
     return streak;
