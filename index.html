@@ -3537,6 +3537,8 @@ window.onload = function() {
     loadDataFromStorage();
     switchTab('TODAY');
 
+    updateWorkStreakBadge();
+
     updateRealtimeDateTime();
     setInterval(updateRealtimeDateTime, 1000);
 };
