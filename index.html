@@ -260,6 +260,71 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
 .tg-steps li em{font-style:normal;color:#fdb515;font-weight:900}
 .tg-tip{margin-top:10px;padding:9px 11px;border-radius:12px;background:rgba(253,181,21,.14);border:1px dashed rgba(253,181,21,.6);color:#ffe9a8;font-size:12px;font-weight:700;text-align:left;line-height:1.45}
 @media (prefers-reduced-motion:reduce){.tg-tap,.tg-rip,.tg-fing,.tg-cal.d i.hot{animation:none}.tg-rip{opacity:1}}
+/* ===== ĐỒNG NGHIỆP ===== */
+.mate-chip{display:inline-flex;align-items:center;gap:4px;padding:7px 12px;margin:0 6px 6px 0;border-radius:999px;font-size:13px;font-weight:800;color:#dbe8ff;background:rgba(3,14,40,.55);border:1px solid rgba(255,255,255,.22);-webkit-tap-highlight-color:transparent}
+.mate-chip.on{color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515);border-color:#fff}
+.mate-chip:active{transform:scale(.95)}
+.mate-add{display:flex;gap:6px;margin-top:4px}
+.mate-add input{flex:1;min-width:0;border-radius:12px;padding:8px 12px;font-size:13px;color:#fff;background:rgba(3,14,40,.6);border:1px solid rgba(255,255,255,.2)}
+.mate-add button{flex:none;padding:8px 14px;border-radius:12px;font-weight:900;font-size:13px;color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515)}
+.mate-btn{padding:11px 8px;border-radius:14px;font-weight:800;font-size:12.5px;color:#fff;background:linear-gradient(135deg,#0d4a9a,#072a66);border:1px solid rgba(253,181,21,.55);-webkit-tap-highlight-color:transparent}
+.mate-btn:active{transform:scale(.97)}
+.lk-card{padding:12px;border-radius:14px;background:rgba(3,14,40,.5);border:1px solid rgba(255,255,255,.14);font-size:13px;color:#e6efff;line-height:1.5}
+.lk-row{display:block;width:100%;text-align:left;padding:10px 12px;border-radius:12px;background:rgba(3,14,40,.45);border:1px solid rgba(255,255,255,.1);font-size:12.5px;color:#e6efff;line-height:1.5}
+/* ===== WRAPPED ===== */
+.wrap-cta{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:18px;text-align:left;color:#071a40;background:linear-gradient(110deg,#f58020,#fdb515 55%,#8dc63f);border:2px solid #fff;box-shadow:0 8px 22px rgba(245,128,32,.35);-webkit-tap-highlight-color:transparent;position:relative;overflow:hidden}
+.wrap-cta:active{transform:scale(.98)}
+.wrap-cta::after{content:'';position:absolute;top:0;bottom:0;width:60px;left:-80px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:wrapShine 3.2s ease-in-out infinite}
+@keyframes wrapShine{0%,60%{left:-80px}100%{left:120%}}
+.wrap-cta-ic{font-size:30px;line-height:1}
+.wrap-cta-tx{flex:1;display:flex;flex-direction:column;line-height:1.25}
+.wrap-cta-tx b{font-size:15px;font-weight:900}
+.wrap-cta-tx small{font-size:11.5px;font-weight:700;opacity:.8}
+.wrap-cta-go{width:32px;height:32px;border-radius:50%;background:#071a40;color:#fdb515;display:flex;align-items:center;justify-content:center;font-size:13px}
+.wrap-root{overflow:hidden;transition:background .4s}
+.wrap-prog{position:absolute;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 10px);display:flex;gap:4px;z-index:6}
+.wrap-prog i{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.35);position:relative;overflow:hidden}
+.wrap-prog i.done{background:#fff}
+.wrap-prog i.cur::after{content:'';position:absolute;inset:0;background:#fff;transform-origin:left;animation:wrapFill 6.5s linear forwards}
+.wrap-root.last .wrap-prog i.cur::after{animation:none}
+.wrap-root.last .wrap-prog i.cur{background:#fff}
+@keyframes wrapFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wrap-close{position:absolute;right:12px;top:calc(env(safe-area-inset-top,0px) + 24px);z-index:7;width:36px;height:36px;border-radius:50%;font-size:15px;font-weight:900;color:inherit;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center}
+.wrap-stage{position:absolute;inset:0;z-index:1}
+.wrap-tap{position:absolute;top:70px;bottom:0;z-index:2;-webkit-tap-highlight-color:transparent}
+.wrap-tap.l{left:0;width:35%}.wrap-tap.r{right:0;width:65%}
+.wrap-root.last .wrap-tap.r{display:none}
+.wrap-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:70px 26px 40px;gap:10px}
+.wrap-emoji{font-size:104px;line-height:1;animation:wrapPop .7s cubic-bezier(.2,1.4,.4,1) both,wrapFloat 3s ease-in-out .7s infinite;filter:drop-shadow(0 8px 14px rgba(0,0,0,.25))}
+@keyframes wrapPop{from{transform:scale(.2) rotate(-20deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+@keyframes wrapFloat{50%{transform:translateY(-10px) rotate(4deg)}}
+.wrap-kicker{font-size:14px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;opacity:.9;animation:wrapUp .6s .15s both}
+.wrap-big{font-size:clamp(44px,15vw,78px);font-weight:900;line-height:1.05;word-break:break-word;text-shadow:0 4px 18px rgba(0,0,0,.18);animation:wrapUp .6s .3s both}
+.wrap-big.txt{font-size:clamp(34px,11vw,56px)}
+.wrap-big .wrap-num{font-family:ui-monospace,Menlo,monospace;letter-spacing:-.02em}
+.wrap-unit{font-size:.4em;font-weight:800}
+.wrap-sub{font-size:16px;font-weight:700;line-height:1.45;max-width:340px;opacity:.95;animation:wrapUp .6s .5s both}
+@keyframes wrapUp{from{transform:translateY(22px);opacity:0}to{transform:none;opacity:1}}
+.wrap-deco{position:absolute;font-size:30px;opacity:.55;animation:wrapDrift 6s ease-in-out infinite;pointer-events:none}
+.wrap-deco.d0{left:8%;top:16%}.wrap-deco.d1{right:10%;top:12%;animation-delay:.8s;font-size:38px}.wrap-deco.d2{left:14%;top:70%;animation-delay:1.4s}
+.wrap-deco.d3{right:12%;top:66%;animation-delay:.4s;font-size:42px}.wrap-deco.d4{left:44%;top:8%;animation-delay:2s;font-size:24px}.wrap-deco.d5{right:34%;bottom:7%;animation-delay:1s}
+@keyframes wrapDrift{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-16px) rotate(12deg)}}
+.wrap-slide.sum{justify-content:flex-start;padding-top:80px;overflow:auto;gap:14px}
+.wrap-card{width:100%;max-width:380px;padding:16px;border-radius:22px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.wrap-card-title{font-size:15px;font-weight:900;color:#fdb515;margin-bottom:10px;letter-spacing:.04em}
+.wrap-row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:13.5px;font-weight:700;text-align:left}
+.wrap-row b{color:#fff;font-weight:900;text-align:right}
+.wrap-badge{margin-top:12px;padding:10px;border-radius:999px;font-size:15px;font-weight:900;color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515)}
+.wrap-actions{position:relative;z-index:5;width:100%;max-width:380px;display:flex;flex-direction:column;gap:8px}
+.wrap-btn{padding:14px;border-radius:16px;font-size:15px;font-weight:900;color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515);border:2px solid #fff;-webkit-tap-highlight-color:transparent}
+.wrap-btn.ghost{background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.4)}
+.wrap-btn:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){.wrap-emoji,.wrap-deco,.wrap-cta::after,.wrap-kicker,.wrap-big,.wrap-sub{animation:none}.wrap-prog i.cur::after{animation:none;transform:scaleX(1)}}
+.wrap-periods-lb{margin:2px 0 6px;font-size:11px;font-weight:900;letter-spacing:.05em;color:#fdb515;text-transform:uppercase}
+.wrap-periods{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;-webkit-overflow-scrolling:touch}
+.wrap-chip{flex:none;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:800;color:#fff;white-space:nowrap;background:rgba(3,14,40,.55);border:1px solid rgba(253,181,21,.55);-webkit-tap-highlight-color:transparent}
+.wrap-chip:active{transform:scale(.96)}
+.wrap-periods-hint{margin-top:2px;font-size:10px;color:#9db7e3;font-weight:700}
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white pb-12">
@@ -279,7 +344,7 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
             <div>
                 <span class="px-3 py-1 bg-orange-500/20 text-orange-400 font-extrabold text-xs tracking-wider rounded-full uppercase border border-orange-500/30">Galaxy Cinema • GO! An Lạc</span>
                 <h1 class="text-2xl font-black text-white tracking-tight mt-2">GALAXY XIN CHÀO! 👋</h1>
-                <p class="text-amber-300 text-xs font-bold tracking-wide mt-1">Mang Hollywood đến gần bạn</p>
+                <p class="text-amber-300 text-xs font-bold tracking-wide mt-1">Xuyên màn ảnh, chạm thiên hà</p>
                 <p class="text-slate-300 text-xs mt-1">Sổ chấm công & Tính lương cá nhân do dtruong.27 phát triển</p>
             </div>
 
@@ -608,11 +673,21 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
                         </div>
                     </div>
 
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-2">👥 Làm chung với ai?</label>
+                        <div id="todayMates"></div>
+                    </div>
+
                     <p id="todayFormError" class="text-xs text-rose-400 font-bold hidden"></p>
 
                     <button onclick="saveTodayAttendance()" class="w-full py-4 bg-gradient-to-r from-galaxy-orange via-amber-500 to-galaxy-yellow hover:from-orange-600 hover:to-amber-400 text-slate-950 font-black rounded-xl shadow-lg transition duration-200 transform active:scale-95 flex items-center justify-center gap-2 text-base">
                         <i class="fa-solid fa-floppy-disk"></i> XÁC NHẬN CHẤM CÔNG
                     </button>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="openMatesManager()" class="mate-btn">👥 Đồng nghiệp</button>
+                        <button onclick="openMateLookup()" class="mate-btn">🔎 Tra cứu làm chung</button>
+                    </div>
                 </div>
 
                 <!-- Daily Breakdown Result Card -->
@@ -942,6 +1017,14 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
             <div id="goalBody" class="relative"></div>
         </div>
 
+        <!-- 🎞️ WRAPPED -->
+        <button onclick="openWrapped()" class="wrap-cta w-full">
+            <span class="wrap-cta-ic">🎞️</span>
+            <span class="wrap-cta-tx"><b>Wrapped kỳ lương</b><small>Xem tổng kết như một đoạn phim ngắn</small></span>
+            <span class="wrap-cta-go">▶</span>
+        </button>
+        <div id="wrapPeriods"></div>
+
         <!-- Ngày công / Tổng giờ / Chi tiết lương -->
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full">
 
@@ -1084,6 +1167,37 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
     <!-- ========================================== -->
     <!-- MODAL 1: CHẤM CÔNG BÙ (QUICK EDIT DAY) -->
     <!-- ========================================== -->
+    <!-- 👥 QUẢN LÝ ĐỒNG NGHIỆP -->
+    <div id="matesModal" class="fixed inset-0 z-[55] bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-galaxy-card border border-orange-500/50 rounded-2xl w-full max-w-md max-h-[88vh] overflow-y-auto p-5 shadow-2xl space-y-4 relative">
+            <button onclick="closeMatesManager()" class="absolute top-3 right-3 text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="text-base font-extrabold text-white pr-8">👥 Đồng nghiệp của bạn</h3>
+            <p class="text-xs text-slate-300">Thêm những người hay làm chung. Khi chấm công, chỉ cần chạm tên để ghi hôm đó làm chung với ai.</p>
+            <div class="mate-add"><input id="mgrMateInput" type="text" maxlength="40" placeholder="Nhập tên đồng nghiệp..." onkeydown="if(event.key==='Enter')addMateFromManager()"><button onclick="addMateFromManager()">➕ Thêm</button></div>
+            <div id="mgrMateList" class="space-y-2"></div>
+        </div>
+    </div>
+
+    <!-- 🔎 TRA CỨU LÀM CHUNG -->
+    <div id="lookupModal" class="fixed inset-0 z-[55] bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-galaxy-card border border-orange-500/50 rounded-2xl w-full max-w-md max-h-[88vh] overflow-y-auto p-5 shadow-2xl space-y-4 relative">
+            <button onclick="closeMateLookup()" class="absolute top-3 right-3 text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="text-base font-extrabold text-white pr-8">🔎 Tra cứu làm chung</h3>
+            <p class="text-xs text-slate-300">Thiếu hàng cần đền chung? Chọn ngày để xem hôm đó bạn làm chung với ai.</p>
+            <input id="lookupDate" type="date" onchange="renderLookup()" class="w-full rounded-xl px-3 py-2.5 text-white text-sm font-mono bg-slate-950 border border-slate-700">
+            <div id="lookupResult"></div>
+            <div>
+                <div class="text-xs font-black text-amber-300 uppercase mb-2">📋 Ca gần đây (chạm để xem)</div>
+                <div id="lookupRecent" class="space-y-2"></div>
+            </div>
+            <div>
+                <div class="text-xs font-black text-amber-300 uppercase mb-2">👤 Theo người (chạm tên)</div>
+                <div id="lookupPeople"></div>
+                <div id="lookupPersonDays" class="space-y-2 mt-2"></div>
+            </div>
+        </div>
+    </div>
+
     <div id="retroEditModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-galaxy-card border border-orange-500/50 rounded-2xl w-full max-w-md p-6 shadow-2xl space-y-5 relative">
             <button onclick="closeRetroEditModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-1">
@@ -1120,7 +1234,12 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
                 </div>
             </div>
 
-            <p id="retroModalError" class="text-xs text-rose-400 font-bold hidden"></p>
+            <div>
+                        <label class="block text-xs font-bold text-slate-300 uppercase mb-2">👥 Làm chung với ai?</label>
+                        <div id="retroMates"></div>
+                    </div>
+
+                    <p id="retroModalError" class="text-xs text-rose-400 font-bold hidden"></p>
 
             <div class="flex gap-2 pt-2">
                 <button onclick="closeRetroEditModal()" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold rounded-xl transition">
@@ -1861,6 +1980,7 @@ function renderPayrollOtherIncome() {
     }
 
     updatePayrollGoal(finalTotal);
+    renderWrappedPeriods();
 }
 
 
@@ -2016,6 +2136,518 @@ function updatePayrollGoal(total) {
     }
 }
 
+
+// ==========================================
+// 👥 ĐỒNG NGHIỆP: ghi lại hôm nào làm chung với ai để tra cứu khi thiếu hàng
+// ==========================================
+const MATES_KEY = 'galaxy_cinema_mates_v1';
+let matesList = [];
+let todayMatesSel = [];
+let retroMatesSel = [];
+const matesDisplay = { today: [], retro: [] };
+let lookupPerson = '';
+
+function loadMates() {
+    try {
+        const a = JSON.parse(localStorage.getItem(MATES_KEY) || '[]');
+        matesList = Array.isArray(a) ? a.filter(function (x) { return typeof x === 'string' && x.trim(); }) : [];
+    } catch (e) { matesList = []; }
+}
+
+function saveMates() {
+    try { localStorage.setItem(MATES_KEY, JSON.stringify(matesList)); } catch (e) {}
+}
+
+function cleanMateName(s) {
+    return String(s || '').trim().replace(/\s+/g, ' ');
+}
+
+function addMateName(raw) {
+    const name = cleanMateName(raw);
+    if (!name) return null;
+    const ex = matesList.find(function (x) { return x.toLowerCase() === name.toLowerCase(); });
+    if (ex) return ex;
+    matesList.push(name);
+    saveMates();
+    return name;
+}
+
+function renderMatesPicker(which) {
+    const box = document.getElementById(which + 'Mates');
+    if (!box) return;
+    const sel = which === 'today' ? todayMatesSel : retroMatesSel;
+    const names = matesList.slice();
+    sel.forEach(function (n) { if (!names.some(function (x) { return x.toLowerCase() === n.toLowerCase(); })) names.push(n); });
+    matesDisplay[which] = names;
+    let html = '';
+    if (!names.length) {
+        html += '<p class="text-xs text-slate-400 mb-2">Chưa có đồng nghiệp nào. Nhập tên bên dưới để thêm nhé.</p>';
+    } else {
+        html += '<div>' + names.map(function (n, i) {
+            const on = sel.some(function (x) { return x.toLowerCase() === n.toLowerCase(); });
+            return '<button type="button" class="mate-chip' + (on ? ' on' : '') + '" onclick="toggleMate(\'' + which + '\',' + i + ')">' + (on ? '✓ ' : '') + escapeHtml(n) + '</button>';
+        }).join('') + '</div>';
+    }
+    html += '<div class="mate-add"><input id="' + which + 'MateInput" type="text" maxlength="40" placeholder="Thêm tên người mới..." onkeydown="if(event.key===\'Enter\')addMateFromInput(\'' + which + '\')"><button type="button" onclick="addMateFromInput(\'' + which + '\')">➕</button></div>';
+    box.innerHTML = html;
+}
+
+function toggleMate(which, idx) {
+    const name = matesDisplay[which][idx];
+    if (!name) return;
+    const sel = which === 'today' ? todayMatesSel : retroMatesSel;
+    const at = sel.findIndex(function (x) { return x.toLowerCase() === name.toLowerCase(); });
+    if (at >= 0) sel.splice(at, 1); else sel.push(name);
+    renderMatesPicker(which);
+}
+
+function addMateFromInput(which) {
+    const inp = document.getElementById(which + 'MateInput');
+    if (!inp) return;
+    const name = addMateName(inp.value);
+    if (!name) return;
+    const sel = which === 'today' ? todayMatesSel : retroMatesSel;
+    if (!sel.some(function (x) { return x.toLowerCase() === name.toLowerCase(); })) sel.push(name);
+    renderMatesPicker(which);
+}
+
+function mateShiftCount(name) {
+    let n = 0;
+    Object.keys(attendanceDB).forEach(function (d) {
+        const r = attendanceDB[d];
+        if (r && r.shift !== 'OFF' && Array.isArray(r.mates) && r.mates.some(function (x) { return x.toLowerCase() === name.toLowerCase(); })) n++;
+    });
+    return n;
+}
+
+function openMatesManager() {
+    document.getElementById('matesModal').classList.remove('hidden');
+    renderMatesManager();
+}
+
+function closeMatesManager() {
+    document.getElementById('matesModal').classList.add('hidden');
+    renderMatesPicker('today');
+}
+
+function renderMatesManager() {
+    const list = document.getElementById('mgrMateList');
+    if (!matesList.length) {
+        list.innerHTML = '<div class="lk-card">Chưa có ai trong danh sách. Nhập tên ở ô phía trên rồi bấm Thêm.</div>';
+        return;
+    }
+    list.innerHTML = matesList.map(function (n, i) {
+        return '<div class="lk-card flex items-center justify-between gap-2"><div><b class="text-white">' + escapeHtml(n) + '</b><div class="text-xs text-slate-300">Đã làm chung ' + mateShiftCount(n) + ' ca</div></div>' +
+            '<button onclick="removeMate(' + i + ')" class="px-3 py-2 rounded-lg text-xs font-bold text-rose-300 bg-rose-500/15 border border-rose-500/40">🗑 Xóa</button></div>';
+    }).join('');
+}
+
+function addMateFromManager() {
+    const inp = document.getElementById('mgrMateInput');
+    if (!addMateName(inp.value)) return;
+    inp.value = '';
+    renderMatesManager();
+}
+
+function removeMate(i) {
+    const n = matesList[i];
+    if (!n) return;
+    if (!confirm('Xóa "' + n + '" khỏi danh sách? Các ngày đã ghi làm chung với người này vẫn được giữ lại.')) return;
+    matesList.splice(i, 1);
+    saveMates();
+    renderMatesManager();
+}
+
+function fmtDMY(ds) {
+    const p = ds.split('-');
+    return p[2] + '/' + p[1] + '/' + p[0];
+}
+
+function shiftDesc(r) {
+    return r.shift === 'OFF' ? 'Nghỉ (OFF)' : ('Ca ' + r.shift + ' · ' + r.startTime + '–' + r.endTime);
+}
+
+function mateChipsHtml(arr) {
+    return arr.map(function (n) { return '<span class="mate-chip on" style="margin:0 6px 4px 0">' + escapeHtml(n) + '</span>'; }).join('');
+}
+
+function openMateLookup() {
+    document.getElementById('lookupDate').value = formatDateISO(selectedDate);
+    lookupPerson = '';
+    document.getElementById('lookupModal').classList.remove('hidden');
+    renderLookup();
+}
+
+function closeMateLookup() {
+    document.getElementById('lookupModal').classList.add('hidden');
+}
+
+function lookupPick(ds) {
+    document.getElementById('lookupDate').value = ds;
+    renderLookup();
+    document.getElementById('lookupResult').scrollIntoView({ block: 'center', behavior: 'smooth' });
+}
+
+function lookupPickPerson(i) {
+    const all = lookupPeopleNames();
+    lookupPerson = all[i] || '';
+    renderLookup();
+}
+
+function lookupPeopleNames() {
+    const names = matesList.slice();
+    Object.keys(attendanceDB).forEach(function (d) {
+        const r = attendanceDB[d];
+        if (r && Array.isArray(r.mates)) r.mates.forEach(function (n) {
+            if (!names.some(function (x) { return x.toLowerCase() === n.toLowerCase(); })) names.push(n);
+        });
+    });
+    return names;
+}
+
+function renderLookup() {
+    const ds = document.getElementById('lookupDate').value;
+    const res = document.getElementById('lookupResult');
+    if (!ds) {
+        res.innerHTML = '';
+    } else {
+        const r = attendanceDB[ds];
+        let body;
+        if (!r) body = 'Ngày này chưa có chấm công.';
+        else if (r.shift === 'OFF') body = 'Ngày này bạn nghỉ (OFF).';
+        else {
+            const m = Array.isArray(r.mates) ? r.mates : [];
+            body = '<b class="text-white">' + shiftDesc(r) + '</b><div class="mt-2 text-xs text-amber-300 font-bold">LÀM CHUNG VỚI:</div><div class="mt-1">' +
+                (m.length ? mateChipsHtml(m) : '<span class="text-slate-300">Chưa ghi ai làm chung ngày này. Vào Lịch Tháng, bấm vào ngày đó để thêm.</span>') + '</div>';
+        }
+        res.innerHTML = '<div class="lk-card"><div class="text-xs text-amber-300 font-black mb-1">📅 ' + fmtDMY(ds) + '</div>' + body + '</div>';
+    }
+    const days = Object.keys(attendanceDB).filter(function (d) { return attendanceDB[d] && attendanceDB[d].shift !== 'OFF'; }).sort().reverse().slice(0, 12);
+    document.getElementById('lookupRecent').innerHTML = days.length ? days.map(function (d) {
+        const r = attendanceDB[d];
+        const m = Array.isArray(r.mates) && r.mates.length ? r.mates.map(escapeHtml).join(', ') : '<span class="text-slate-400">chưa ghi</span>';
+        return '<button class="lk-row" onclick="lookupPick(\'' + d + '\')"><b class="text-white">' + fmtDMY(d) + '</b> · ' + shiftDesc(r) + '<br>👥 ' + m + '</button>';
+    }).join('') : '<div class="lk-card">Chưa có ca làm nào.</div>';
+    const people = lookupPeopleNames();
+    document.getElementById('lookupPeople').innerHTML = people.length ? people.map(function (n, i) {
+        const on = lookupPerson && n.toLowerCase() === lookupPerson.toLowerCase();
+        return '<button class="mate-chip' + (on ? ' on' : '') + '" onclick="lookupPickPerson(' + i + ')">' + escapeHtml(n) + ' (' + mateShiftCount(n) + ')</button>';
+    }).join('') : '<div class="lk-card">Chưa có đồng nghiệp nào. Bấm 👥 Đồng nghiệp để thêm.</div>';
+    const pd = document.getElementById('lookupPersonDays');
+    if (!lookupPerson) { pd.innerHTML = ''; return; }
+    const ds2 = Object.keys(attendanceDB).filter(function (d) {
+        const r = attendanceDB[d];
+        return r && r.shift !== 'OFF' && Array.isArray(r.mates) && r.mates.some(function (x) { return x.toLowerCase() === lookupPerson.toLowerCase(); });
+    }).sort().reverse().slice(0, 30);
+    pd.innerHTML = '<div class="text-xs text-amber-300 font-bold">Các ngày làm chung với ' + escapeHtml(lookupPerson) + ':</div>' + (ds2.length ? ds2.map(function (d) {
+        return '<button class="lk-row" onclick="lookupPick(\'' + d + '\')"><b class="text-white">' + fmtDMY(d) + '</b> · ' + shiftDesc(attendanceDB[d]) + '</button>';
+    }).join('') : '<div class="lk-card">Chưa có ngày nào ghi làm chung với người này.</div>');
+}
+
+loadMates();
+
+// ==========================================
+// 🎞️ WRAPPED KỲ LƯƠNG: tổng kết như câu chuyện, vuốt/chạm để xem tiếp
+// ==========================================
+const WR = { slides: [], i: 0, timer: null, stats: null, dur: 6500 };
+const DOW_FULL = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+
+function wrDM(d) {
+    return String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0');
+}
+
+function wrappedStats(ref) {
+    const range = getPayrollPeriodRange(ref || selectedPayrollDate);
+    const s = new Date(range.startDate), e = new Date(range.endDate);
+    const st = { start: s, end: e, totalDays: 0, days: 0, hours: 0, ot: 0, pay: 0, other: 0, richest: null, longest: null,
+        bestStreak: 0, bestStart: null, bestEnd: null, byShift: { CO: 0, US: 0, LB: 0 }, byDow: [0, 0, 0, 0, 0, 0, 0], mates: {} };
+    let streak = 0, streakStart = null;
+    for (let d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+        st.totalDays++;
+        const r = attendanceDB[formatDateISO(d)];
+        if (r && r.shift !== 'OFF') {
+            const c = calculateSalary(r.shift, r.startTime, r.endTime);
+            const info = { date: new Date(d), shift: r.shift, start: r.startTime, end: r.endTime, pay: c.totalPay || 0, hours: c.totalHours || 0 };
+            st.days++; st.hours += info.hours; st.ot += c.otHours || 0; st.pay += info.pay;
+            if (!st.richest || info.pay > st.richest.pay) st.richest = info;
+            if (!st.longest || info.hours > st.longest.hours || (info.hours === st.longest.hours && info.pay > st.longest.pay)) st.longest = info;
+            if (st.byShift[r.shift] !== undefined) st.byShift[r.shift]++;
+            st.byDow[d.getDay()]++;
+            (Array.isArray(r.mates) ? r.mates : []).forEach(function (n) {
+                const k = String(n).toLowerCase();
+                st.mates[k] = st.mates[k] || { name: n, c: 0 };
+                st.mates[k].c++;
+            });
+            if (streak === 0) streakStart = new Date(d);
+            streak++;
+            if (streak > st.bestStreak) { st.bestStreak = streak; st.bestStart = new Date(streakStart); st.bestEnd = new Date(d); }
+        } else {
+            streak = 0;
+        }
+    }
+    st.other = getPayrollOtherIncomeTotal(s, e);
+    st.total = st.pay + st.other;
+    st.favShift = Object.keys(st.byShift).sort(function (a, b) { return st.byShift[b] - st.byShift[a]; })[0];
+    let bd = 0;
+    st.byDow.forEach(function (c, i) { if (c > st.byDow[bd]) bd = i; });
+    st.busyDow = bd;
+    const ml = Object.keys(st.mates).map(function (k) { return st.mates[k]; }).sort(function (a, b) { return b.c - a.c; });
+    st.topMate = ml[0] || null;
+    const g = loadGoal();
+    st.goalPct = g.amount ? Math.floor(st.total / g.amount * 100) : null;
+    return st;
+}
+
+function wrappedPersona(st) {
+    const otShare = st.hours ? st.ot / st.hours : 0;
+    if (st.bestStreak >= 7) return ['Chiến thần bền bỉ', '🔥', 'Bạn làm liền một mạch không biết mệt. Phòng vé không thể thiếu bạn!'];
+    if (otShare >= 0.35) return ['Cú đêm Galaxy', '🦉', 'Khi thành phố đã ngủ, bạn vẫn đứng quầy sáng đèn.'];
+    if (st.days >= 22) return ['Nhân viên cứng cựa', '💎', 'Gần như ngày nào cũng có mặt, quá đáng tin cậy!'];
+    if (st.topMate && st.topMate.c >= 8) return ['Bạn đồng hành ăn ý', '🤝', 'Có đồng đội hợp cạ, ca nào cũng nhẹ nhàng hơn.'];
+    if (st.days >= 12) return ['Ngôi sao đang lên', '⭐', 'Nhịp làm đều đặn, kỳ sau còn bứt phá hơn nữa!'];
+    return ['Tân binh tiềm năng', '🌱', 'Khởi đầu nhẹ nhàng, kỳ sau chắc chắn sẽ rực rỡ hơn!'];
+}
+
+function wrappedBuild(st) {
+    const per = wrDM(st.start) + ' – ' + wrDM(st.end);
+    const sl = [];
+    const pe = wrappedPersona(st);
+    sl.push({ bg: 'linear-gradient(160deg,#034ea2,#071a40)', fg: '#fff', emoji: '🎬', kicker: 'Kỳ lương ' + per, big: 'Wrapped của bạn', sub: 'Cùng nhìn lại một kỳ làm việc tuyệt vời nhé!', deco: ['✨', '🍿', '🎟️', '⭐', '🎞️', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#5ca038,#00b7e6)', fg: '#fff', emoji: '📅', kicker: 'Bạn đã đi làm', num: st.days, fmt: 'int', unit: 'ngày', sub: 'trên tổng ' + st.totalDays + ' ngày của kỳ, chuyên cần ghê!', deco: ['🌟', '📅', '✨', '💪', '🌟', '✨'] });
+    const films = Math.floor(st.hours / 2);
+    sl.push({ bg: 'linear-gradient(160deg,#034ea2,#1a2f8a)', fg: '#fff', emoji: '⏱️', kicker: 'Tổng thời gian đứng quầy', num: st.hours, fmt: 'dec1', unit: 'giờ', sub: 'bằng khoảng ' + films + ' bộ phim dài 2 tiếng! 🍿', deco: ['⏱️', '🎞️', '✨', '🍿', '🎬', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#fdb515,#f58020)', fg: '#071a40', emoji: '💰', kicker: 'Thu nhập kỳ này', num: st.total, fmt: 'money', unit: '', sub: st.goalPct !== null ? 'Đạt ' + st.goalPct + '% mục tiêu của bạn ' + (st.goalPct >= 100 ? '🎉' : '💪') : 'Mỗi đồng đều là mồ hôi của bạn!', deco: ['💵', '🪙', '✨', '💰', '🪙', '✨'] });
+    if (st.richest) sl.push({ bg: 'linear-gradient(160deg,#f58020,#c8102e)', fg: '#fff', emoji: '🏆', kicker: 'Ca nhiều tiền nhất', num: st.richest.pay, fmt: 'money', unit: '', sub: DOW_FULL[st.richest.date.getDay()] + ' ' + wrDM(st.richest.date) + ' · Ca ' + st.richest.shift + ' (' + st.richest.start + '–' + st.richest.end + ')', deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
+    if (st.longest) sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '🕰️', kicker: 'Ca làm lâu nhất', num: st.longest.hours, fmt: 'dec1', unit: 'giờ', sub: DOW_FULL[st.longest.date.getDay()] + ' ' + wrDM(st.longest.date) + ' · Ca ' + st.longest.shift + ' (' + st.longest.start + '–' + st.longest.end + ')', deco: ['🕰️', '💪', '✨', '😤', '💪', '✨'] });
+    if (st.bestStreak) sl.push({ bg: 'linear-gradient(160deg,#f58020,#9d0c23)', fg: '#fff', emoji: '🔥', kicker: 'Chuỗi làm dài nhất', num: st.bestStreak, fmt: 'int', unit: 'ngày liên tiếp', sub: st.bestStreak > 1 ? 'từ ' + wrDM(st.bestStart) + ' đến ' + wrDM(st.bestEnd) + ' · quá bền bỉ!' : 'Kỳ sau thử nối dài hơn nhé!', deco: ['🔥', '💥', '✨', '🔥', '⚡', '✨'] });
+    if (st.days) sl.push({ bg: 'linear-gradient(160deg,#071a40,#034ea2 55%,#00b7e6)', fg: '#fff', emoji: '🌙', kicker: 'Ca bạn đi nhiều nhất', big: 'Ca ' + st.favShift, sub: st.byShift[st.favShift] + ' lần · ngày hay đi nhất là ' + DOW_FULL[st.busyDow] + ' · ' + Math.round(st.ot * 10) / 10 + ' giờ làm đêm', deco: ['🌙', '⭐', '✨', '🌟', '🌙', '✨'] });
+    if (st.topMate) sl.push({ bg: 'linear-gradient(160deg,#8dc63f,#00b7e6)', fg: '#071a40', emoji: '🤝', kicker: 'Đồng đội ăn ý nhất', big: st.topMate.name, sub: 'làm chung với bạn ' + st.topMate.c + ' ca. Cảm ơn nhau nhé!', deco: ['🤝', '💛', '✨', '🙌', '💛', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#fdb515,#f58020)', fg: '#071a40', emoji: pe[1], kicker: 'Danh hiệu của bạn kỳ này', big: pe[0], sub: pe[2], deco: ['👑', '✨', '🎉', '⭐', '🎊', '✨'] });
+    sl.push({ summary: true, bg: 'linear-gradient(160deg,#034ea2,#071a40)', fg: '#fff' });
+    return sl;
+}
+
+function wrFmt(n, f) {
+    if (f === 'money') return formatVND(Math.round(n));
+    if (f === 'dec1') return (Math.round(n * 10) / 10).toLocaleString('vi-VN');
+    return String(Math.round(n));
+}
+
+function wrAnimateNums() {
+    const els = document.querySelectorAll('#wrapStage .wrap-num');
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    els.forEach(function (el) {
+        const to = Number(el.getAttribute('data-to')) || 0, f = el.getAttribute('data-fmt');
+        if (reduce) { el.textContent = wrFmt(to, f); return; }
+        const t0 = performance.now(), D = 1100;
+        (function tick(now) {
+            const p = Math.min(1, (now - t0) / D), e = 1 - Math.pow(1 - p, 3);
+            el.textContent = wrFmt(to * e, f);
+            if (p < 1 && document.body.contains(el)) requestAnimationFrame(tick);
+        })(t0);
+    });
+}
+
+function wrSummaryHtml(st) {
+    const pe = wrappedPersona(st);
+    const row = function (e, l, v) { return '<div class="wrap-row"><span>' + e + ' ' + l + '</span><b>' + v + '</b></div>'; };
+    return '<div class="wrap-card"><div class="wrap-card-title">Kỳ lương ' + wrDM(st.start) + ' – ' + wrDM(st.end) + '</div>' +
+        row('📅', 'Ngày làm', st.days + ' ngày') + row('⏱️', 'Tổng giờ', wrFmt(st.hours, 'dec1') + ' giờ') + row('💰', 'Thu nhập', formatVND(Math.round(st.total))) +
+        (st.richest ? row('🏆', 'Ca nhiều tiền nhất', formatVND(Math.round(st.richest.pay))) : '') +
+        (st.longest ? row('🕰️', 'Ca lâu nhất', wrFmt(st.longest.hours, 'dec1') + ' giờ') : '') +
+        row('🔥', 'Chuỗi dài nhất', st.bestStreak + ' ngày') +
+        (st.topMate ? row('🤝', 'Đồng đội ăn ý', escapeHtml(st.topMate.name)) : '') +
+        '<div class="wrap-badge">' + pe[1] + ' ' + pe[0] + '</div></div>' +
+        '<div class="wrap-actions"><button onclick="wrappedShare()" class="wrap-btn">📤 Chia sẻ / lưu ảnh</button><button onclick="wrappedGo(0)" class="wrap-btn ghost">↻ Xem lại</button></div>';
+}
+
+function wrRender() {
+    const s = WR.slides[WR.i];
+    const stage = document.getElementById('wrapStage');
+    const root = document.getElementById('wrappedOverlay');
+    root.style.background = s.bg;
+    root.style.color = s.fg;
+    root.classList.toggle('last', !!s.summary);
+    let h;
+    if (s.summary) {
+        h = '<div class="wrap-slide sum">' + wrSummaryHtml(WR.stats) + '</div>';
+    } else {
+        h = '<div class="wrap-slide">' +
+            (s.deco || []).map(function (e, k) { return '<span class="wrap-deco d' + k + '">' + e + '</span>'; }).join('') +
+            '<div class="wrap-emoji">' + s.emoji + '</div>' +
+            '<div class="wrap-kicker">' + escapeHtml(s.kicker) + '</div>' +
+            (s.num !== undefined ? '<div class="wrap-big"><span class="wrap-num" data-to="' + s.num + '" data-fmt="' + s.fmt + '">0</span>' + (s.unit ? '<span class="wrap-unit"> ' + s.unit + '</span>' : '') + '</div>' : '<div class="wrap-big txt">' + escapeHtml(s.big) + '</div>') +
+            '<div class="wrap-sub">' + escapeHtml(s.sub) + '</div></div>';
+    }
+    stage.innerHTML = h;
+    const prog = document.getElementById('wrapProg');
+    prog.innerHTML = WR.slides.map(function (_, k) {
+        return '<i class="' + (k < WR.i ? 'done' : (k === WR.i ? 'cur' : '')) + '"></i>';
+    }).join('');
+    wrAnimateNums();
+    clearTimeout(WR.timer);
+    if (!s.summary) WR.timer = setTimeout(function () { wrappedStep(1); }, WR.dur);
+}
+
+function wrappedGo(i) {
+    WR.i = Math.max(0, Math.min(WR.slides.length - 1, i));
+    wrRender();
+}
+
+function wrappedStep(d) {
+    if (d > 0 && WR.i >= WR.slides.length - 1) return;
+    wrappedGo(WR.i + d);
+}
+
+const WR_SEEN_KEY = 'galaxy_cinema_wrapped_seen_v1';
+let wrPeriods = [];
+
+function wrSeenList() {
+    try {
+        const a = JSON.parse(localStorage.getItem(WR_SEEN_KEY) || '[]');
+        return Array.isArray(a) ? a : [];
+    } catch (e) { return []; }
+}
+
+function wrMarkSeen(start) {
+    const a = wrSeenList();
+    const k = formatDateISO(start);
+    if (a.indexOf(k) < 0) {
+        a.push(k);
+        try { localStorage.setItem(WR_SEEN_KEY, JSON.stringify(a)); } catch (e) {}
+    }
+}
+
+function openWrapped(ref, auto) {
+    const st = wrappedStats(ref);
+    if (!st.days) {
+        if (!auto) alert('Kỳ lương này chưa có ca nào. Hãy chấm công vài ca rồi quay lại xem Wrapped nhé! 🎬');
+        return false;
+    }
+    WR.stats = st;
+    WR.slides = wrappedBuild(st);
+    WR.i = 0;
+    wrMarkSeen(st.start);
+    document.getElementById('wrappedOverlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    wrRender();
+    renderWrappedPeriods();
+    return true;
+}
+
+// Danh sách các kỳ lương đã có ca làm (tối đa 12 kỳ gần nhất) để xem lại
+function renderWrappedPeriods() {
+    const box = document.getElementById('wrapPeriods');
+    if (!box) return;
+    wrPeriods = [];
+    let ref = new Date();
+    const seen = wrSeenList();
+    for (let i = 0; i < 12; i++) {
+        const r = getPayrollPeriodRange(ref);
+        let n = 0;
+        for (let d = new Date(r.startDate); d <= r.endDate; d.setDate(d.getDate() + 1)) {
+            const rec = attendanceDB[formatDateISO(d)];
+            if (rec && rec.shift !== 'OFF') n++;
+        }
+        if (n > 0) wrPeriods.push({ ref: new Date(r.endDate), start: new Date(r.startDate), end: new Date(r.endDate), n: n, isNew: seen.indexOf(formatDateISO(r.startDate)) < 0 });
+        ref = new Date(r.startDate);
+        ref.setDate(ref.getDate() - 1);
+    }
+    if (!wrPeriods.length) { box.innerHTML = ''; return; }
+    box.innerHTML = '<div class="wrap-periods-lb">📼 Xem lại các kỳ trước:</div><div class="wrap-periods">' +
+        wrPeriods.map(function (p, i) {
+            return '<button class="wrap-chip" onclick="wrappedOpenPeriod(' + i + ')">' + (p.isNew ? '✨ ' : '') + 'Tháng ' + (p.end.getMonth() + 1) + ' · ' + wrDM(p.start) + '–' + wrDM(p.end) + '</button>';
+        }).join('') + '</div><p class="wrap-periods-hint">Wrapped tự động hiện vào ngày 26 mỗi tháng.</p>';
+}
+
+function wrappedOpenPeriod(i) {
+    const p = wrPeriods[i];
+    if (p) openWrapped(p.ref);
+}
+
+// Ngày 26 hằng tháng (kỳ lương mới bắt đầu): tự động chiếu Wrapped của kỳ vừa kết thúc, mỗi kỳ một lần
+function wrappedAutoCheck(tries) {
+    const today = new Date();
+    if (today.getDate() < 26) return;
+    const ref = new Date(today.getFullYear(), today.getMonth(), 25);
+    const r = getPayrollPeriodRange(ref);
+    if (wrSeenList().indexOf(formatDateISO(r.startDate)) >= 0) return;
+    const busy = document.querySelector('.fixed.inset-0:not(.hidden):not(#wrappedOverlay):not(#gameScreen)');
+    if (busy) {
+        if ((tries || 0) < 4) setTimeout(function () { wrappedAutoCheck((tries || 0) + 1); }, 4000);
+        return;
+    }
+    openWrapped(ref, true);
+}
+
+window.addEventListener('load', function () {
+    setTimeout(function () { renderWrappedPeriods(); wrappedAutoCheck(0); }, 1200);
+});
+
+function closeWrapped() {
+    clearTimeout(WR.timer);
+    document.getElementById('wrappedOverlay').classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function (e) {
+    const ov = document.getElementById('wrappedOverlay');
+    if (!ov || ov.classList.contains('hidden')) return;
+    if (e.key === 'ArrowRight') wrappedStep(1);
+    else if (e.key === 'ArrowLeft') wrappedStep(-1);
+    else if (e.key === 'Escape') closeWrapped();
+});
+
+function wrappedShare() {
+    const st = WR.stats, pe = wrappedPersona(st);
+    const c = document.createElement('canvas');
+    c.width = 1080; c.height = 1350;
+    const x = c.getContext('2d');
+    const g = x.createLinearGradient(0, 0, 0, 1350);
+    g.addColorStop(0, '#034ea2'); g.addColorStop(1, '#071a40');
+    x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
+    const sg = x.createLinearGradient(0, 0, 1080, 0);
+    ['#f58020', '#fdb515', '#8dc63f', '#00b7e6', '#034ea2'].forEach(function (col, k) { sg.addColorStop(k / 4, col); });
+    x.fillStyle = sg; x.fillRect(0, 0, 1080, 14);
+    const logo = document.querySelector('img[alt="Galaxy Cinema GO!"]');
+    if (logo && logo.complete && logo.naturalWidth) { try { x.drawImage(logo, 440, 60, 200, 200); } catch (e) {} }
+    const F = '"Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif';
+    x.textAlign = 'center';
+    x.fillStyle = '#fdb515'; x.font = '800 42px ' + F; x.fillText('WRAPPED KỲ LƯƠNG', 540, 340);
+    x.fillStyle = '#ffffff'; x.font = '600 36px ' + F; x.fillText(wrDM(st.start) + ' – ' + wrDM(st.end), 540, 392);
+    const rows = [['📅 Ngày làm', st.days + ' ngày'], ['⏱️ Tổng giờ', wrFmt(st.hours, 'dec1') + ' giờ'], ['💰 Thu nhập', formatVND(Math.round(st.total))],
+        ['🏆 Ca nhiều tiền nhất', st.richest ? formatVND(Math.round(st.richest.pay)) : '-'], ['🕰️ Ca làm lâu nhất', st.longest ? wrFmt(st.longest.hours, 'dec1') + ' giờ' : '-'],
+        ['🔥 Chuỗi làm dài nhất', st.bestStreak + ' ngày']];
+    if (st.topMate) rows.push(['🤝 Đồng đội ăn ý', st.topMate.name]);
+    let y = 480;
+    rows.forEach(function (r) {
+        x.fillStyle = 'rgba(255,255,255,0.10)';
+        x.beginPath(); x.roundRect ? x.roundRect(90, y - 52, 900, 92, 26) : x.rect(90, y - 52, 900, 92); x.fill();
+        x.textAlign = 'left'; x.fillStyle = '#cfe0ff'; x.font = '700 34px ' + F; x.fillText(r[0], 124, y + 8);
+        x.textAlign = 'right'; x.fillStyle = '#ffffff'; x.font = '800 38px ' + F; x.fillText(r[1], 956, y + 8);
+        y += 112;
+    });
+    x.textAlign = 'center';
+    const bg = x.createLinearGradient(240, 0, 840, 0);
+    bg.addColorStop(0, '#f58020'); bg.addColorStop(1, '#fdb515');
+    x.fillStyle = bg;
+    x.beginPath(); x.roundRect ? x.roundRect(240, y + 10, 600, 96, 48) : x.rect(240, y + 10, 600, 96); x.fill();
+    x.fillStyle = '#071a40'; x.font = '800 40px ' + F; x.fillText(pe[1] + ' ' + pe[0], 540, y + 72);
+    x.fillStyle = '#b4cdf2'; x.font = '600 28px ' + F; x.fillText('Galaxy Cinema GO! An Lạc · Xuyên màn ảnh, chạm thiên hà', 540, 1290);
+    c.toBlob(function (blob) {
+        if (!blob) return;
+        const file = new File([blob], 'wrapped-ky-luong.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({ files: [file], title: 'Wrapped kỳ lương' }).catch(function () {});
+        } else {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'wrapped-ky-luong.png';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+        }
+    }, 'image/png');
+}
 
 function escapeHtml(text) {
 
@@ -2421,6 +3053,8 @@ document.addEventListener('touchend', function(e) {
             updateShiftButtonsUI(selectedShift);
             calculateAndDisplayToday();
             renderSalary4MonthChart();
+            todayMatesSel = Array.isArray((record || {}).mates) ? record.mates.slice() : [];
+            renderMatesPicker('today');
         }
 
         function showDetailedForm(show) {
@@ -2526,7 +3160,8 @@ showDetailedForm(true);
             attendanceDB[dateStr] = {
                 shift: selectedShift,
                 startTime: start,
-                endTime: end
+                endTime: end,
+                mates: todayMatesSel.slice()
             };
 
             saveDataToStorage();
@@ -3004,6 +3639,8 @@ renderPayrollOtherIncome();
             document.getElementById('retroEndTime').value = record.endTime || '00:30';
 
             document.getElementById('retroModalError').classList.add('hidden');
+            retroMatesSel = Array.isArray(record.mates) ? record.mates.slice() : [];
+            renderMatesPicker('retro');
             document.getElementById('retroEditModal').classList.remove('hidden');
         }
 
@@ -3059,7 +3696,8 @@ renderPayrollOtherIncome();
             attendanceDB[retroModalActiveDateStr] = {
                 shift: retroModalShift,
                 startTime: retroModalShift === 'OFF' ? '00:00' : start,
-                endTime: retroModalShift === 'OFF' ? '00:00' : end
+                endTime: retroModalShift === 'OFF' ? '00:00' : end,
+                mates: retroModalShift === 'OFF' ? [] : retroMatesSel.slice()
             };
 
             saveDataToStorage();
@@ -3144,6 +3782,7 @@ renderPayrollOtherIncome();
             const data = {
                 settings: appSettings,
                 attendanceDB: attendanceDB,
+                mates: matesList,
                 exportDate: new Date().toISOString()
             };
             downloadFile(JSON.stringify(data, null, 2), `GalaxyCinema_Backup_${formatDateISO(new Date())}.json`, 'application/json');
@@ -3160,6 +3799,9 @@ renderPayrollOtherIncome();
                     if (parsed.attendanceDB) {
                         attendanceDB = parsed.attendanceDB;
                         if (parsed.settings) appSettings = parsed.settings;
+                        if (Array.isArray(parsed.mates)) {
+                            parsed.mates.forEach(function (n) { addMateName(n); });
+                        }
                         saveDataToStorage();
                         updateGreetingHeader();
                         renderActiveTab();
@@ -3490,7 +4132,16 @@ function submitWelcomeName() {
     }
 }
     </script>
-    <!-- =========================================================
+    <!-- 🎞️ WRAPPED OVERLAY -->
+<div id="wrappedOverlay" class="hidden fixed inset-0 wrap-root" style="z-index:99998" role="dialog" aria-label="Wrapped kỳ lương">
+    <div id="wrapProg" class="wrap-prog"></div>
+    <button class="wrap-close" onclick="closeWrapped()" aria-label="Đóng">✕</button>
+    <div id="wrapStage" class="wrap-stage"></div>
+    <div class="wrap-tap l" onclick="wrappedStep(-1)"></div>
+    <div class="wrap-tap r" onclick="wrappedStep(1)"></div>
+</div>
+
+<!-- =========================================================
      GALAXY POS CHALLENGE (trò chơi nhân viên: bán vé, bắp nước, combo)
 ========================================================= -->
 <div id="gameScreen" class="hidden fixed inset-0 z-[99999] bg-slate-950" style="padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)">
