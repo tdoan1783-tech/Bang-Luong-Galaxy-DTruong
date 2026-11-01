@@ -325,6 +325,113 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
 .wrap-chip{flex:none;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:800;color:#fff;white-space:nowrap;background:rgba(3,14,40,.55);border:1px solid rgba(253,181,21,.55);-webkit-tap-highlight-color:transparent}
 .wrap-chip:active{transform:scale(.96)}
 .wrap-periods-hint{margin-top:2px;font-size:10px;color:#9db7e3;font-weight:700}
+/* ===== WRAPPED: CẢNH HOẠT HÌNH ===== */
+.wrap-scene-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.wrap-slide>.wrap-emoji,.wrap-slide>.wrap-kicker,.wrap-slide>.wrap-big,.wrap-slide>.wrap-sub,.wrap-slide>.wrap-viz{position:relative;z-index:2}
+.wr-p{position:absolute;opacity:.85;z-index:1;will-change:transform}
+.wr-p.fall{top:0;animation:wrFall linear infinite}
+.wr-p.rise{bottom:-8%;animation:wrRise linear infinite}
+.wr-p.twinkle{animation:wrTwinkle ease-in-out infinite}
+@keyframes wrFall{from{transform:translateY(-14vh) rotate(0)}to{transform:translateY(112vh) rotate(360deg)}}
+@keyframes wrRise{0%{transform:translateY(0) translateX(0);opacity:0}15%{opacity:.9}100%{transform:translateY(-112vh) translateX(18px);opacity:0}}
+@keyframes wrTwinkle{0%,100%{opacity:.15;transform:scale(.6)}50%{opacity:1;transform:scale(1.2) rotate(18deg)}}
+.wr-c{position:absolute;top:0;width:9px;height:14px;border-radius:2px;z-index:1;animation:wrFall linear infinite}
+.wr-spot{position:absolute;top:-8%;width:56%;height:118%;background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0) 82%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);transform-origin:50% 0;animation:wrSweep 5s ease-in-out infinite alternate}
+.wr-spot.a{left:2%;transform:rotate(-14deg)}
+.wr-spot.b{right:2%;transform:rotate(14deg);animation-direction:alternate-reverse}
+@keyframes wrSweep{to{transform:rotate(12deg)}}
+.wr-curtain{position:absolute;top:0;bottom:0;width:52%;z-index:3;background:repeating-linear-gradient(90deg,#8a0b1f 0 16px,#c8102e 16px 32px,#a80d25 32px 48px);box-shadow:inset 0 -26px 40px rgba(0,0,0,.35)}
+.wr-curtain.l{left:0;border-right:5px solid #fdb515;animation:wrCurL 1.7s .5s cubic-bezier(.7,0,.2,1) forwards}
+.wr-curtain.r{right:0;border-left:5px solid #fdb515;animation:wrCurR 1.7s .5s cubic-bezier(.7,0,.2,1) forwards}
+@keyframes wrCurL{to{transform:translateX(-104%)}}
+@keyframes wrCurR{to{transform:translateX(104%)}}
+.wr-film{position:absolute;left:0;right:0;bottom:0;height:36px;z-index:1;background:repeating-linear-gradient(90deg,transparent 0 12px,#e8e8e8 12px 24px) 0 5px/100% 6px no-repeat,repeating-linear-gradient(90deg,transparent 0 12px,#e8e8e8 12px 24px) 0 calc(100% - 5px)/100% 6px no-repeat,#161616;animation:wrFilm .9s linear infinite}
+@keyframes wrFilm{to{background-position:24px 5px,24px calc(100% - 5px),0 0}}
+.wr-rays{position:absolute;left:50%;top:36%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;background:repeating-conic-gradient(rgba(255,255,255,.2) 0 9deg,transparent 9deg 18deg);animation:wrSpin 26s linear infinite}
+@keyframes wrSpin{to{transform:rotate(360deg)}}
+.wrap-viz{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:6px;animation:wrapUp .6s .7s both}
+.wr-cal{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;max-width:290px}
+.wr-cal i,.wr-legend i{width:24px;height:24px;border-radius:7px;background:rgba(255,255,255,.22);display:inline-block}
+.wr-cal i{animation:wrCell .45s cubic-bezier(.2,1.5,.4,1) both}
+.wr-cal i.on,.wr-legend i.on{background:#fff;box-shadow:0 0 10px rgba(255,255,255,.7)}
+@keyframes wrCell{from{transform:scale(0)}to{transform:scale(1)}}
+.wr-legend{font-size:12px;font-weight:800;opacity:.9;display:flex;align-items:center;gap:6px}
+.wr-legend i{width:14px;height:14px;border-radius:4px}
+.wr-clock{width:112px;height:112px}
+.wr-hand{transform-origin:50px 50px;animation:wrSpin 3s linear infinite}
+.wr-hand.h{animation-duration:36s}
+.wr-films{display:flex;gap:2px;font-size:22px}
+.wr-films span{animation:wrCell .4s cubic-bezier(.2,1.5,.4,1) both}
+.wr-ticket{padding:9px 18px;border-radius:14px;background:#fff;color:#071a40;font-weight:900;font-size:14px;border:2px dashed #c8102e;transform:rotate(-3deg);box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.wr-batt{position:relative;width:230px;height:42px;border-radius:12px;border:4px solid #fff;background:rgba(0,0,0,.25);overflow:hidden}
+.wr-batt::after{content:'';position:absolute;right:-12px;top:10px;width:6px;height:14px;background:#fff;border-radius:0 3px 3px 0}
+.wr-batt i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#8dc63f,#fdb515,#f58020);animation:wrBar 1.3s .6s cubic-bezier(.2,.8,.2,1) forwards}
+.wr-batt span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:#071a40;text-shadow:0 0 6px #fff}
+@keyframes wrBar{to{width:var(--w)}}
+.wr-flames{display:flex;align-items:flex-end;justify-content:center;flex-wrap:wrap;gap:0;max-width:300px}
+.wr-flames span{animation:wrFlame .9s ease-in-out infinite alternate,wrCell .45s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes wrFlame{to{transform:translateY(-6px) scale(1.12)}}
+.wr-bars{width:100%;max-width:300px;display:flex;flex-direction:column;gap:8px}
+.wr-bar{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800}
+.wr-bar b{width:48px;text-align:left}.wr-bar em{width:24px;font-style:normal;text-align:right}
+.wr-bar div{flex:1;height:14px;border-radius:7px;background:rgba(255,255,255,.2);overflow:hidden}
+.wr-bar i{display:block;height:100%;width:0;border-radius:7px;background:linear-gradient(90deg,#fdb515,#f58020);animation:wrBar 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+.wr-pair{display:flex;align-items:center;gap:6px}
+.wr-av{width:74px;height:74px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#071a40;border:3px solid #fff;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.wr-av.a{background:linear-gradient(135deg,#fdb515,#f58020);animation:wrMeetL 1.2s .5s cubic-bezier(.2,1.2,.4,1) both}
+.wr-av.b{background:linear-gradient(135deg,#00b7e6,#034ea2);color:#fff;font-size:30px;animation:wrMeetR 1.2s .5s cubic-bezier(.2,1.2,.4,1) both}
+@keyframes wrMeetL{from{transform:translateX(-90px);opacity:0}to{transform:none;opacity:1}}
+@keyframes wrMeetR{from{transform:translateX(90px);opacity:0}to{transform:none;opacity:1}}
+.wr-shake{font-size:40px;animation:wrShake .7s 1.5s ease-in-out infinite alternate}
+@keyframes wrShake{from{transform:rotate(-14deg) scale(1)}to{transform:rotate(14deg) scale(1.2)}}
+.wrap-emoji.ring{position:relative}
+.wrap-emoji.ring::before{content:'';position:absolute;inset:-18px;border-radius:50%;z-index:-1;background:conic-gradient(#f58020,#fdb515,#8dc63f,#00b7e6,#034ea2,#f58020);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 7px),#000 calc(100% - 6px));mask:radial-gradient(farthest-side,transparent calc(100% - 7px),#000 calc(100% - 6px));animation:wrSpin 4s linear infinite}
+@media (prefers-reduced-motion:reduce){.wr-p,.wr-c,.wr-spot,.wr-rays,.wr-film,.wr-hand,.wr-shake,.wr-flames span,.wrap-emoji.ring::before{animation:none}.wr-p{display:none}.wr-curtain{display:none}}
+/* ===== NHÓM NHẢY (kiểu sticker GIF) ===== */
+.wrap-slide.has-crew{padding-bottom:128px}
+.wr-crew{position:absolute;left:0;right:0;bottom:30px;display:flex;justify-content:center;align-items:flex-end;gap:10px;pointer-events:none;z-index:3}
+.wr-dance{display:inline-block;font-size:42px;line-height:1;transform-origin:50% 100%;filter:drop-shadow(1.6px 0 0 #fff) drop-shadow(-1.6px 0 0 #fff) drop-shadow(0 1.6px 0 #fff) drop-shadow(0 -1.6px 0 #fff) drop-shadow(0 5px 6px rgba(0,0,0,.28));animation:dn0 .7s ease-in-out infinite}
+.wr-dance.dn0{animation-name:dn0}.wr-dance.dn1{animation-name:dn1}.wr-dance.dn2{animation-name:dn2}.wr-dance.dn3{animation-name:dn3}
+@keyframes dn0{0%,100%{transform:translateY(0) scale(1.12,.86)}45%{transform:translateY(-26px) scale(.92,1.1) rotate(8deg)}}
+@keyframes dn1{0%,100%{transform:rotate(-16deg) translateX(-4px)}50%{transform:rotate(16deg) translateX(4px) translateY(-8px)}}
+@keyframes dn2{0%{transform:translateY(0) rotate(0) scale(1.08,.9)}50%{transform:translateY(-30px) rotate(180deg) scale(.95,1.08)}100%{transform:translateY(0) rotate(360deg) scale(1.08,.9)}}
+@keyframes dn3{0%,100%{transform:scaleX(1) translateY(0)}25%{transform:scaleX(-1) translateY(-14px)}50%{transform:scaleX(-1) translateY(0)}75%{transform:scaleX(1) translateY(-14px)}}
+.wr-mascot{flex:none;transform-origin:50% 100%;filter:drop-shadow(0 6px 6px rgba(0,0,0,.28));animation:mcDance .7s ease-in-out infinite alternate}
+@keyframes mcDance{from{transform:translateY(0) rotate(-6deg) scale(1.04,.95)}to{transform:translateY(-16px) rotate(6deg) scale(.96,1.05)}}
+.mc-arm{animation:mcArm .35s ease-in-out infinite alternate}
+.mc-arm.l{transform-origin:34px 92px}.mc-arm.r{transform-origin:86px 92px;animation-direction:alternate-reverse}
+@keyframes mcArm{from{transform:rotate(-26deg)}to{transform:rotate(22deg)}}
+.mc-leg{animation:mcLeg .7s ease-in-out infinite alternate}.mc-leg.r{animation-direction:alternate-reverse}
+@keyframes mcLeg{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.mc-eye{animation:mcBlink 3s infinite}
+@keyframes mcBlink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.1)}}
+.wr-disco{position:absolute;top:60px;left:50%;margin-left:-26px;font-size:52px;line-height:1;transform-origin:50% -60px;animation:wrDisco 2.4s ease-in-out infinite alternate;z-index:3;filter:drop-shadow(0 0 10px rgba(255,255,255,.7))}
+@keyframes wrDisco{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+.wr-says{position:absolute;left:0;right:0;bottom:calc(30px + 78px);height:34px;pointer-events:none;z-index:4}
+.wr-says span{position:absolute;left:50%;top:0;white-space:nowrap;transform:translateX(-50%) scale(.2);opacity:0;padding:6px 14px;border-radius:999px;font-size:14px;font-weight:900;color:#071a40;background:#fff;box-shadow:0 5px 14px rgba(0,0,0,.25);animation:wrSay 6s infinite}
+@keyframes wrSay{0%{transform:translateX(-50%) scale(.2) rotate(-6deg);opacity:0}6%{transform:translateX(-50%) scale(1.12) rotate(3deg);opacity:1}12%,30%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}36%,100%{transform:translateX(-50%) scale(.6);opacity:0}}
+.wr-logo-dance{width:70px;height:70px;object-fit:contain;flex:none;margin-bottom:-4px;transform-origin:50% 100%;animation:wrLogoJig 1s ease-in-out infinite}
+@keyframes wrLogoJig{0%,100%{transform:rotate(-10deg) scale(1.04,.94)}50%{transform:rotate(10deg) translateY(-12px) scale(.95,1.06)}}
+@media (max-height:700px){.wrap-emoji{font-size:80px}.wr-dance{font-size:34px}.wrap-slide.has-crew{padding-bottom:112px}.wr-says{bottom:calc(30px + 62px)}}
+@media (prefers-reduced-motion:reduce){.wr-dance,.wr-mascot,.mc-arm,.mc-leg,.mc-eye,.wr-disco,.wr-logo-dance{animation:none}.wr-says span{animation:none;opacity:0}.wr-says span:first-child{opacity:1;transform:translateX(-50%) scale(1)}}
+.wrap-snd{right:56px}
+/* ===== GIF GIPHY ===== */
+.wr-gif{display:none;max-height:150px;max-width:72vw;border-radius:18px;border:3px solid #fff;box-shadow:0 10px 26px rgba(0,0,0,.35);object-fit:contain;background:rgba(255,255,255,.15);animation:wrapPop .6s cubic-bezier(.2,1.4,.4,1) both}
+.wrap-gifbtn{margin-top:8px;width:100%;padding:10px;border-radius:14px;font-size:12.5px;font-weight:800;color:#fff;background:rgba(3,14,40,.45);border:1px dashed rgba(253,181,21,.7);-webkit-tap-highlight-color:transparent}
+.wrap-gifbtn:active{transform:scale(.98)}
+.gif-prev{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.gif-prev img{height:64px;max-width:120px;border-radius:10px;object-fit:contain;background:rgba(255,255,255,.1)}
+.gif-x{margin-left:auto;font-size:11px;font-weight:800;padding:6px 10px;border-radius:10px;color:#fda4af;background:rgba(244,63,94,.15);border:1px solid rgba(244,63,94,.4)}
+/* ===== LƯƠNG THÁNG CŨ ===== */
+.past-note{font-size:12px;font-weight:800;color:#ffe9a8;text-align:center}
+.past-note:empty{display:none}
+.past-btn{width:100%;padding:11px;border-radius:14px;font-size:13px;font-weight:900;color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515);border:2px solid #fff;-webkit-tap-highlight-color:transparent}
+.past-btn:active{transform:scale(.98)}
+.past-in{width:100%;border-radius:12px;padding:10px 12px;font-size:14px;color:#fff;background:rgba(3,14,40,.65);border:1px solid rgba(255,255,255,.22);color-scheme:dark}
+.past-save{width:100%;padding:12px;border-radius:12px;font-size:14px;font-weight:900;color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515)}
+.past-save:active{transform:scale(.98)}
+.past-mini{width:34px;height:34px;border-radius:10px;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
+.past-mini.del{background:rgba(244,63,94,.15);border-color:rgba(244,63,94,.4)}
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white pb-12">
@@ -997,6 +1104,9 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
             </p>
         </div>
 
+        <div id="pastNote" class="past-note"></div>
+        <button onclick="openPastMonths()" class="past-btn">📚 Bổ sung lương</button>
+
         <!-- 🎯 MỤC TIÊU KỲ LƯƠNG -->
         <div id="goalCard" class="goal-card w-full rounded-2xl p-4 border">
             <span class="sp" style="left:14px;top:46px;font-size:14px;animation-delay:0s">✦</span>
@@ -1024,6 +1134,7 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
             <span class="wrap-cta-go">▶</span>
         </button>
         <div id="wrapPeriods"></div>
+        <button onclick="openGifManager()" class="wrap-gifbtn">🖼️ Thêm GIF từ GIPHY cho Wrapped</button>
 
         <!-- Ngày công / Tổng giờ / Chi tiết lương -->
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full">
@@ -1195,6 +1306,39 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
                 <div id="lookupPeople"></div>
                 <div id="lookupPersonDays" class="space-y-2 mt-2"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- 🖼️ GIF CHO WRAPPED -->
+    <div id="gifModal" class="fixed inset-0 z-[55] bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-galaxy-card border border-orange-500/50 rounded-2xl w-full max-w-md max-h-[88vh] overflow-y-auto p-5 shadow-2xl space-y-3 relative">
+            <button onclick="closeGifManager()" class="absolute top-3 right-3 text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="text-base font-extrabold text-white pr-8">🖼️ GIF cho Wrapped</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">Mở <b class="text-white">giphy.com</b> hoặc app GIPHY, chọn GIF mình thích, bấm <b class="text-white">Copy Link</b>, rồi dán vào ô của trang tương ứng. GIF sẽ hiện ở trang đó trong Wrapped. Cần có mạng để GIF tải được.</p>
+            <div id="gifList" class="space-y-2"></div>
+            <p class="text-[10px] text-slate-400">GIF lấy từ GIPHY. Chỉ dùng được link đầy đủ của giphy.com, không dùng link rút gọn gph.is.</p>
+        </div>
+    </div>
+
+    <!-- 📚 LƯƠNG THÁNG CŨ -->
+    <div id="pastModal" class="fixed inset-0 z-[55] bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-galaxy-card border border-orange-500/50 rounded-2xl w-full max-w-md max-h-[88vh] overflow-y-auto p-5 shadow-2xl space-y-3 relative">
+            <button onclick="closePastMonths()" class="absolute top-3 right-3 text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="text-base font-extrabold text-white pr-8">📚 Bổ sung lương</h3>
+            <p class="text-xs text-slate-300 leading-relaxed">Dành cho những tháng <b class="text-white">trước khi dùng app</b>: chỉ cần nhập tổng lương cả tháng, không cần nhập từng ngày. Mỗi tháng là một kỳ lương từ 26 tháng trước đến 25 tháng đó.</p>
+            <div class="lk-card space-y-2">
+                <label class="block text-[11px] font-black text-amber-300 uppercase">Tháng (kỳ kết thúc ngày 25)</label>
+                <input id="pastMonth" type="month" class="past-in">
+                <label class="block text-[11px] font-black text-amber-300 uppercase">Tổng lương cả tháng (đồng)</label>
+                <input id="pastAmount" type="text" inputmode="numeric" placeholder="VD: 7500000" class="past-in" autocomplete="off">
+                <label class="block text-[11px] font-black text-amber-300 uppercase">Ghi chú (không bắt buộc)</label>
+                <input id="pastNoteIn" type="text" maxlength="60" placeholder="VD: tháng có thưởng lễ" class="past-in" autocomplete="off">
+                <div id="pastErr" class="text-[11px] text-rose-300"></div>
+                <button onclick="savePastFromForm()" class="past-save">➕ Lưu khoản bổ sung</button>
+            </div>
+            <div class="text-xs font-black text-amber-300 uppercase">📋 Các khoản đã bổ sung</div>
+            <div id="pastList" class="space-y-2"></div>
+            <p class="text-[10px] text-slate-400 leading-relaxed">Lưu ý: nếu tháng đó bạn đã chấm công từng ngày trong app thì đừng bổ sung thêm tổng, vì số tiền sẽ bị cộng trùng. Khoản bổ sung được cộng vào tổng thu nhập, mục tiêu và biểu đồ 4 kỳ của kỳ đó.</p>
         </div>
     </div>
 
@@ -1609,6 +1753,8 @@ function getLast4PayrollPeriods() {
             temp.setDate(temp.getDate() + 1);
         }
 
+        totalPay += getPastAmount(startDate, endDate);
+
         periods.push({
             startDate,
             endDate,
@@ -1980,6 +2126,7 @@ function renderPayrollOtherIncome() {
     }
 
     updatePayrollGoal(finalTotal);
+    renderPastNote(startDate, endDate);
     renderWrappedPeriods();
 }
 
@@ -2359,12 +2506,13 @@ function wrDM(d) {
 function wrappedStats(ref) {
     const range = getPayrollPeriodRange(ref || selectedPayrollDate);
     const s = new Date(range.startDate), e = new Date(range.endDate);
-    const st = { start: s, end: e, totalDays: 0, days: 0, hours: 0, ot: 0, pay: 0, other: 0, richest: null, longest: null,
+    const st = { start: s, end: e, totalDays: 0, flags: [], days: 0, hours: 0, ot: 0, pay: 0, other: 0, richest: null, longest: null,
         bestStreak: 0, bestStart: null, bestEnd: null, byShift: { CO: 0, US: 0, LB: 0 }, byDow: [0, 0, 0, 0, 0, 0, 0], mates: {} };
     let streak = 0, streakStart = null;
     for (let d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
         st.totalDays++;
         const r = attendanceDB[formatDateISO(d)];
+        st.flags.push(!!(r && r.shift !== 'OFF'));
         if (r && r.shift !== 'OFF') {
             const c = calculateSalary(r.shift, r.startTime, r.endTime);
             const info = { date: new Date(d), shift: r.shift, start: r.startTime, end: r.endTime, pay: c.totalPay || 0, hours: c.totalHours || 0 };
@@ -2412,20 +2560,439 @@ function wrappedBuild(st) {
     const per = wrDM(st.start) + ' – ' + wrDM(st.end);
     const sl = [];
     const pe = wrappedPersona(st);
-    sl.push({ bg: 'linear-gradient(160deg,#034ea2,#071a40)', fg: '#fff', emoji: '🎬', kicker: 'Kỳ lương ' + per, big: 'Wrapped của bạn', sub: 'Cùng nhìn lại một kỳ làm việc tuyệt vời nhé!', deco: ['✨', '🍿', '🎟️', '⭐', '🎞️', '✨'] });
-    sl.push({ bg: 'linear-gradient(160deg,#5ca038,#00b7e6)', fg: '#fff', emoji: '📅', kicker: 'Bạn đã đi làm', num: st.days, fmt: 'int', unit: 'ngày', sub: 'trên tổng ' + st.totalDays + ' ngày của kỳ, chuyên cần ghê!', deco: ['🌟', '📅', '✨', '💪', '🌟', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#034ea2,#071a40)', fg: '#fff', emoji: '🎬', scene: 'intro', kicker: 'Kỳ lương ' + per, big: 'Wrapped của bạn', sub: 'Cùng nhìn lại một kỳ làm việc tuyệt vời nhé!', deco: ['✨', '🍿', '🎟️', '⭐', '🎞️', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#5ca038,#00b7e6)', fg: '#fff', emoji: '📅', scene: 'days', kicker: 'Bạn đã đi làm', num: st.days, fmt: 'int', unit: 'ngày', sub: 'trên tổng ' + st.totalDays + ' ngày của kỳ, chuyên cần ghê!', deco: ['🌟', '📅', '✨', '💪', '🌟', '✨'] });
     const films = Math.floor(st.hours / 2);
-    sl.push({ bg: 'linear-gradient(160deg,#034ea2,#1a2f8a)', fg: '#fff', emoji: '⏱️', kicker: 'Tổng thời gian đứng quầy', num: st.hours, fmt: 'dec1', unit: 'giờ', sub: 'bằng khoảng ' + films + ' bộ phim dài 2 tiếng! 🍿', deco: ['⏱️', '🎞️', '✨', '🍿', '🎬', '✨'] });
-    sl.push({ bg: 'linear-gradient(160deg,#fdb515,#f58020)', fg: '#071a40', emoji: '💰', kicker: 'Thu nhập kỳ này', num: st.total, fmt: 'money', unit: '', sub: st.goalPct !== null ? 'Đạt ' + st.goalPct + '% mục tiêu của bạn ' + (st.goalPct >= 100 ? '🎉' : '💪') : 'Mỗi đồng đều là mồ hôi của bạn!', deco: ['💵', '🪙', '✨', '💰', '🪙', '✨'] });
-    if (st.richest) sl.push({ bg: 'linear-gradient(160deg,#f58020,#c8102e)', fg: '#fff', emoji: '🏆', kicker: 'Ca nhiều tiền nhất', num: st.richest.pay, fmt: 'money', unit: '', sub: DOW_FULL[st.richest.date.getDay()] + ' ' + wrDM(st.richest.date) + ' · Ca ' + st.richest.shift + ' (' + st.richest.start + '–' + st.richest.end + ')', deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
-    if (st.longest) sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '🕰️', kicker: 'Ca làm lâu nhất', num: st.longest.hours, fmt: 'dec1', unit: 'giờ', sub: DOW_FULL[st.longest.date.getDay()] + ' ' + wrDM(st.longest.date) + ' · Ca ' + st.longest.shift + ' (' + st.longest.start + '–' + st.longest.end + ')', deco: ['🕰️', '💪', '✨', '😤', '💪', '✨'] });
-    if (st.bestStreak) sl.push({ bg: 'linear-gradient(160deg,#f58020,#9d0c23)', fg: '#fff', emoji: '🔥', kicker: 'Chuỗi làm dài nhất', num: st.bestStreak, fmt: 'int', unit: 'ngày liên tiếp', sub: st.bestStreak > 1 ? 'từ ' + wrDM(st.bestStart) + ' đến ' + wrDM(st.bestEnd) + ' · quá bền bỉ!' : 'Kỳ sau thử nối dài hơn nhé!', deco: ['🔥', '💥', '✨', '🔥', '⚡', '✨'] });
-    if (st.days) sl.push({ bg: 'linear-gradient(160deg,#071a40,#034ea2 55%,#00b7e6)', fg: '#fff', emoji: '🌙', kicker: 'Ca bạn đi nhiều nhất', big: 'Ca ' + st.favShift, sub: st.byShift[st.favShift] + ' lần · ngày hay đi nhất là ' + DOW_FULL[st.busyDow] + ' · ' + Math.round(st.ot * 10) / 10 + ' giờ làm đêm', deco: ['🌙', '⭐', '✨', '🌟', '🌙', '✨'] });
-    if (st.topMate) sl.push({ bg: 'linear-gradient(160deg,#8dc63f,#00b7e6)', fg: '#071a40', emoji: '🤝', kicker: 'Đồng đội ăn ý nhất', big: st.topMate.name, sub: 'làm chung với bạn ' + st.topMate.c + ' ca. Cảm ơn nhau nhé!', deco: ['🤝', '💛', '✨', '🙌', '💛', '✨'] });
-    sl.push({ bg: 'linear-gradient(160deg,#fdb515,#f58020)', fg: '#071a40', emoji: pe[1], kicker: 'Danh hiệu của bạn kỳ này', big: pe[0], sub: pe[2], deco: ['👑', '✨', '🎉', '⭐', '🎊', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#034ea2,#1a2f8a)', fg: '#fff', emoji: '⏱️', scene: 'hours', kicker: 'Tổng thời gian đứng quầy', num: st.hours, fmt: 'dec1', unit: 'giờ', sub: 'bằng khoảng ' + films + ' bộ phim dài 2 tiếng! 🍿', deco: ['⏱️', '🎞️', '✨', '🍿', '🎬', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#fdb515,#f58020)', fg: '#071a40', emoji: '💰', scene: 'money', kicker: 'Thu nhập kỳ này', num: st.total, fmt: 'money', unit: '', sub: st.goalPct !== null ? 'Đạt ' + st.goalPct + '% mục tiêu của bạn ' + (st.goalPct >= 100 ? '🎉' : '💪') : 'Mỗi đồng đều là mồ hôi của bạn!', deco: ['💵', '🪙', '✨', '💰', '🪙', '✨'] });
+    if (st.richest) sl.push({ bg: 'linear-gradient(160deg,#f58020,#c8102e)', fg: '#fff', emoji: '🏆', scene: 'richest', kicker: 'Ca nhiều tiền nhất', num: st.richest.pay, fmt: 'money', unit: '', sub: DOW_FULL[st.richest.date.getDay()] + ' ' + wrDM(st.richest.date) + ' · Ca ' + st.richest.shift + ' (' + st.richest.start + '–' + st.richest.end + ')', deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
+    if (st.longest) sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '🕰️', scene: 'longest', kicker: 'Ca làm lâu nhất', num: st.longest.hours, fmt: 'dec1', unit: 'giờ', sub: DOW_FULL[st.longest.date.getDay()] + ' ' + wrDM(st.longest.date) + ' · Ca ' + st.longest.shift + ' (' + st.longest.start + '–' + st.longest.end + ')', deco: ['🕰️', '💪', '✨', '😤', '💪', '✨'] });
+    if (st.bestStreak) sl.push({ bg: 'linear-gradient(160deg,#f58020,#9d0c23)', fg: '#fff', emoji: '🔥', scene: 'streak', kicker: 'Chuỗi làm dài nhất', num: st.bestStreak, fmt: 'int', unit: 'ngày liên tiếp', sub: st.bestStreak > 1 ? 'từ ' + wrDM(st.bestStart) + ' đến ' + wrDM(st.bestEnd) + ' · quá bền bỉ!' : 'Kỳ sau thử nối dài hơn nhé!', deco: ['🔥', '💥', '✨', '🔥', '⚡', '✨'] });
+    if (st.days) sl.push({ bg: 'linear-gradient(160deg,#071a40,#034ea2 55%,#00b7e6)', fg: '#fff', emoji: '🌙', scene: 'fav', kicker: 'Ca bạn đi nhiều nhất', big: 'Ca ' + st.favShift, sub: st.byShift[st.favShift] + ' lần · ngày hay đi nhất là ' + DOW_FULL[st.busyDow] + ' · ' + Math.round(st.ot * 10) / 10 + ' giờ làm đêm', deco: ['🌙', '⭐', '✨', '🌟', '🌙', '✨'] });
+    if (st.topMate) sl.push({ bg: 'linear-gradient(160deg,#8dc63f,#00b7e6)', fg: '#071a40', emoji: '🤝', scene: 'mate', kicker: 'Đồng đội ăn ý nhất', big: st.topMate.name, sub: 'làm chung với bạn ' + st.topMate.c + ' ca. Cảm ơn nhau nhé!', deco: ['🤝', '💛', '✨', '🙌', '💛', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#fdb515,#f58020)', fg: '#071a40', emoji: pe[1], scene: 'title', ring: true, kicker: 'Danh hiệu của bạn kỳ này', big: pe[0], sub: pe[2], deco: ['👑', '✨', '🎉', '⭐', '🎊', '✨'] });
     sl.push({ summary: true, bg: 'linear-gradient(160deg,#034ea2,#071a40)', fg: '#fff' });
     return sl;
 }
+
+function wrRand(a, b) { return a + Math.random() * (b - a); }
+
+function wrRain(list, n, mode) {
+    let h = '';
+    for (let i = 0; i < n; i++) {
+        const e = list[i % list.length];
+        const top = mode === 'twinkle' ? 'top:' + Math.round(wrRand(4, 90)) + '%;' : '';
+        h += '<span class="wr-p ' + mode + '" style="left:' + Math.round(wrRand(0, 94)) + '%;' + top + 'font-size:' + Math.round(wrRand(18, 36)) + 'px;animation-duration:' + wrRand(3, 6.5).toFixed(1) + 's;animation-delay:-' + wrRand(0, 5).toFixed(1) + 's">' + e + '</span>';
+    }
+    return h;
+}
+
+function wrConfetti(n) {
+    const cols = ['#f58020', '#fdb515', '#8dc63f', '#00b7e6', '#ffffff', '#034ea2'];
+    let h = '';
+    for (let i = 0; i < n; i++) {
+        h += '<i class="wr-c" style="left:' + Math.round(wrRand(0, 98)) + '%;background:' + cols[i % cols.length] + ';animation-duration:' + wrRand(2.2, 4.8).toFixed(1) + 's;animation-delay:-' + wrRand(0, 4).toFixed(1) + 's"></i>';
+    }
+    return h;
+}
+
+function wrScene(s, st) {
+    let bg = '', viz = '';
+    switch (s.scene) {
+        case 'intro':
+            bg = '<div class="wr-spot a"></div><div class="wr-spot b"></div>' + wrRain(['✨', '⭐'], 10, 'fall') +
+                '<div class="wr-curtain l"></div><div class="wr-curtain r"></div><div class="wr-film"></div>';
+            break;
+        case 'days':
+            bg = wrRain(['🌟', '✨'], 8, 'rise');
+            viz = '<div class="wr-cal">' + st.flags.map(function (w, i) { return '<i class="' + (w ? 'on' : '') + '" style="animation-delay:' + (i * 45) + 'ms"></i>'; }).join('') +
+                '</div><div class="wr-legend"><i class="on"></i> ngày đi làm &nbsp;&nbsp; <i></i> ngày nghỉ</div>';
+            break;
+        case 'hours': {
+            bg = wrRain(['🍿', '🎞️'], 14, 'fall');
+            const films = Math.min(8, Math.floor(st.hours / 2));
+            let fl = '';
+            for (let i = 0; i < films; i++) fl += '<span style="animation-delay:' + (400 + i * 140) + 'ms">🎞️</span>';
+            viz = '<svg class="wr-clock" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="rgba(255,255,255,.14)" stroke="#fff" stroke-width="4"/>' +
+                '<g stroke="#fff" stroke-width="3" stroke-linecap="round"><line x1="50" y1="9" x2="50" y2="17"/><line x1="91" y1="50" x2="83" y2="50"/><line x1="50" y1="91" x2="50" y2="83"/><line x1="9" y1="50" x2="17" y2="50"/></g>' +
+                '<line class="wr-hand h" x1="50" y1="50" x2="50" y2="28" stroke="#fff" stroke-width="5" stroke-linecap="round"/>' +
+                '<line class="wr-hand m" x1="50" y1="50" x2="50" y2="15" stroke="#fdb515" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="50" r="4" fill="#fdb515"/></svg>' +
+                (films ? '<div class="wr-films">' + fl + '</div>' : '');
+            break;
+        }
+        case 'money':
+            bg = wrRain(['💰', '🪙', '💵', '💸'], 24, 'fall');
+            break;
+        case 'richest':
+            bg = '<div class="wr-rays"></div>' + wrConfetti(26) + wrRain(['🥇', '✨'], 8, 'fall');
+            viz = '<div class="wr-ticket">🎟️ Ca ' + st.richest.shift + ' · ' + st.richest.start + '–' + st.richest.end + '</div>';
+            break;
+        case 'longest': {
+            bg = wrRain(['💦', '😤'], 8, 'fall');
+            const pct = Math.max(8, Math.min(100, Math.round(st.longest.hours / 12 * 100)));
+            viz = '<div class="wr-batt"><i style="--w:' + pct + '%"></i><span>' + wrFmt(st.longest.hours, 'dec1') + ' giờ</span></div><div class="wr-legend">pin 12 giờ, bạn dùng hết ' + pct + '%</div>';
+            break;
+        }
+        case 'streak': {
+            bg = wrRain(['🔥', '🔥', '💥'], 20, 'rise');
+            const n = Math.min(10, st.bestStreak);
+            let fl = '';
+            for (let i = 0; i < n; i++) fl += '<span style="animation-delay:' + (300 + i * 130) + 'ms;font-size:' + (22 + i * 3) + 'px">🔥</span>';
+            viz = '<div class="wr-flames">' + fl + '</div>';
+            break;
+        }
+        case 'fav': {
+            bg = wrRain(['⭐', '✨', '🌙'], 14, 'twinkle');
+            const mx = Math.max(1, st.byShift.CO, st.byShift.US, st.byShift.LB);
+            viz = '<div class="wr-bars">' + ['CO', 'US', 'LB'].map(function (k, i) {
+                return '<div class="wr-bar"><b>Ca ' + k + '</b><div><i style="--w:' + Math.round(st.byShift[k] / mx * 100) + '%;animation-delay:' + (300 + i * 200) + 'ms"></i></div><em>' + st.byShift[k] + '</em></div>';
+            }).join('') + '</div>';
+            break;
+        }
+        case 'mate':
+            bg = wrRain(['💛', '💚', '💖'], 16, 'rise');
+            viz = '<div class="wr-pair"><div class="wr-av a">Bạn</div><div class="wr-shake">🤝</div><div class="wr-av b">' + escapeHtml(String(st.topMate.name).charAt(0).toUpperCase()) + '</div></div>';
+            break;
+        case 'title':
+            bg = '<div class="wr-rays"></div>' + wrConfetti(34);
+            break;
+    }
+    return { bg: '<div class="wrap-scene-bg">' + bg + '</div>', viz: viz ? '<div class="wrap-viz">' + viz + '</div>' : '' };
+}
+
+// ==========================================
+// 💃 NHÓM NHẢY: sticker emoji nhảy nhót + linh vật bắp rang vui nhộn (tự vẽ, không cần file GIF)
+// ==========================================
+const WR_CREW = {
+    intro:   { d: ['🕺', '💃'], say: ['Xin chào!', 'Bắt đầu nào!', 'Quẩy lên!'] },
+    days:    { d: ['💃', '🕺', '💃'], say: ['Chuyên cần!', 'Đỉnh ghê!', 'Cứng cựa!'] },
+    hours:   { d: ['🍿', '🕺', '🎞️'], say: ['Nhiều phim ghê!', 'Chăm chỉ!', 'Siêu giờ!'] },
+    money:   { d: ['🤑', '🕺', '💃', '🤑'], say: ['Ting ting!', 'Giàu rồi!', 'Đỉnh quá!'] },
+    richest: { d: ['🥳', '🕺', '🏆', '💃', '🥳'], say: ['Ca vàng!', 'Vô đối!', 'Quá đỉnh!'] },
+    longest: { d: ['😤', '💪', '🕺'], say: ['Trâu bò!', 'Kiên trì!', 'Mạnh mẽ!'] },
+    streak:  { d: ['🔥', '🕺', '💪', '💃', '🔥'], say: ['Cháy luôn!', 'Bền bỉ ghê!', 'Không dừng!'] },
+    fav:     { d: ['🌙', '🕺', '💃'], say: ['Cú đêm!', 'Chill phết!', 'Đêm vui nhé!'] },
+    mate:    { d: ['🕺', '🤝', '💃'], say: ['Đồng đội!', 'Ăn ý ghê!', 'Cặp đôi vàng!'] },
+    title:   { d: ['🥳', '🕺', '🎉', '💃', '🥳'], say: ['Xuất sắc!', 'Tự hào!', 'Quẩy lên!'], mascot: true }
+};
+
+function wrMascot(size) {
+    return '<svg class="wr-mascot" style="width:' + size + 'px;height:' + Math.round(size * 1.25) + 'px" viewBox="0 0 120 150" aria-hidden="true">' +
+        '<g class="mc-body">' +
+        '<g class="mc-arm l"><path d="M34 92 Q12 84 8 62" fill="none" stroke="#f3c9a0" stroke-width="7" stroke-linecap="round"/><circle cx="8" cy="60" r="7" fill="#f3c9a0"/></g>' +
+        '<g class="mc-arm r"><path d="M86 92 Q108 84 112 62" fill="none" stroke="#f3c9a0" stroke-width="7" stroke-linecap="round"/><circle cx="112" cy="60" r="7" fill="#f3c9a0"/></g>' +
+        '<g class="mc-leg l"><ellipse cx="46" cy="143" rx="11" ry="6" fill="#071a40"/></g><g class="mc-leg r"><ellipse cx="74" cy="143" rx="11" ry="6" fill="#071a40"/></g>' +
+        '<g fill="#fff8dc" stroke="#fdb515" stroke-width="2"><circle cx="38" cy="58" r="15"/><circle cx="82" cy="58" r="15"/><circle cx="60" cy="46" r="19"/><circle cx="48" cy="40" r="13"/><circle cx="73" cy="38" r="13"/></g>' +
+        '<path d="M28 66 L92 66 L84 140 L36 140 Z" fill="#e11d2e"/><path d="M42 66 L48 140 L56 140 L52 66 Z M68 66 L64 140 L72 140 L78 66 Z" fill="#fff" opacity=".9"/>' +
+        '<ellipse cx="50" cy="96" rx="7" ry="8" fill="#fff"/><ellipse cx="70" cy="96" rx="7" ry="8" fill="#fff"/><circle class="mc-eye" cx="51" cy="97" r="3.6" fill="#071a40"/><circle class="mc-eye" cx="69" cy="97" r="3.6" fill="#071a40"/>' +
+        '<path d="M50 110 Q60 123 70 110 Z" fill="#7a0a1b" stroke="#071a40" stroke-width="2" stroke-linejoin="round"/><circle cx="41" cy="106" r="4.5" fill="#ff8fa3" opacity=".8"/><circle cx="79" cy="106" r="4.5" fill="#ff8fa3" opacity=".8"/>' +
+        '</g></svg>';
+}
+
+function wrCrew(s) {
+    const c = WR_CREW[s.scene];
+    if (!c) return '';
+    let h = '<div class="wr-crew">';
+    const mid = Math.floor(c.d.length / 2);
+    c.d.forEach(function (e, i) {
+        if (c.mascot && i === mid) h += wrMascot(92);
+        h += '<span class="wr-dance dn' + (i % 4) + '" style="animation-delay:-' + (i * 0.17).toFixed(2) + 's;animation-duration:' + (0.55 + (i % 3) * 0.16).toFixed(2) + 's">' + e + '</span>';
+    });
+    h += '</div>';
+    if (s.scene === 'intro') h = '<div class="wr-disco">🪩</div><div class="wr-crew">' + wrMascot(92) + '</div>';
+    h += '<div class="wr-says">' + c.say.map(function (t, i) { return '<span style="animation-delay:' + (i * 2) + 's">' + t + '</span>'; }).join('') + '</div>';
+    return h;
+}
+
+function wrLogoDance() {
+    const lg = document.querySelector('img[alt="Galaxy Cinema GO!"]');
+    return lg && lg.src ? '<img class="wr-logo-dance" alt="" src="' + lg.src + '">' : '';
+}
+
+// ==========================================
+// 🔊 ÂM THANH WRAPPED: hiệu ứng tự tạo bằng Web Audio (không cần file âm thanh)
+// ==========================================
+const WRS_KEY = 'galaxy_cinema_wrsound_v1';
+const WRS = {
+    ctx: null, master: null, bus: null, noiseBuf: null, on: true,
+    init: function () {
+        if (this.ctx) return true;
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return false;
+        const c = this.ctx = new AC();
+        this.master = c.createGain();
+        this.master.gain.value = 0.8;
+        const comp = c.createDynamicsCompressor();
+        comp.threshold.value = -16;
+        comp.ratio.value = 4;
+        this.master.connect(comp);
+        comp.connect(c.destination);
+        const len = c.sampleRate;
+        this.noiseBuf = c.createBuffer(1, len, c.sampleRate);
+        const d = this.noiseBuf.getChannelData(0);
+        for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+        return true;
+    },
+    unlock: function () {
+        try { if (this.init() && this.ctx.state !== 'running') this.ctx.resume(); } catch (e) {}
+    },
+    ready: function (fn) {
+        if (!this.init()) return;
+        if (this.ctx.state === 'running') { fn(); return; }
+        try { this.ctx.resume().then(fn).catch(function () {}); } catch (e) {}
+    },
+    newBus: function () {
+        const c = this.ctx, t = c.currentTime;
+        if (this.bus) {
+            this.bus.gain.cancelScheduledValues(t);
+            this.bus.gain.setTargetAtTime(0, t, 0.04);
+        }
+        const b = c.createGain();
+        b.gain.value = 1;
+        b.connect(this.master);
+        this.bus = b;
+        return t;
+    },
+    stopAll: function () {
+        if (!this.ctx || !this.bus) return;
+        const t = this.ctx.currentTime;
+        this.bus.gain.cancelScheduledValues(t);
+        this.bus.gain.setTargetAtTime(0, t, 0.05);
+    },
+    osc: function (type, f, t, dur, vol, f2) {
+        const c = this.ctx, o = c.createOscillator(), g = c.createGain();
+        o.type = type;
+        o.frequency.setValueAtTime(f, t);
+        if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + dur);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(vol, t + 0.006);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        o.connect(g);
+        g.connect(this.bus);
+        o.start(t);
+        o.stop(t + dur + 0.05);
+    },
+    bell: function (f, t, vol) {
+        this.osc('sine', f, t, 0.9, vol);
+        this.osc('sine', f * 2.76, t, 0.5, vol * 0.4);
+        this.osc('sine', f * 5.4, t, 0.25, vol * 0.15);
+    },
+    noise: function (t, dur, vol, type, f0, f1) {
+        const c = this.ctx, s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+        s.buffer = this.noiseBuf;
+        f.type = type;
+        f.frequency.setValueAtTime(f0, t);
+        if (f1 !== f0) f.frequency.exponentialRampToValueAtTime(f1, t + dur);
+        if (type === 'bandpass') f.Q.value = 0.9;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(vol, t + dur * 0.3);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        s.connect(f);
+        f.connect(g);
+        g.connect(this.bus);
+        s.start(t);
+        s.stop(t + dur + 0.05);
+    },
+    brass: function (m, t, dur, vol) {
+        const f = 440 * Math.pow(2, (m - 69) / 12), self = this;
+        [-6, 6].forEach(function (det) {
+            const c = self.ctx, o = c.createOscillator(), lp = c.createBiquadFilter(), g = c.createGain();
+            o.type = 'sawtooth';
+            o.frequency.value = f;
+            o.detune.value = det;
+            lp.type = 'lowpass';
+            lp.frequency.setValueAtTime(900, t);
+            lp.frequency.linearRampToValueAtTime(3200, t + 0.06);
+            g.gain.setValueAtTime(0.0001, t);
+            g.gain.linearRampToValueAtTime(vol, t + 0.03);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+            o.connect(lp);
+            lp.connect(g);
+            g.connect(self.bus);
+            o.start(t);
+            o.stop(t + dur + 0.05);
+        });
+    },
+    pop: function (t, vol) { this.osc('sine', 650, t, 0.09, vol, 180); },
+    tick: function (t, f, vol) { this.osc('triangle', f, t, 0.05, vol); },
+    thud: function (t, vol) { this.osc('sine', 130, t, 0.22, vol, 48); },
+    crash: function (t, vol) { this.noise(t, 1.2, vol, 'highpass', 5000, 5000); }
+};
+try { WRS.on = localStorage.getItem(WRS_KEY) !== 'off'; } catch (e) {}
+
+const WRS_SCENES = {
+    intro: function (t) {
+        WRS.noise(t + 0.45, 1.5, 0.3, 'lowpass', 200, 1800);
+        [67, 72, 76, 79].forEach(function (m, i) { WRS.brass(m, t + 1.85 + i * 0.14, i === 3 ? 0.9 : 0.22, 0.09); });
+        WRS.thud(t + 1.85, 0.3);
+        WRS.crash(t + 2.3, 0.3);
+    },
+    days: function (t, st) {
+        let n = 0;
+        st.flags.forEach(function (w, i) {
+            if (w) { WRS.osc('triangle', 520 + Math.min(n, 24) * 28, t + 0.05 + i * 0.045, 0.09, 0.09); n++; }
+        });
+        WRS.bell(1568, t + 0.15 + st.flags.length * 0.045, 0.12);
+    },
+    hours: function (t) {
+        for (let i = 0; i < 6; i++) WRS.tick(t + 0.5 + i * 0.45, i % 2 ? 900 : 700, 0.14);
+        for (let j = 0; j < 28; j++) WRS.noise(t + 0.4 + j * 0.083, 0.03, 0.045, 'bandpass', 3000, 3000);
+    },
+    money: function (t) {
+        for (let i = 0; i < 12; i++) WRS.bell(1100 + Math.random() * 1300, t + 0.15 + Math.random() * 3.4, 0.07);
+        WRS.bell(2093, t + 1.15, 0.14);
+        WRS.bell(2637, t + 1.26, 0.14);
+        WRS.noise(t + 1.1, 0.12, 0.15, 'highpass', 3000, 3000);
+    },
+    richest: function (t) {
+        [64, 67, 72, 76].forEach(function (m, i) { WRS.brass(m, t + 0.1 + i * 0.13, i === 3 ? 0.8 : 0.2, 0.09); });
+        WRS.crash(t + 0.62, 0.3);
+        for (let i = 0; i < 8; i++) WRS.pop(t + 0.8 + Math.random() * 1.6, 0.1);
+    },
+    longest: function (t) {
+        WRS.osc('sawtooth', 160, t + 0.7, 1.4, 0.04, 640);
+        WRS.bell(1319, t + 2.2, 0.14);
+    },
+    streak: function (t, st) {
+        WRS.noise(t + 0.1, 1.2, 0.16, 'bandpass', 300, 1500);
+        for (let i = 0; i < 18; i++) WRS.noise(t + 0.2 + Math.random() * 3.2, 0.05, 0.1, 'highpass', 1500 + Math.random() * 1500, 1800);
+        for (let i = 0; i < Math.min(st.bestStreak || 0, 10); i++) WRS.pop(t + 0.6 + i * 0.1, 0.07);
+    },
+    fav: function (t) {
+        [72, 76, 79].forEach(function (m, i) {
+            const f = 440 * Math.pow(2, (m - 69) / 12);
+            WRS.osc('sine', f, t + 0.6 + i * 0.15, 0.4, 0.14);
+            WRS.osc('sine', f * 4, t + 0.6 + i * 0.15, 0.08, 0.04);
+        });
+    },
+    mate: function (t) {
+        WRS.thud(t + 1.25, 0.25);
+        WRS.bell(1568, t + 1.3, 0.1);
+        WRS.bell(2093, t + 1.4, 0.08);
+    },
+    title: function (t) {
+        [67, 72, 76, 79, 84].forEach(function (m, i) { WRS.brass(m, t + 0.2 + i * 0.12, i === 4 ? 0.9 : 0.2, 0.09); });
+        WRS.crash(t + 0.9, 0.3);
+        for (let i = 0; i < 8; i++) WRS.bell(1046 * Math.pow(1.122, i), t + 1.2 + i * 0.09, 0.08);
+        WRS.noise(t + 1.0, 1.6, 0.1, 'bandpass', 1200, 2400);
+    },
+    summary: function (t) {
+        [72, 76, 79, 84].forEach(function (m, i) { WRS.bell(440 * Math.pow(2, (m - 69) / 12), t + 0.1 + i * 0.12, 0.1); });
+    }
+};
+
+function wrSfx(s) {
+    if (!WRS.on) return;
+    WRS.ready(function () {
+        const t = WRS.newBus() + 0.02;
+        const k = s.summary ? 'summary' : s.scene;
+        const st = WR.stats;
+        WRS.noise(t, 0.35, 0.2, 'bandpass', 500, 2600);
+        if (WRS_SCENES[k]) WRS_SCENES[k](t, st, s);
+        if (WR_CREW[k]) [0.36, 2.36, 4.36].forEach(function (d) { WRS.pop(t + d, 0.1); });
+        if (['richest', 'longest', 'streak'].indexOf(k) >= 0) {
+            for (let i = 0; i < 10; i++) WRS.tick(t + 0.25 + i * 0.1, 420 + i * 55, 0.05);
+        }
+    });
+}
+
+function wrapSoundUi() {
+    const b = document.getElementById('wrapSnd');
+    if (b) b.textContent = WRS.on ? '🔊' : '🔇';
+}
+
+function wrapSoundToggle() {
+    WRS.on = !WRS.on;
+    try { localStorage.setItem(WRS_KEY, WRS.on ? 'on' : 'off'); } catch (e) {}
+    wrapSoundUi();
+    if (WRS.on) { WRS.unlock(); wrSfx(WR.slides[WR.i]); } else { WRS.stopAll(); }
+}
+
+document.addEventListener('pointerdown', function (e) {
+    if (e.target && e.target.closest && e.target.closest('#wrappedOverlay')) WRS.unlock();
+}, true);
+
+// ==========================================
+// 🖼️ GIF TỪ GIPHY CHO WRAPPED: dán link GIF, app tự lấy mã và hiển thị
+// ==========================================
+const GIF_KEY = 'galaxy_cinema_gifs_v1';
+const GIF_SLOTS = [['intro', '🎬 Mở đầu'], ['days', '📅 Ngày làm'], ['hours', '⏱️ Giờ làm'], ['money', '💰 Tiền'], ['richest', '🏆 Ca nhiều tiền nhất'],
+    ['longest', '🕰️ Ca làm lâu nhất'], ['streak', '🔥 Chuỗi dài nhất'], ['fav', '🌙 Ca hay đi nhất'], ['mate', '🤝 Đồng đội ăn ý'], ['title', '👑 Danh hiệu']];
+let gifMap = {};
+
+function loadGifs() {
+    try {
+        const o = JSON.parse(localStorage.getItem(GIF_KEY) || '{}');
+        gifMap = o && typeof o === 'object' ? o : {};
+    } catch (e) { gifMap = {}; }
+}
+
+function saveGifs() {
+    try { localStorage.setItem(GIF_KEY, JSON.stringify(gifMap)); } catch (e) {}
+}
+
+function parseGiphyId(str) {
+    const s = String(str || '').trim();
+    if (!s) return '';
+    let m = s.match(/media\/(?:[^\/?#]+\/)*?([A-Za-z0-9]{6,30})\/giphy/);
+    if (m) return m[1];
+    m = s.match(/giphy\.com\/(?:gifs|stickers|clips|embed)\/([^\/?#]+)/);
+    if (m) {
+        const seg = m[1];
+        const id = seg.indexOf('-') >= 0 ? seg.slice(seg.lastIndexOf('-') + 1) : seg;
+        return /^[A-Za-z0-9]{6,30}$/.test(id) ? id : '';
+    }
+    return /^[A-Za-z0-9]{8,30}$/.test(s) ? s : '';
+}
+
+function gifUrl(id) {
+    return 'https://media.giphy.com/media/' + id + '/giphy.gif';
+}
+
+function openGifManager() {
+    document.getElementById('gifModal').classList.remove('hidden');
+    renderGifManager();
+}
+
+function closeGifManager() {
+    document.getElementById('gifModal').classList.add('hidden');
+}
+
+function renderGifManager() {
+    document.getElementById('gifList').innerHTML = GIF_SLOTS.map(function (sl) {
+        const id = gifMap[sl[0]];
+        return '<div class="lk-card"><div class="text-xs font-black text-amber-300 mb-2">' + sl[1] + '</div>' +
+            (id ? '<div class="gif-prev"><img src="' + gifUrl(id) + '" alt="" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<span class=&quot;text-xs text-slate-400&quot;>Chưa tải được ảnh xem trước (cần có mạng)</span>\'"><button onclick="clearGif(\'' + sl[0] + '\')" class="gif-x">Xóa GIF</button></div>' : '') +
+            '<div class="mate-add"><input id="gifIn_' + sl[0] + '" type="text" placeholder="Dán link GIPHY..." autocomplete="off"><button onclick="saveGif(\'' + sl[0] + '\')">Lưu</button></div>' +
+            '<div id="gifErr_' + sl[0] + '" class="text-[11px] text-rose-300 mt-1"></div></div>';
+    }).join('');
+}
+
+function saveGif(scene) {
+    const v = document.getElementById('gifIn_' + scene).value;
+    const id = parseGiphyId(v);
+    if (!id) {
+        document.getElementById('gifErr_' + scene).textContent = /gph\.is/.test(v) ? 'Link rút gọn gph.is chưa dùng được. Hãy mở GIF trên giphy.com rồi chọn Copy Link.' : 'Link chưa đúng. Hãy dán link GIF đầy đủ từ giphy.com.';
+        return;
+    }
+    gifMap[scene] = id;
+    saveGifs();
+    renderGifManager();
+}
+
+function clearGif(scene) {
+    delete gifMap[scene];
+    saveGifs();
+    renderGifManager();
+}
+
+function wrGifHtml(s) {
+    const id = s && s.scene ? gifMap[s.scene] : '';
+    if (!id) return '';
+    return '<img class="wr-gif" alt="" referrerpolicy="no-referrer" src="' + gifUrl(id) + '" onload="this.style.display=\'block\';if(this.previousElementSibling)this.previousElementSibling.style.display=\'none\'">';
+}
+
+loadGifs();
 
 function wrFmt(n, f) {
     if (f === 'money') return formatVND(Math.round(n));
@@ -2468,16 +3035,17 @@ function wrRender() {
     root.style.background = s.bg;
     root.style.color = s.fg;
     root.classList.toggle('last', !!s.summary);
+    const sc = s.summary ? { bg: '', viz: '' } : wrScene(s, WR.stats);
     let h;
     if (s.summary) {
-        h = '<div class="wrap-slide sum">' + wrSummaryHtml(WR.stats) + '</div>';
+        h = '<div class="wrap-slide sum">' + wrLogoDance() + wrSummaryHtml(WR.stats) + '</div>';
     } else {
-        h = '<div class="wrap-slide">' +
-            (s.deco || []).map(function (e, k) { return '<span class="wrap-deco d' + k + '">' + e + '</span>'; }).join('') +
-            '<div class="wrap-emoji">' + s.emoji + '</div>' +
+        h = '<div class="wrap-slide has-crew">' +
+            sc.bg +
+            '<div class="wrap-emoji' + (s.ring ? ' ring' : '') + '">' + s.emoji + '</div>' + wrGifHtml(s) +
             '<div class="wrap-kicker">' + escapeHtml(s.kicker) + '</div>' +
             (s.num !== undefined ? '<div class="wrap-big"><span class="wrap-num" data-to="' + s.num + '" data-fmt="' + s.fmt + '">0</span>' + (s.unit ? '<span class="wrap-unit"> ' + s.unit + '</span>' : '') + '</div>' : '<div class="wrap-big txt">' + escapeHtml(s.big) + '</div>') +
-            '<div class="wrap-sub">' + escapeHtml(s.sub) + '</div></div>';
+            '<div class="wrap-sub">' + escapeHtml(s.sub) + '</div>' + sc.viz + wrCrew(s) + '</div>';
     }
     stage.innerHTML = h;
     const prog = document.getElementById('wrapProg');
@@ -2485,6 +3053,7 @@ function wrRender() {
         return '<i class="' + (k < WR.i ? 'done' : (k === WR.i ? 'cur' : '')) + '"></i>';
     }).join('');
     wrAnimateNums();
+    wrSfx(s);
     clearTimeout(WR.timer);
     if (!s.summary) WR.timer = setTimeout(function () { wrappedStep(1); }, WR.dur);
 }
@@ -2530,6 +3099,8 @@ function openWrapped(ref, auto) {
     wrMarkSeen(st.start);
     document.getElementById('wrappedOverlay').classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    if (!auto) WRS.unlock();
+    wrapSoundUi();
     wrRender();
     renderWrappedPeriods();
     return true;
@@ -2586,6 +3157,7 @@ window.addEventListener('load', function () {
 
 function closeWrapped() {
     clearTimeout(WR.timer);
+    WRS.stopAll();
     document.getElementById('wrappedOverlay').classList.add('hidden');
     document.body.style.overflow = '';
 }
@@ -2649,6 +3221,142 @@ function wrappedShare() {
     }, 'image/png');
 }
 
+// ==========================================
+// 📚 LƯƠNG THÁNG CŨ: nhập tổng lương cả tháng, không cần nhập từng ngày
+// ==========================================
+const PAST_KEY = 'galaxy_cinema_past_months_v1';
+let pastMap = {};
+
+function loadPast() {
+    try {
+        const o = JSON.parse(localStorage.getItem(PAST_KEY) || '{}');
+        pastMap = o && typeof o === 'object' && !Array.isArray(o) ? o : {};
+    } catch (e) { pastMap = {}; }
+}
+
+function savePast() {
+    try { localStorage.setItem(PAST_KEY, JSON.stringify(pastMap)); } catch (e) {}
+}
+
+function getPastAmount(startDate, endDate) {
+    try {
+        const o = pastMap[getPayrollPeriodKey(startDate, endDate)];
+        return o ? (Number(o.amount) || 0) : 0;
+    } catch (e) { return 0; }
+}
+
+function pastRangeFromMonth(v) {
+    const p = String(v || '').split('-');
+    const y = parseInt(p[0], 10), m = parseInt(p[1], 10);
+    if (!y || !m) return null;
+    return getPayrollPeriodRange(new Date(y, m - 1, 25));
+}
+
+function pastLabel(startDate, endDate) {
+    return 'Tháng ' + (endDate.getMonth() + 1) + '/' + endDate.getFullYear() + ' (' + wrDM(startDate) + ' – ' + wrDM(endDate) + ')';
+}
+
+function pastCountShifts(startDate, endDate) {
+    let n = 0;
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+        const r = attendanceDB[formatDateISO(d)];
+        if (r && r.shift !== 'OFF') n++;
+    }
+    return n;
+}
+
+function pastRefreshViews() {
+    try { renderPayrollOtherIncome(); } catch (e) {}
+    try { renderSalary4MonthChart(); } catch (e) {}
+}
+
+function renderPastNote(startDate, endDate) {
+    const el = document.getElementById('pastNote');
+    if (!el) return;
+    const a = getPastAmount(startDate, endDate);
+    el.innerHTML = a > 0 ? '📚 Đã gồm <b>' + formatVND(a) + '</b> lương bổ sung cho kỳ này' : '';
+}
+
+function openPastMonths() {
+    const cur = getPayrollPeriodRange(new Date());
+    const prevEnd = new Date(cur.startDate);
+    prevEnd.setDate(prevEnd.getDate() - 1);
+    document.getElementById('pastMonth').value = prevEnd.getFullYear() + '-' + String(prevEnd.getMonth() + 1).padStart(2, '0');
+    document.getElementById('pastAmount').value = '';
+    document.getElementById('pastNoteIn').value = '';
+    document.getElementById('pastErr').textContent = '';
+    document.getElementById('pastModal').classList.remove('hidden');
+    renderPastList();
+}
+
+function closePastMonths() {
+    document.getElementById('pastModal').classList.add('hidden');
+}
+
+function savePastFromForm() {
+    const err = document.getElementById('pastErr');
+    const range = pastRangeFromMonth(document.getElementById('pastMonth').value);
+    const amt = parseInt(String(document.getElementById('pastAmount').value).replace(/\D/g, ''), 10) || 0;
+    if (!range) { err.textContent = 'Hãy chọn tháng.'; return; }
+    if (!amt) { err.textContent = 'Hãy nhập tổng lương lớn hơn 0.'; return; }
+    const n = pastCountShifts(range.startDate, range.endDate);
+    if (n > 0 && !confirm('Kỳ này đã có ' + n + ' ca chấm công từng ngày. Bổ sung thêm tổng sẽ bị cộng trùng. Vẫn lưu?')) return;
+    err.textContent = '';
+    pastMap[getPayrollPeriodKey(range.startDate, range.endDate)] = {
+        amount: amt,
+        note: String(document.getElementById('pastNoteIn').value || '').trim().slice(0, 60),
+        start: formatDateISO(range.startDate),
+        end: formatDateISO(range.endDate)
+    };
+    savePast();
+    document.getElementById('pastAmount').value = '';
+    document.getElementById('pastNoteIn').value = '';
+    renderPastList();
+    pastRefreshViews();
+}
+
+function renderPastList() {
+    const keys = Object.keys(pastMap).sort().reverse();
+    const box = document.getElementById('pastList');
+    if (!keys.length) {
+        box.innerHTML = '<div class="lk-card">Chưa bổ sung tháng nào. Chọn tháng, nhập tổng lương rồi bấm Lưu nhé.</div>';
+        return;
+    }
+    let sum = 0;
+    box.innerHTML = keys.map(function (k, i) {
+        const o = pastMap[k];
+        const p = k.split('_');
+        const s = new Date(p[0] + 'T00:00:00'), e = new Date(p[1] + 'T00:00:00');
+        sum += Number(o.amount) || 0;
+        return '<div class="lk-card"><div class="flex items-start justify-between gap-2"><div class="min-w-0"><b class="text-white">' + pastLabel(s, e) + '</b>' +
+            '<div class="text-sm font-mono text-amber-300 mt-0.5">' + formatVND(o.amount) + '</div>' + (o.note ? '<div class="text-xs text-slate-300 mt-0.5">' + escapeHtml(o.note) + '</div>' : '') + '</div>' +
+            '<div class="flex gap-1 shrink-0"><button onclick="editPast(' + i + ')" class="past-mini">✏️</button><button onclick="deletePast(' + i + ')" class="past-mini del">🗑</button></div></div></div>';
+    }).join('') + '<div class="text-xs text-slate-300 text-right">Tổng ' + keys.length + ' tháng: <b class="text-white">' + formatVND(sum) + '</b></div>';
+}
+
+function editPast(i) {
+    const k = Object.keys(pastMap).sort().reverse()[i];
+    const o = pastMap[k];
+    if (!o) return;
+    const e = new Date(k.split('_')[1] + 'T00:00:00');
+    document.getElementById('pastMonth').value = e.getFullYear() + '-' + String(e.getMonth() + 1).padStart(2, '0');
+    document.getElementById('pastAmount').value = String(o.amount);
+    document.getElementById('pastNoteIn').value = o.note || '';
+    document.getElementById('pastErr').textContent = 'Đang sửa tháng này: chỉnh số rồi bấm Lưu.';
+    document.getElementById('pastAmount').focus();
+}
+
+function deletePast(i) {
+    const k = Object.keys(pastMap).sort().reverse()[i];
+    if (!k || !confirm('Xóa khoản bổ sung lương của tháng này?')) return;
+    delete pastMap[k];
+    savePast();
+    renderPastList();
+    pastRefreshViews();
+}
+
+loadPast();
+
 function escapeHtml(text) {
 
     const div =
@@ -2683,6 +3391,8 @@ function calculatePayrollGalaxyTotal(startDate, endDate) {
 
         temp.setDate(temp.getDate() + 1);
     }
+
+    totalPay += getPastAmount(startDate, endDate);
 
     return totalPay;
 }
@@ -3783,6 +4493,7 @@ renderPayrollOtherIncome();
                 settings: appSettings,
                 attendanceDB: attendanceDB,
                 mates: matesList,
+                pastMonths: pastMap,
                 exportDate: new Date().toISOString()
             };
             downloadFile(JSON.stringify(data, null, 2), `GalaxyCinema_Backup_${formatDateISO(new Date())}.json`, 'application/json');
@@ -3801,6 +4512,10 @@ renderPayrollOtherIncome();
                         if (parsed.settings) appSettings = parsed.settings;
                         if (Array.isArray(parsed.mates)) {
                             parsed.mates.forEach(function (n) { addMateName(n); });
+                        }
+                        if (parsed.pastMonths && typeof parsed.pastMonths === 'object') {
+                            Object.keys(parsed.pastMonths).forEach(function (k) { pastMap[k] = parsed.pastMonths[k]; });
+                            savePast();
                         }
                         saveDataToStorage();
                         updateGreetingHeader();
@@ -4136,6 +4851,7 @@ function submitWelcomeName() {
 <div id="wrappedOverlay" class="hidden fixed inset-0 wrap-root" style="z-index:99998" role="dialog" aria-label="Wrapped kỳ lương">
     <div id="wrapProg" class="wrap-prog"></div>
     <button class="wrap-close" onclick="closeWrapped()" aria-label="Đóng">✕</button>
+    <button id="wrapSnd" class="wrap-close wrap-snd" onclick="wrapSoundToggle()" aria-label="Bật hoặc tắt âm thanh">🔊</button>
     <div id="wrapStage" class="wrap-stage"></div>
     <div class="wrap-tap l" onclick="wrappedStep(-1)"></div>
     <div class="wrap-tap r" onclick="wrappedStep(1)"></div>
