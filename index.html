@@ -432,6 +432,58 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
 .past-save:active{transform:scale(.98)}
 .past-mini{width:34px;height:34px;border-radius:10px;font-size:14px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)}
 .past-mini.del{background:rgba(244,63,94,.15);border-color:rgba(244,63,94,.4)}
+/* ===== TỔNG KẾT NĂM ===== */
+.past-btn.year{background:linear-gradient(90deg,#00b7e6,#8dc63f)}
+.year-step{display:flex;align-items:center;justify-content:center;gap:14px}
+.year-step button{width:36px;height:36px;border-radius:50%;font-size:22px;font-weight:900;line-height:1;color:#071a40;background:linear-gradient(135deg,#f58020,#fdb515)}
+.year-step button:active{transform:scale(.9)}
+.year-step b{min-width:90px;text-align:center;font-size:17px;color:#fff}
+.year-hero{padding:16px 12px;border-radius:18px;text-align:center;color:#071a40;background:linear-gradient(135deg,#fdb515,#f58020);box-shadow:0 8px 22px rgba(245,128,32,.3)}
+.year-lb{font-size:11px;font-weight:900;letter-spacing:.1em}
+.year-big{margin-top:4px;font-size:clamp(26px,8vw,36px);font-weight:900;font-family:ui-monospace,Menlo,monospace;word-break:break-word}
+.year-sub{margin-top:2px;font-size:12px;font-weight:800;opacity:.85}
+.year-bars{display:flex;align-items:flex-end;gap:4px;height:130px;padding-top:16px}
+.yb{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.yb i{display:block;width:100%;border-radius:6px 6px 2px 2px;background:rgba(255,255,255,.3);transition:height .6s}
+.yb i.top{background:linear-gradient(180deg,#fdb515,#f58020);box-shadow:0 0 12px rgba(253,181,21,.7)}
+.yb b{margin-top:3px;font-size:9.5px;color:#b4cdf2;font-weight:800}
+.yb-v{font-size:8.5px;color:#e6efff;font-weight:800;margin-bottom:2px;white-space:nowrap}
+.year-x{cursor:pointer;-webkit-tap-highlight-color:transparent;border-radius:16px}
+.year-glow{animation:yearGlow 1.6s ease-in-out infinite}
+@keyframes yearGlow{0%,100%{box-shadow:0 0 0 0 rgba(253,181,21,0)}50%{box-shadow:0 0 18px 6px rgba(253,181,21,.85)}}
+@media (prefers-reduced-motion:reduce){.year-glow{animation:none;box-shadow:0 0 14px 4px rgba(253,181,21,.8)}}
+/* ===== BIỂU TƯỢNG RẠP PHIM ĐỘNG (SVG tự vẽ) ===== */
+.fa-calendar-check::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='8' y='26' width='48' height='30' rx='4' fill='%230b2a63' stroke='%23fff' stroke-width='3'/%3E%3Cpath d='M27 33l14 8-14 8z' fill='%23fdb515'/%3E%3Cg%3E%3CanimateTransform attributeName='transform' type='rotate' values='0 10 26;-26 10 26;0 10 26;0 10 26' keyTimes='0;.08;.16;1' dur='2.6s' repeatCount='indefinite'/%3E%3Crect x='8' y='12' width='48' height='14' rx='3' fill='%23fff'/%3E%3Cpath d='M17 12l-5 14M29 12l-5 14M41 12l-5 14M53 12l-5 14' stroke='%23071a40' stroke-width='5'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+.fa-calendar-week::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='20' cy='16' r='9' fill='none' stroke='%23fdb515' stroke-width='3'/%3E%3Ccircle cx='42' cy='16' r='9' fill='none' stroke='%23fdb515' stroke-width='3'/%3E%3Cg%3E%3CanimateTransform attributeName='transform' type='rotate' values='0 20 16;360 20 16' dur='3s' repeatCount='indefinite'/%3E%3Cpath d='M20 8v16M12 16h16' stroke='%23fdb515' stroke-width='2.5'/%3E%3C/g%3E%3Cg%3E%3CanimateTransform attributeName='transform' type='rotate' values='0 42 16;360 42 16' dur='3s' repeatCount='indefinite'/%3E%3Cpath d='M42 8v16M34 16h16' stroke='%23fdb515' stroke-width='2.5'/%3E%3C/g%3E%3Crect x='6' y='28' width='42' height='24' rx='5' fill='%230b2a63' stroke='%23fff' stroke-width='3'/%3E%3Ccircle cx='20' cy='40' r='5' fill='%2300b7e6'/%3E%3Crect x='48' y='34' width='8' height='12' rx='2' fill='%23fff'/%3E%3Cpath d='M57 36l6-6v20l-6-6z' fill='%23fdb515'%3E%3Canimate attributeName='opacity' values='1;.3;1' dur='.5s' repeatCount='indefinite'/%3E%3C/path%3E%3C/svg%3E") center/contain no-repeat}
+.fa-calendar-days::before,.fa-calendar-pen::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='8' y='12' width='48' height='44' rx='6' fill='%23fff'/%3E%3Crect x='8' y='12' width='48' height='15' rx='6' fill='%23f58020'/%3E%3Cpath d='M14 17h5v5h-5zM25 17h5v5h-5zM36 17h5v5h-5zM47 17h5v5h-5z' fill='%23fff'/%3E%3Cg fill='%23034ea2'%3E%3Ccircle cx='18' cy='36' r='2.6'/%3E%3Ccircle cx='29' cy='36' r='2.6'/%3E%3Ccircle cx='40' cy='36' r='2.6'/%3E%3Ccircle cx='51' cy='36' r='2.6'/%3E%3Ccircle cx='18' cy='47' r='2.6'/%3E%3Ccircle cx='29' cy='47' r='2.6'/%3E%3Ccircle cx='40' cy='47' r='2.6'/%3E%3C/g%3E%3Ccircle cx='51' cy='47' r='4' fill='%23fdb515'%3E%3Canimate attributeName='r' values='3;5.8;3' dur='1.4s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/svg%3E") center/contain no-repeat}
+.fa-receipt::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M6 16h46a0 0 0 010 0v10a5 5 0 000 10v10H6V36a5 5 0 000-10z' fill='%23f58020'/%3E%3Cpath d='M38 18v26' stroke='%23fff' stroke-width='2.4' stroke-dasharray='3 3'/%3E%3Cpath transform='translate(21 31)' d='M0 -7 L2.2 -2.2 L7 0 L2.2 2.2 L0 7 L-2.2 2.2 L-7 0 L-2.2 -2.2z' fill='%23fff'/%3E%3Cellipse cx='50' cy='46' rx='10' ry='10' fill='%23fdb515' stroke='%23fff' stroke-width='3'%3E%3Canimate attributeName='rx' values='10;4;10' dur='1.8s' repeatCount='indefinite'/%3E%3C/ellipse%3E%3Cellipse cx='50' cy='46' rx='5' ry='5' fill='%23f58020'%3E%3Canimate attributeName='rx' values='5;2;5' dur='1.8s' repeatCount='indefinite'/%3E%3C/ellipse%3E%3C/svg%3E") center/contain no-repeat}
+.fa-gamepad::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='4' y='20' width='56' height='32' rx='15' fill='%230b2a63' stroke='%23fff' stroke-width='3'/%3E%3Cpath d='M20 28v16M12 36h16' stroke='%23fff' stroke-width='4.4' stroke-linecap='round'/%3E%3Ccircle cx='43' cy='31' r='4.6' fill='%23f58020'%3E%3Canimate attributeName='opacity' values='1;.25;1' dur='1s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='51' cy='39' r='4.6' fill='%23fdb515'%3E%3Canimate attributeName='opacity' values='1;.25;1' dur='1s' begin='.5s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='35' cy='39' r='3' fill='%2300b7e6'/%3E%3C/svg%3E") center/contain no-repeat}
+.fa-book-open::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 20C26 15 16 15 7 18v34c9-3 19-3 25 1z' fill='%23fff'/%3E%3Cpath d='M32 20c6-5 16-5 25-2v34c-9-3-19-3-25 1z' fill='%23dbe8ff'/%3E%3Cpath d='M13 27h13M13 34h13M13 41h13M38 27h13M38 34h13M38 41h13' stroke='%23034ea2' stroke-width='2.4' stroke-linecap='round'/%3E%3Cg transform='translate(32 9)'%3E%3Cpath d='M0 -7 L2.2 -2.2 L7 0 L2.2 2.2 L0 7 L-2.2 2.2 L-7 0 L-2.2 -2.2z' fill='%23fdb515'%3E%3CanimateTransform attributeName='transform' type='scale' values='1;1.5;1' dur='1.6s' repeatCount='indefinite'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+.fa-gear::before,.fa-sliders::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg%3E%3CanimateTransform attributeName='transform' type='rotate' values='0 32 32;360 32 32' dur='8s' repeatCount='indefinite'/%3E%3Ccircle cx='32' cy='32' r='25' fill='%230b2a63' stroke='%23fdb515' stroke-width='5'/%3E%3Ccircle cx='32' cy='17' r='4.6' fill='%23071a40'/%3E%3Ccircle cx='45.3' cy='26.7' r='4.6' fill='%23071a40'/%3E%3Ccircle cx='40.2' cy='42.3' r='4.6' fill='%23071a40'/%3E%3Ccircle cx='23.8' cy='42.3' r='4.6' fill='%23071a40'/%3E%3Ccircle cx='18.7' cy='26.7' r='4.6' fill='%23071a40'/%3E%3Ccircle cx='32' cy='32' r='5.5' fill='%23fff'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+.fa-film::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='10' y='6' width='44' height='52' rx='4' fill='%230b2a63' stroke='%23fff' stroke-width='3'/%3E%3Cpath d='M13 12h5v5h-5zM13 24h5v5h-5zM13 36h5v5h-5zM13 48h5v5h-5zM46 12h5v5h-5zM46 24h5v5h-5zM46 36h5v5h-5zM46 48h5v5h-5z' fill='%23fff'/%3E%3Crect x='22' y='10' width='20' height='13' rx='2' fill='%23f58020'/%3E%3Crect x='22' y='26' width='20' height='13' rx='2' fill='%2300b7e6'%3E%3Canimate attributeName='opacity' values='1;.4;1' dur='1.2s' repeatCount='indefinite'/%3E%3C/rect%3E%3Crect x='22' y='42' width='20' height='13' rx='2' fill='%238dc63f'/%3E%3C/svg%3E") center/contain no-repeat}
+.fa-ticket::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M4 18h56v10a5 5 0 000 10v10H4V38a5 5 0 000-10z' fill='%23f58020'/%3E%3Cpath d='M42 20v24' stroke='%23fff' stroke-width='2.4' stroke-dasharray='3 3'/%3E%3Cg transform='translate(22 33)'%3E%3Cpath d='M0 -7 L2.2 -2.2 L7 0 L2.2 2.2 L0 7 L-2.2 2.2 L-7 0 L-2.2 -2.2z' fill='%23fff'%3E%3CanimateTransform attributeName='transform' type='rotate' values='0;360' dur='5s' repeatCount='indefinite'/%3E%3C/path%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+.fa-wallet::before,.fa-coins::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cellipse cx='32' cy='32' rx='24' ry='24' fill='%23fdb515' stroke='%23fff' stroke-width='4'%3E%3Canimate attributeName='rx' values='24;9;24' dur='1.8s' repeatCount='indefinite'/%3E%3C/ellipse%3E%3Cellipse cx='32' cy='32' rx='14' ry='14' fill='%23f58020'%3E%3Canimate attributeName='rx' values='14;5;14' dur='1.8s' repeatCount='indefinite'/%3E%3C/ellipse%3E%3C/svg%3E") center/contain no-repeat}
+.fa-chart-simple::before,.fa-chart-column::before{content:'';display:inline-block;width:1.18em;height:1.18em;vertical-align:-.22em;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='8' y='36' width='12' height='20' rx='3' fill='%2300b7e6'%3E%3Canimate attributeName='y' values='36;26;36' dur='1.6s' repeatCount='indefinite'/%3E%3Canimate attributeName='height' values='20;30;20' dur='1.6s' repeatCount='indefinite'/%3E%3C/rect%3E%3Crect x='26' y='22' width='12' height='34' rx='3' fill='%23fdb515'%3E%3Canimate attributeName='y' values='22;34;22' dur='1.6s' repeatCount='indefinite'/%3E%3Canimate attributeName='height' values='34;22;34' dur='1.6s' repeatCount='indefinite'/%3E%3C/rect%3E%3Crect x='44' y='30' width='12' height='26' rx='3' fill='%238dc63f'%3E%3Canimate attributeName='y' values='30;16;30' dur='1.6s' repeatCount='indefinite'/%3E%3Canimate attributeName='height' values='26;40;26' dur='1.6s' repeatCount='indefinite'/%3E%3C/rect%3E%3C/svg%3E") center/contain no-repeat}
+.past-btn{grid-column:1 / -1;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden;text-align:center}
+.past-btn::after{content:'';position:absolute;top:0;bottom:0;width:50px;left:-70px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:wrapShine 3.4s ease-in-out infinite;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.fa-calendar-check::before{content:'🎬';width:auto;height:auto;background:none;vertical-align:baseline}.fa-calendar-week::before{content:'📽️';width:auto;height:auto;background:none;vertical-align:baseline}.fa-calendar-days::before{content:'🗓️';width:auto;height:auto;background:none;vertical-align:baseline}.fa-receipt::before{content:'🧾';width:auto;height:auto;background:none;vertical-align:baseline}.fa-gamepad::before{content:'🎮';width:auto;height:auto;background:none;vertical-align:baseline}.fa-book-open::before{content:'📖';width:auto;height:auto;background:none;vertical-align:baseline}.fa-gear::before{content:'⚙️';width:auto;height:auto;background:none;vertical-align:baseline}.fa-film::before{content:'🎞️';width:auto;height:auto;background:none;vertical-align:baseline}.fa-ticket::before{content:'🎟️';width:auto;height:auto;background:none;vertical-align:baseline}.fa-wallet::before{content:'💰';width:auto;height:auto;background:none;vertical-align:baseline}.fa-coins::before{content:'🪙';width:auto;height:auto;background:none;vertical-align:baseline}.fa-chart-simple::before{content:'📊';width:auto;height:auto;background:none;vertical-align:baseline}.fa-chart-column::before{content:'📊';width:auto;height:auto;background:none;vertical-align:baseline}.past-btn::after{display:none}}
+/* ===== TỔNG KẾT NĂM (Wrapped) ===== */
+.wr-ym{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;max-width:310px;margin-top:6px}
+.wr-ym i{font-style:normal;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 2px;border-radius:12px;background:rgba(0,0,0,.2);color:rgba(255,255,255,.7);animation:ywPop .5s cubic-bezier(.2,1.4,.4,1) both}
+.wr-ym i b{font-size:11px;font-weight:900}.wr-ym i em{font-style:normal;font-size:9.5px;font-weight:800}
+.wr-ym i.on{background:#fdb515;color:#071a40;box-shadow:0 0 12px rgba(253,181,21,.7)}
+@keyframes ywPop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.wr-yb{display:flex;align-items:flex-end;gap:4px;height:140px;width:100%;max-width:320px;margin-top:8px;padding:0 2px}
+.wr-yb div{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;font-size:9px;font-weight:800}
+.wr-yb div em{font-style:normal;font-size:8.5px;margin-bottom:2px;color:#fff}
+.wr-yb div i{display:block;width:100%;height:0;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#8fe3ff,#034ea2);animation:ywBar .9s cubic-bezier(.2,.8,.2,1) forwards}
+.wr-yb div.top i{background:linear-gradient(180deg,#fdb515,#f58020);box-shadow:0 0 14px rgba(253,181,21,.8)}
+.wr-yb div b{margin-top:3px;font-size:9px}
+@keyframes ywBar{to{height:calc(var(--h) * .78)}}
+.wrap-yrow{display:flex;gap:8px}.wrap-yrow .wrap-btn{flex:1;padding:12px 6px;font-size:13px}
+@media (prefers-reduced-motion:reduce){.wr-ym i{animation:none}.wr-yb div i{animation:none;height:calc(var(--h) * .78)}}
+.wrap-big.sm{font-size:clamp(34px,11.5vw,56px);white-space:nowrap}
+.wrap-big.xs{font-size:clamp(30px,9.6vw,48px);white-space:nowrap}
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white pb-12">
@@ -583,7 +635,7 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
             <!-- BRAND LOGO AREA (Emulating Official Galaxy Cinema GO! AN LẠC Logo) -->
             <div class="flex items-center space-x-3.5">
                 <!-- Logo -->
-                <div class="flex items-center justify-center shrink-0 transform hover:scale-105 transition">
+                <div id="yearX" role="button" tabindex="0" aria-label="Xem tổng kết năm" onclick="openYearSummary()" onkeydown="if(event.key==='Enter')openYearSummary()" class="year-x flex items-center justify-center shrink-0 transform hover:scale-105 transition">
                     <img src="data:image/png;base64,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" alt="Galaxy Cinema GO!" class="w-12 h-12 object-contain ">
                 </div>
                 <div>
@@ -1105,7 +1157,10 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
         </div>
 
         <div id="pastNote" class="past-note"></div>
-        <button onclick="openPastMonths()" class="past-btn">📚 Bổ sung lương</button>
+        <div class="grid grid-cols-2 gap-2">
+            <button onclick="openPastMonths()" class="past-btn">📚 Bổ sung lương</button>
+            
+        </div>
 
         <!-- 🎯 MỤC TIÊU KỲ LƯƠNG -->
         <div id="goalCard" class="goal-card w-full rounded-2xl p-4 border">
@@ -1329,6 +1384,8 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
             <div class="lk-card space-y-2">
                 <label class="block text-[11px] font-black text-amber-300 uppercase">Tháng (kỳ kết thúc ngày 25)</label>
                 <input id="pastMonth" type="month" class="past-in">
+                <label class="block text-[11px] font-black text-amber-300 uppercase">Tháng đó đi làm bao nhiêu ngày?</label>
+                <input id="pastDays" type="text" inputmode="numeric" placeholder="VD: 22" maxlength="2" class="past-in" autocomplete="off">
                 <label class="block text-[11px] font-black text-amber-300 uppercase">Tổng lương cả tháng (đồng)</label>
                 <input id="pastAmount" type="text" inputmode="numeric" placeholder="VD: 7500000" class="past-in" autocomplete="off">
                 <label class="block text-[11px] font-black text-amber-300 uppercase">Ghi chú (không bắt buộc)</label>
@@ -1339,6 +1396,16 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
             <div class="text-xs font-black text-amber-300 uppercase">📋 Các khoản đã bổ sung</div>
             <div id="pastList" class="space-y-2"></div>
             <p class="text-[10px] text-slate-400 leading-relaxed">Lưu ý: nếu tháng đó bạn đã chấm công từng ngày trong app thì đừng bổ sung thêm tổng, vì số tiền sẽ bị cộng trùng. Khoản bổ sung được cộng vào tổng thu nhập, mục tiêu và biểu đồ 4 kỳ của kỳ đó.</p>
+        </div>
+    </div>
+
+    <!-- 📆 TỔNG KẾT NĂM -->
+    <div id="yearModal" class="fixed inset-0 z-[55] bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-galaxy-card border border-orange-500/50 rounded-2xl w-full max-w-md max-h-[90vh] overflow-y-auto p-5 shadow-2xl space-y-3 relative">
+            <button onclick="closeYearSummary()" class="absolute top-3 right-3 text-slate-400 hover:text-white p-1"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h3 class="text-base font-extrabold text-white pr-8">📆 Tổng kết năm</h3>
+            <div class="year-step"><button onclick="yearStep(-1)" aria-label="Năm trước">‹</button><b id="yearLabel">2026</b><button onclick="yearStep(1)" aria-label="Năm sau">›</button></div>
+            <div id="yearBody"></div>
         </div>
     </div>
 
@@ -1425,8 +1492,9 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
 <div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">HƯỚNG DẪN SỬ DỤNG</div>
 <h3 class="text-xl font-black text-white mt-1">Chào mừng bạn! 👋</h3>
 <p class="text-xs text-slate-300 mt-1">App có 4 tab ở phía trên. Bấm vào từng tab để chuyển màn hình:</p>
-<div class="tg-phone"><div class="tg-row"><div class="tg-b go">Hôm Nay</div><div class="tg-b ">Theo Tuần</div><div class="tg-b ">Lịch Tháng</div><div class="tg-b ">Kỳ Lương</div></div><div class="tg-tap p1" style="left:13%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span><em>Hôm Nay</em>: chấm công cho ngày hôm nay</span></li><li><b>2</b><span><em>Theo Tuần</em>: xem ngày công, giờ làm, lương theo tuần</span></li><li><b>3</b><span><em>Lịch Tháng</em>: xem cả tháng, chấm công bù ngày cũ</span></li><li><b>4</b><span><em>Kỳ Lương</em>: tổng lương, mục tiêu, lương khác</span></li></ol><div class="tg-tip">Vuốt sang trái hoặc bấm <b>TIẾP THEO</b> để xem từng bước 👉</div>
+<div class="tg-phone"><div class="tg-row"><div class="tg-b go">Hôm Nay</div><div class="tg-b ">Theo Tuần</div><div class="tg-b ">Lịch Tháng</div><div class="tg-b ">Kỳ Lương</div></div><div class="tg-tap p1" style="left:13%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span><em>Hôm Nay</em>: chấm công cho ngày hôm nay</span></li><li><b>2</b><span><em>Theo Tuần</em>: xem ngày công, giờ làm, lương theo tuần</span></li><li><b>3</b><span><em>Lịch Tháng</em>: xem cả tháng, chấm công bù ngày cũ</span></li><li><b>4</b><span><em>Kỳ Lương</em>: tổng lương, mục tiêu, bổ sung lương, Wrapped</span></li></ol><div class="tg-tip">Vuốt sang trái hoặc bấm <b>TIẾP THEO</b> để xem từng bước 👉</div>
 </div>
+
 
 <div class="howto-slide p-5 text-center">
 <div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">01 • HÔM NAY</div>
@@ -1435,59 +1503,99 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
 <div class="tg-phone"><div class="tg-row"><span class="tg-n">1</span><div class="tg-b go">CÓ (ĐI LÀM)</div><div class="tg-b off">KHÔNG (OFF ⚪)</div></div><div class="tg-row"><span class="tg-n">2</span><div class="tg-b ">CO<br>Concession</div><div class="tg-b ">US<br>Usher</div><div class="tg-b ">LB<br>Lobby</div></div><div class="tg-row"><span class="tg-n">3</span><div class="tg-b ">09:00 → 14:00</div><div class="tg-b ">14:00 → 18:00</div><div class="tg-b ">18:00 → 23:00</div></div><div class="tg-row"><span class="tg-n">4</span><div class="tg-b ok">XÁC NHẬN CHẤM CÔNG</div></div><div class="tg-tap p2" style="left:26%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm <em>CÓ (ĐI LÀM)</em>. Hôm nay nghỉ thì bấm KHÔNG (OFF)</span></li><li><b>2</b><span>Chọn ca của bạn: <em>CO</em>, <em>US</em> hoặc <em>LB</em></span></li><li><b>3</b><span>Bấm một khung giờ có sẵn, hoặc tự nhập giờ bắt đầu và kết thúc</span></li><li><b>4</b><span>Bấm <em>XÁC NHẬN CHẤM CÔNG</em> để lưu</span></li></ol><div class="tg-tip">Bấm NGÀY TRƯỚC hoặc NGÀY SAU để chấm cho ngày khác.</div>
 </div>
 
+
 <div class="howto-slide p-5 text-center">
-<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">02 • LỊCH THÁNG</div>
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">02 • LÀM CHUNG</div>
+<h3 class="text-xl font-black text-white mt-1">Ghi làm chung với ai 👥</h3>
+<p class="text-xs text-slate-300 mt-1">Để khi thiếu hàng cần đền chung, chỉ cần tra là biết hôm đó làm với ai:</p>
+<div class="tg-phone"><div class="tg-row" style="height:24px"><div class="tg-b" style="background:none;border:0;color:#fff;justify-content:flex-start">👥 Làm chung với ai?</div></div><div class="tg-row"><span class="tg-n">1</span><div class="tg-b go">✓ Lan</div><div class="tg-b go">✓ Minh</div><div class="tg-b ">Hoa</div><div class="tg-b" style="flex:.5">➕</div></div><div class="tg-row"><span class="tg-n">2</span><div class="tg-b ">👥 Đồng nghiệp</div><div class="tg-b go">🔎 Tra cứu làm chung</div></div><div class="tg-tap" style="left:72%;top:94px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm <em>👥 Đồng nghiệp</em> để thêm tên những người hay làm chung</span></li><li><b>2</b><span>Khi chấm công, chạm tên ở mục <em>Làm chung với ai?</em> (chọn được nhiều người) rồi bấm XÁC NHẬN</span></li><li><b>3</b><span>Cần xem lại? Bấm <em>🔎 Tra cứu làm chung</em>, chọn ngày để biết hôm đó làm chung với ai</span></li></ol><div class="tg-tip">Quên ghi hôm trước? Vào <b>Lịch Tháng</b>, bấm vào ngày đó để thêm người làm chung.</div>
+</div>
+
+
+<div class="howto-slide p-5 text-center">
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">03 • LỊCH THÁNG</div>
 <h3 class="text-xl font-black text-white mt-1">Quên chấm? Chấm công bù</h3>
 <p class="text-xs text-slate-300 mt-1">Vào tab <b>Lịch Tháng</b>, bấm vào ngày cần sửa:</p>
 <div class="tg-phone"><div class="tg-cal"><i>T2</i><i>T3</i><i>T4</i><i>T5</i><i>T6</i><i>T7</i><i>CN</i></div><div class="tg-cal d"><i class="">19</i><i class="w">20</i><i class="w">21</i><i class="">22</i><i class="hot">23</i><i class="">24</i><i class="">25</i><i class="w">26</i><i class="w">27</i><i class="">28</i><i class="">29</i><i class="">30</i><i class="">31</i><i class="">1</i></div><div class="tg-tap " style="left:65%;top:58px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><div class="text-lg leading-none text-amber-300">⬇</div><div class="tg-phone"><div class="tg-ttl">CHẤM CÔNG BÙ · 23/10</div><div class="tg-row"><div class="tg-b go">CO</div><div class="tg-b ">US</div><div class="tg-b ">LB</div><div class="tg-b ">OFF ⚪</div></div><div class="tg-row"><div class="tg-b off">HỦY BỎ</div><div class="tg-b ok">LƯU THAY ĐỔI</div></div><div class="tg-tap " style="left:75%;top:114px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm vào <em>ngày</em> cần chấm hoặc chỉnh sửa trên lịch</span></li><li><b>2</b><span>Chọn ca (CO, US, LB) hoặc OFF, chỉnh giờ nếu cần</span></li><li><b>3</b><span>Bấm <em>LƯU THAY ĐỔI</em></span></li></ol><div class="tg-tip">Ngày có chấm tròn cam là ngày đã đi làm.</div>
 </div>
 
+
 <div class="howto-slide p-5 text-center">
-<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">03 • THEO TUẦN</div>
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">04 • THEO TUẦN</div>
 <h3 class="text-xl font-black text-white mt-1">Xem lịch làm theo tuần</h3>
 <p class="text-xs text-slate-300 mt-1">Vào tab <b>Theo Tuần</b> để xem tổng kết nhanh:</p>
 <div class="tg-phone"><div class="tg-row"><span class="tg-n">1</span><div class="tg-b ">TUẦN TRƯỚC</div><div class="tg-b go">TUẦN HIỆN TẠI</div><div class="tg-b ">TUẦN SAU</div></div><div class="tg-row" style="height:48px"><span class="tg-n">2</span><div class="tg-b ">Ngày công<br>5</div><div class="tg-b ">Tổng giờ<br>24h</div><div class="tg-b ">Lương tuần<br>…</div></div><div class="tg-row"><span class="tg-n">3</span><div class="tg-b ">XUẤT CSV TUẦN</div></div><div class="tg-tap " style="left:83%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm <em>TUẦN TRƯỚC</em> hoặc <em>TUẦN SAU</em> để đổi tuần, <em>TUẦN HIỆN TẠI</em> để quay về</span></li><li><b>2</b><span>Xem số ngày công, tổng giờ, giờ OT và lương của tuần</span></li><li><b>3</b><span>Cần file bảng tính thì bấm <em>XUẤT CSV TUẦN</em></span></li></ol><div class="tg-tip">Một tuần tính từ <b>Thứ 6 → Thứ 5</b>.</div>
 </div>
 
+
 <div class="howto-slide p-5 text-center">
-<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">04 • KỲ LƯƠNG</div>
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">05 • KỲ LƯƠNG</div>
 <h3 class="text-xl font-black text-white mt-1">Xem tiền lương theo kỳ</h3>
 <p class="text-xs text-slate-300 mt-1">Vào tab <b>Kỳ Lương</b>. Mỗi kỳ tính từ ngày <b>26 → 25</b> tháng sau:</p>
 <div class="tg-phone"><div class="tg-row"><span class="tg-n">1</span><div class="tg-b ">KỲ TRƯỚC</div><div class="tg-b go">KỲ HIỆN TẠI</div><div class="tg-b ">KỲ SAU</div></div><div class="tg-row" style="height:56px"><span class="tg-n">2</span><div class="tg-b" style="font-size:20px;color:#fdb515">TỔNG THU NHẬP …₫</div></div><div class="tg-row"><span class="tg-n">3</span><div class="tg-b ">💵 Lương thường</div><div class="tg-b ">🌙 Lương OT</div><div class="tg-b ">⏱️ Giờ</div></div><div class="tg-tap " style="left:17%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm <em>KỲ TRƯỚC</em> hoặc <em>KỲ SAU</em> để xem các kỳ khác</span></li><li><b>2</b><span>Số to ở giữa là <em>tổng thu nhập</em> của kỳ</span></li><li><b>3</b><span>Bên dưới là lương thường, lương OT, tổng giờ và số ngày công</span></li></ol><div class="tg-tip">Cần bảng tính thì bấm <b>XUẤT CSV KỲ</b> ở cuối trang.</div>
 </div>
 
+
 <div class="howto-slide p-5 text-center">
-<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">05 • MỤC TIÊU</div>
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">06 • MỤC TIÊU</div>
 <h3 class="text-xl font-black text-white mt-1">Đặt mục tiêu kỳ lương 🎯</h3>
 <p class="text-xs text-slate-300 mt-1">Trong tab <b>Kỳ Lương</b>, tìm khung <b>Mục tiêu kỳ lương</b>:</p>
 <div class="tg-phone"><div class="tg-row" style="height:24px"><div class="tg-b" style="background:none;border:0;color:#fff;font-size:12px">Kỳ này bạn muốn kiếm bao nhiêu?</div></div><div class="tg-row"><span class="tg-n">1</span><div class="tg-b go">5tr</div><div class="tg-b go">7tr</div><div class="tg-b go">10tr</div><div class="tg-b go">12tr</div><div class="tg-b go">15tr</div></div><div class="tg-row" style="height:26px"><div class="tg-bar"><i></i><u>🎬</u></div></div><div class="tg-row" style="height:34px"><div class="tg-b go">🍿 25%</div><div class="tg-b ">🎟️ 50%</div><div class="tg-b ">🎬 75%</div><div class="tg-b ">🏆 100%</div></div><div class="tg-tap " style="left:50%;top:66px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm một mức có sẵn (ví dụ <em>10 triệu</em>), hoặc bấm <em>✏️ Đặt mục tiêu</em> để tự nhập số</span></li><li><b>2</b><span>Thanh tiến độ sẽ chạy khi bạn có thêm thu nhập</span></li><li><b>3</b><span>Qua mỗi mốc 25%, 50%, 75% huy hiệu sẽ sáng lên, bấm 💬 để nghe lời cổ vũ</span></li></ol><div class="tg-tip">Đạt 100% sẽ có pháo giấy 🎉</div>
 </div>
 
+
 <div class="howto-slide p-5 text-center">
-<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">06 • LƯƠNG KHÁC</div>
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">07 • LƯƠNG KHÁC</div>
 <h3 class="text-xl font-black text-white mt-1">Cộng thêm thu nhập ngoài</h3>
 <p class="text-xs text-slate-300 mt-1">Làm thêm việc khác (phát tờ rơi, giao đồ…)? Ghi vào phần <b>Lương khác</b>:</p>
 <div class="tg-phone"><div class="tg-row" style="height:24px"><div class="tg-b" style="background:none;border:0;color:#fff;justify-content:flex-start">➕ Lương khác</div></div><div class="tg-row"><span class="tg-n">1</span><div class="tg-b " style="flex:2;font-weight:700">Tên khoản<br>VD: Phát tờ rơi</div><div class="tg-b " style="flex:1.2;font-weight:700">Số tiền</div><div class="tg-b go" style="flex:.5;font-size:16px">➜</div></div><div class="tg-tap " style="left:92%;top:66px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Nhập <em>tên khoản</em> và <em>số tiền</em></span></li><li><b>2</b><span>Bấm nút <em>➜</em> để thêm</span></li><li><b>3</b><span>Khoản này được cộng thẳng vào <em>tổng thu nhập</em> của kỳ</span></li></ol><div class="tg-tip">Nhập nhầm? Xóa khoản đó trong danh sách rồi nhập lại.</div>
 </div>
 
+
 <div class="howto-slide p-5 text-center">
-<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">07 • TRÒ CHƠI</div>
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">08 • BỔ SUNG LƯƠNG</div>
+<h3 class="text-xl font-black text-white mt-1">Thêm lương các tháng trước 📚</h3>
+<p class="text-xs text-slate-300 mt-1">Tháng trước khi dùng app, không cần nhập từng ngày, chỉ nhập tổng:</p>
+<div class="tg-phone"><div class="tg-row"><span class="tg-n">1</span><div class="tg-b go">📚 Bổ sung lương</div></div><div class="tg-row"><span class="tg-n">2</span><div class="tg-b ">Tháng 7/2026</div><div class="tg-b ">7.500.000 ₫</div></div><div class="tg-row"><span class="tg-n">3</span><div class="tg-b ">Số ngày đã làm: 22</div></div><div class="tg-row"><span class="tg-n">4</span><div class="tg-b ok">➕ Lưu khoản bổ sung</div></div><div class="tg-tap" style="left:50%;top:58px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Trong tab <em>Kỳ Lương</em>, bấm <em>📚 Bổ sung lương</em></span></li><li><b>2</b><span>Chọn <em>tháng</em>, nhập <em>tổng lương cả tháng</em> và <em>số ngày đã làm</em></span></li><li><b>3</b><span>Bấm <em>Lưu khoản bổ sung</em>. Số tiền được cộng vào tổng thu nhập, mục tiêu và Tổng kết năm</span></li></ol><div class="tg-tip">⚠️ Tháng nào đã chấm công từng ngày thì đừng bổ sung thêm, vì tiền sẽ bị cộng trùng.</div>
+</div>
+
+
+<div class="howto-slide p-5 text-center">
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">09 • WRAPPED</div>
+<h3 class="text-xl font-black text-white mt-1">Xem lại một kỳ như xem phim 🎞️</h3>
+<p class="text-xs text-slate-300 mt-1">Tổng kết kỳ lương theo từng trang, có hình, hiệu ứng và âm thanh:</p>
+<div class="tg-phone"><div class="tg-row"><span class="tg-n">1</span><div class="tg-b go" style="font-size:12px">🎞️ Wrapped kỳ lương ▶</div></div><div class="tg-row"><span class="tg-n">2</span><div class="tg-b ">Tháng 10 · 26/09–25/10</div><div class="tg-b ">Tháng 9 · 26/08–25/09</div></div><div class="tg-row"><span class="tg-n">3</span><div class="tg-b ok">📤 Chia sẻ / lưu ảnh</div></div><div class="tg-tap" style="left:50%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm <em>Wrapped kỳ lương</em> trong tab Kỳ Lương. Muốn xem kỳ cũ thì chạm một tháng ở hàng <em>📼 Xem lại</em></span></li><li><b>2</b><span>Chạm nửa phải màn hình để sang trang, nửa trái để quay lại. Nút <em>🔊</em> để bật hoặc tắt âm thanh</span></li><li><b>3</b><span>Ở trang cuối, bấm <em>Chia sẻ / lưu ảnh</em> để gửi cho bạn bè</span></li></ol><div class="tg-tip">🎉 Ngày 26 hằng tháng, Wrapped của kỳ vừa xong tự động hiện lên. Muốn thêm GIF thì bấm <b>🖼️ Thêm GIF từ GIPHY</b> dưới nút Wrapped.</div>
+</div>
+
+
+<div class="howto-slide p-5 text-center">
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">10 • TỔNG KẾT NĂM</div>
+<h3 class="text-xl font-black text-white mt-1">Cả năm bạn làm được bao nhiêu 📆</h3>
+<p class="text-xs text-slate-300 mt-1">Tổng tiền, tổng số ngày làm và tháng cao nhất của cả năm:</p>
+<div class="tg-phone"><div class="tg-row" style="height:50px"><span class="tg-n">2</span><div class="tg-b go" style="flex:.45;font-size:28px;font-weight:900">✕</div><div class="tg-b" style="flex:2.2;flex-direction:column;align-items:flex-start;padding-left:10px;background:none;border:0;color:#fff;font-size:13px">GALAXY CINEMA<small style="font-size:10px;color:#fdb515">GO! AN LẠC</small></div></div><div class="tg-row"><span class="tg-n">3</span><div class="tg-b" style="flex:.4">‹</div><div class="tg-b ">Năm 2026</div><div class="tg-b" style="flex:.4">›</div></div><div class="tg-tap" style="left:15%;top:36px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Đến ngày <em>25/12</em> hằng năm, Tổng kết năm <em>tự hiện ra</em>. Logo ✕ nhấp nháy sáng đến hết 31/12</span></li><li><b>2</b><span>Muốn xem lại bất cứ lúc nào: chạm vào <em>logo ✕</em> ở góc trên bên trái thanh tiêu đề</span></li><li><b>3</b><span>Xem như Wrapped: chạm nửa phải để sang trang, nửa trái để quay lại. Ở trang cuối bấm <em>‹ Năm ›</em> để đổi năm hoặc <em>Chia sẻ</em></span></li></ol><div class="tg-tip">Không có nút chữ nào cả, cứ chạm vào <b>logo ✕</b> là xem được. Bình thường nó ẩn đi, đến 25/12 mới tự hiện 🎉</div>
+</div>
+
+
+<div class="howto-slide p-5 text-center">
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">11 • TRÒ CHƠI</div>
 <h3 class="text-xl font-black text-white mt-1">Chơi POS Challenge 🎮</h3>
 <p class="text-xs text-slate-300 mt-1">Giải trí giữa ca bằng trò chơi bán vé, bắp nước:</p>
 <div class="tg-phone"><div class="tg-row"><div class="tg-b go" style="flex:3;justify-content:flex-start;padding-left:10px">GALAXY CINEMA</div><div class="tg-b " style="flex:.6;font-size:16px">🎮</div><div class="tg-b " style="flex:.6;font-size:16px">📖</div><div class="tg-b " style="flex:.6;font-size:16px">⚙️</div></div><div class="tg-row"><span class="tg-n">2</span><div class="tg-b go">🎬 BẮT ĐẦU CA LÀM</div></div><div class="tg-tap p8" style="left:69%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm biểu tượng <em>🎮</em> ở góc trên bên phải</span></li><li><b>2</b><span>Đọc luật rồi bấm <em>BẮT ĐẦU CA LÀM</em></span></li><li><b>3</b><span>Chọn đúng vé, bắp, nước, combo và trả lời QA/QC. Sai sẽ bị trừ tiền</span></li></ol><div class="tg-tip">Muốn thoát giữa chừng thì bấm <b>✕ Đóng</b>. Điểm cao nhất được lưu lại.</div>
 </div>
 
+
 <div class="howto-slide p-5 text-center">
-<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">08 • CÀI ĐẶT & SAO LƯU</div>
+<div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">12 • CÀI ĐẶT & SAO LƯU</div>
 <h3 class="text-xl font-black text-white mt-1">Giữ an toàn dữ liệu ⚙️</h3>
 <p class="text-xs text-slate-300 mt-1">Dữ liệu chỉ nằm trên điện thoại này, hãy sao lưu thường xuyên:</p>
-<div class="tg-phone"><div class="tg-row"><div class="tg-b go" style="flex:3;justify-content:flex-start;padding-left:10px">GALAXY CINEMA</div><div class="tg-b " style="flex:.6;font-size:16px">🎮</div><div class="tg-b " style="flex:.6;font-size:16px">📖</div><div class="tg-b " style="flex:.6;font-size:16px">⚙️</div></div><div class="tg-row"><span class="tg-n">2</span><div class="tg-b go">TẢI BACKUP (JSON)</div></div><div class="tg-tap p9" style="left:94%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm biểu tượng <em>⚙️</em> ở góc trên bên phải</span></li><li><b>2</b><span>Bấm <em>TẢI BACKUP (JSON)</em>, file sẽ lưu vào máy</span></li><li><b>3</b><span>Đổi điện thoại hoặc lỡ mất dữ liệu: vào ⚙️ và chọn file backup ở mục khôi phục</span></li></ol><div class="tg-tip">⚠️ Xóa dữ liệu Safari hoặc đổi máy sẽ mất dữ liệu. Nên sao lưu mỗi tuần.<br>📖 Muốn xem lại hướng dẫn: bấm biểu tượng <b>cuốn sách</b> ở góc trên phải.</div>
+<div class="tg-phone"><div class="tg-row"><div class="tg-b go" style="flex:3;justify-content:flex-start;padding-left:10px">GALAXY CINEMA</div><div class="tg-b " style="flex:.6;font-size:16px">🎮</div><div class="tg-b " style="flex:.6;font-size:16px">📖</div><div class="tg-b " style="flex:.6;font-size:16px">⚙️</div></div><div class="tg-row"><span class="tg-n">2</span><div class="tg-b go">TẢI BACKUP (JSON)</div></div><div class="tg-tap p9" style="left:94%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm biểu tượng <em>⚙️</em> ở góc trên bên phải</span></li><li><b>2</b><span>Bấm <em>TẢI BACKUP (JSON)</em>, file sẽ lưu vào máy</span></li><li><b>3</b><span>Đổi điện thoại hoặc lỡ mất dữ liệu: vào ⚙️ và chọn file backup ở mục khôi phục</span></li></ol><div class="tg-tip">⚠️ Xóa dữ liệu Safari hoặc đổi máy sẽ mất dữ liệu. Nên sao lưu mỗi tuần.<br>💾 File sao lưu gồm cả danh sách đồng nghiệp và lương bổ sung.<br>📖 Muốn xem lại hướng dẫn: bấm biểu tượng <b>cuốn sách</b> ở góc trên phải.</div>
 </div>
 
 
             </div>
 
         </div>
+
 
 
         <!-- DOTS -->
@@ -2505,7 +2613,10 @@ function wrDM(d) {
 
 function wrappedStats(ref) {
     const range = getPayrollPeriodRange(ref || selectedPayrollDate);
-    const s = new Date(range.startDate), e = new Date(range.endDate);
+    return wrappedStatsRange(new Date(range.startDate), new Date(range.endDate));
+}
+
+function wrappedStatsRange(s, e) {
     const st = { start: s, end: e, totalDays: 0, flags: [], days: 0, hours: 0, ot: 0, pay: 0, other: 0, richest: null, longest: null,
         bestStreak: 0, bestStart: null, bestEnd: null, byShift: { CO: 0, US: 0, LB: 0 }, byDow: [0, 0, 0, 0, 0, 0, 0], mates: {} };
     let streak = 0, streakStart = null;
@@ -2881,6 +2992,41 @@ const WRS_SCENES = {
     }
 };
 
+// Âm thanh và nhóm nhảy cho các trang riêng của Tổng kết năm
+WRS_SCENES.ydays = function (t) {
+    const ys = WR.ys;
+    if (!ys) return;
+    let n = 0;
+    ys.ms.forEach(function (x, i) {
+        if (x.days > 0) { WRS.osc('triangle', 520 + n * 55, t + 0.3 + i * 0.09, 0.14, 0.1); n++; }
+    });
+    WRS.bell(1568, t + 0.5 + ys.ms.length * 0.09, 0.12);
+};
+WRS_SCENES.ybest = function (t) {
+    [64, 67, 72, 76].forEach(function (m, i) { WRS.brass(m, t + 0.1 + i * 0.13, i === 3 ? 0.8 : 0.2, 0.09); });
+    WRS.crash(t + 0.62, 0.3);
+    for (let i = 0; i < 8; i++) WRS.pop(t + 0.8 + Math.random() * 1.6, 0.1);
+};
+WRS_SCENES.ybars = function (t) {
+    const ys = WR.ys;
+    if (!ys) return;
+    const mx = Math.max.apply(null, ys.ms.map(function (x) { return x.total; })) || 1;
+    const pent = [0, 2, 4, 7, 9];
+    ys.ms.forEach(function (x, i) {
+        if (x.total <= 0) return;
+        const lvl = Math.round(x.total / mx * 9);
+        const m = 60 + pent[lvl % 5] + 12 * Math.floor(lvl / 5);
+        WRS.osc('sine', 440 * Math.pow(2, (m - 69) / 12), t + 0.2 + i * 0.09, 0.3, 0.12);
+    });
+};
+WRS_SCENES.yavg = function (t) {
+    [72, 76, 79, 84].forEach(function (m, i) { WRS.bell(440 * Math.pow(2, (m - 69) / 12), t + 0.3 + i * 0.16, 0.1); });
+};
+WR_CREW.ydays = { d: ['💃', '🕺', '💃'], say: ['Cả năm chăm chỉ!', 'Đỉnh ghê!', 'Cứng cựa!'] };
+WR_CREW.ybest = { d: ['🥳', '🕺', '🏆', '💃', '🥳'], say: ['Tháng vàng!', 'Quá đỉnh!', 'Vô đối!'] };
+WR_CREW.ybars = { d: ['📈', '🕺', '💃'], say: ['Lên đều!', 'Nhìn mê chưa!', 'Chăm chỉ!'] };
+WR_CREW.yavg = { d: ['🕺', '💰', '💃'], say: ['Ổn định!', 'Đều tay!', 'Giỏi ghê!'] };
+
 function wrSfx(s) {
     if (!WRS.on) return;
     WRS.ready(function () {
@@ -2994,6 +3140,12 @@ function wrGifHtml(s) {
 
 loadGifs();
 
+function wrBigCls(s) {
+    if (s.fmt !== 'money') return '';
+    const L = wrFmt(s.num, 'money').length;
+    return L >= 12 ? ' xs' : (L >= 10 ? ' sm' : '');
+}
+
 function wrFmt(n, f) {
     if (f === 'money') return formatVND(Math.round(n));
     if (f === 'dec1') return (Math.round(n * 10) / 10).toLocaleString('vi-VN');
@@ -3035,16 +3187,16 @@ function wrRender() {
     root.style.background = s.bg;
     root.style.color = s.fg;
     root.classList.toggle('last', !!s.summary);
-    const sc = s.summary ? { bg: '', viz: '' } : wrScene(s, WR.stats);
+    const sc = s.summary ? { bg: '', viz: '' } : (WR.mode === 'year' ? wrSceneYear(s, WR.ys) : wrScene(s, WR.stats));
     let h;
     if (s.summary) {
-        h = '<div class="wrap-slide sum">' + wrLogoDance() + wrSummaryHtml(WR.stats) + '</div>';
+        h = '<div class="wrap-slide sum">' + wrLogoDance() + (WR.mode === 'year' ? wrYearSummaryHtml(WR.ys) : wrSummaryHtml(WR.stats)) + '</div>';
     } else {
         h = '<div class="wrap-slide has-crew">' +
             sc.bg +
             '<div class="wrap-emoji' + (s.ring ? ' ring' : '') + '">' + s.emoji + '</div>' + wrGifHtml(s) +
             '<div class="wrap-kicker">' + escapeHtml(s.kicker) + '</div>' +
-            (s.num !== undefined ? '<div class="wrap-big"><span class="wrap-num" data-to="' + s.num + '" data-fmt="' + s.fmt + '">0</span>' + (s.unit ? '<span class="wrap-unit"> ' + s.unit + '</span>' : '') + '</div>' : '<div class="wrap-big txt">' + escapeHtml(s.big) + '</div>') +
+            (s.num !== undefined ? '<div class="wrap-big' + wrBigCls(s) + '"><span class="wrap-num" data-to="' + s.num + '" data-fmt="' + s.fmt + '">0</span>' + (s.unit ? '<span class="wrap-unit"> ' + s.unit + '</span>' : '') + '</div>' : '<div class="wrap-big txt">' + escapeHtml(s.big) + '</div>') +
             '<div class="wrap-sub">' + escapeHtml(s.sub) + '</div>' + sc.viz + wrCrew(s) + '</div>';
     }
     stage.innerHTML = h;
@@ -3093,6 +3245,7 @@ function openWrapped(ref, auto) {
         if (!auto) alert('Kỳ lương này chưa có ca nào. Hãy chấm công vài ca rồi quay lại xem Wrapped nhé! 🎬');
         return false;
     }
+    WR.mode = 'period';
     WR.stats = st;
     WR.slides = wrappedBuild(st);
     WR.i = 0;
@@ -3158,6 +3311,7 @@ window.addEventListener('load', function () {
 function closeWrapped() {
     clearTimeout(WR.timer);
     WRS.stopAll();
+    setTimeout(function () { yearAutoCheck(0); }, 700);
     document.getElementById('wrappedOverlay').classList.add('hidden');
     document.body.style.overflow = '';
 }
@@ -3171,6 +3325,7 @@ document.addEventListener('keydown', function (e) {
 });
 
 function wrappedShare() {
+    if (WR.mode === 'year') { wrappedShareYear(); return; }
     const st = WR.stats, pe = wrappedPersona(st);
     const c = document.createElement('canvas');
     c.width = 1080; c.height = 1350;
@@ -3274,7 +3429,7 @@ function renderPastNote(startDate, endDate) {
     const el = document.getElementById('pastNote');
     if (!el) return;
     const a = getPastAmount(startDate, endDate);
-    el.innerHTML = a > 0 ? '📚 Đã gồm <b>' + formatVND(a) + '</b> lương bổ sung cho kỳ này' : '';
+    el.innerHTML = a > 0 ? '📚 Đã gồm <b>' + formatVND(a) + '</b> lương bổ sung cho kỳ này' + (typeof (pastMap[getPayrollPeriodKey(startDate, endDate)] || {}).days === 'number' ? ' (' + pastMap[getPayrollPeriodKey(startDate, endDate)].days + ' ngày)' : '') : '';
 }
 
 function openPastMonths() {
@@ -3283,6 +3438,7 @@ function openPastMonths() {
     prevEnd.setDate(prevEnd.getDate() - 1);
     document.getElementById('pastMonth').value = prevEnd.getFullYear() + '-' + String(prevEnd.getMonth() + 1).padStart(2, '0');
     document.getElementById('pastAmount').value = '';
+    document.getElementById('pastDays').value = '';
     document.getElementById('pastNoteIn').value = '';
     document.getElementById('pastErr').textContent = '';
     document.getElementById('pastModal').classList.remove('hidden');
@@ -3297,19 +3453,24 @@ function savePastFromForm() {
     const err = document.getElementById('pastErr');
     const range = pastRangeFromMonth(document.getElementById('pastMonth').value);
     const amt = parseInt(String(document.getElementById('pastAmount').value).replace(/\D/g, ''), 10) || 0;
+    const dstr = String(document.getElementById('pastDays').value).replace(/\D/g, '');
+    const days = dstr === '' ? -1 : parseInt(dstr, 10);
     if (!range) { err.textContent = 'Hãy chọn tháng.'; return; }
+    if (days < 0 || days > 31) { err.textContent = 'Hãy nhập số ngày đi làm trong tháng (từ 0 đến 31).'; return; }
     if (!amt) { err.textContent = 'Hãy nhập tổng lương lớn hơn 0.'; return; }
     const n = pastCountShifts(range.startDate, range.endDate);
     if (n > 0 && !confirm('Kỳ này đã có ' + n + ' ca chấm công từng ngày. Bổ sung thêm tổng sẽ bị cộng trùng. Vẫn lưu?')) return;
     err.textContent = '';
     pastMap[getPayrollPeriodKey(range.startDate, range.endDate)] = {
         amount: amt,
+        days: days,
         note: String(document.getElementById('pastNoteIn').value || '').trim().slice(0, 60),
         start: formatDateISO(range.startDate),
         end: formatDateISO(range.endDate)
     };
     savePast();
     document.getElementById('pastAmount').value = '';
+    document.getElementById('pastDays').value = '';
     document.getElementById('pastNoteIn').value = '';
     renderPastList();
     pastRefreshViews();
@@ -3322,16 +3483,17 @@ function renderPastList() {
         box.innerHTML = '<div class="lk-card">Chưa bổ sung tháng nào. Chọn tháng, nhập tổng lương rồi bấm Lưu nhé.</div>';
         return;
     }
-    let sum = 0;
+    let sum = 0, sumDays = 0;
     box.innerHTML = keys.map(function (k, i) {
         const o = pastMap[k];
         const p = k.split('_');
         const s = new Date(p[0] + 'T00:00:00'), e = new Date(p[1] + 'T00:00:00');
         sum += Number(o.amount) || 0;
+        sumDays += Number(o.days) || 0;
         return '<div class="lk-card"><div class="flex items-start justify-between gap-2"><div class="min-w-0"><b class="text-white">' + pastLabel(s, e) + '</b>' +
-            '<div class="text-sm font-mono text-amber-300 mt-0.5">' + formatVND(o.amount) + '</div>' + (o.note ? '<div class="text-xs text-slate-300 mt-0.5">' + escapeHtml(o.note) + '</div>' : '') + '</div>' +
+            '<div class="text-sm font-mono text-amber-300 mt-0.5">' + formatVND(o.amount) + (typeof o.days === 'number' ? ' · ' + o.days + ' ngày' : ' · chưa nhập số ngày') + '</div>' + (o.note ? '<div class="text-xs text-slate-300 mt-0.5">' + escapeHtml(o.note) + '</div>' : '') + '</div>' +
             '<div class="flex gap-1 shrink-0"><button onclick="editPast(' + i + ')" class="past-mini">✏️</button><button onclick="deletePast(' + i + ')" class="past-mini del">🗑</button></div></div></div>';
-    }).join('') + '<div class="text-xs text-slate-300 text-right">Tổng ' + keys.length + ' tháng: <b class="text-white">' + formatVND(sum) + '</b></div>';
+    }).join('') + '<div class="text-xs text-slate-300 text-right">Tổng ' + keys.length + ' tháng: <b class="text-white">' + sumDays + ' ngày · ' + formatVND(sum) + '</b></div>';
 }
 
 function editPast(i) {
@@ -3341,6 +3503,7 @@ function editPast(i) {
     const e = new Date(k.split('_')[1] + 'T00:00:00');
     document.getElementById('pastMonth').value = e.getFullYear() + '-' + String(e.getMonth() + 1).padStart(2, '0');
     document.getElementById('pastAmount').value = String(o.amount);
+    document.getElementById('pastDays').value = typeof o.days === 'number' ? String(o.days) : '';
     document.getElementById('pastNoteIn').value = o.note || '';
     document.getElementById('pastErr').textContent = 'Đang sửa tháng này: chỉnh số rồi bấm Lưu.';
     document.getElementById('pastAmount').focus();
@@ -3356,6 +3519,308 @@ function deletePast(i) {
 }
 
 loadPast();
+
+// ==========================================
+// 📆 TỔNG KẾT NĂM: tổng thu nhập và tổng số ngày làm của cả năm
+// ==========================================
+let yearView = new Date().getFullYear();
+
+function isYearEnd() {
+    const n = new Date();
+    return n.getMonth() === 11 && n.getDate() >= 25;
+}
+
+function yearDefault() {
+    const n = new Date();
+    if (n.getMonth() === 11 && n.getDate() >= 26) return n.getFullYear();
+    return getPayrollPeriodRange(n).endDate.getFullYear();
+}
+
+function renderYearEntry() {
+    const el = document.getElementById('yearX');
+    if (el) el.classList.toggle('year-glow', isYearEnd());
+}
+
+const YEAR_SEEN_KEY = 'galaxy_cinema_year_seen_v1';
+
+function yearSeenList() {
+    try {
+        const a = JSON.parse(localStorage.getItem(YEAR_SEEN_KEY) || '[]');
+        return Array.isArray(a) ? a : [];
+    } catch (e) { return []; }
+}
+
+// Từ 25/12 đến 31/12: tự động hiện Tổng kết năm một lần (nếu năm đó có dữ liệu)
+function yearAutoCheck(tries) {
+    if (!isYearEnd()) return;
+    const y = new Date().getFullYear();
+    if (yearSeenList().indexOf(y) >= 0) return;
+    if (!yearData(y).some(function (x) { return x.has; })) return;
+    const busy = document.querySelector('.fixed.inset-0:not(.hidden):not(#gameScreen):not(#yearModal)');
+    if (busy) {
+        if ((tries || 0) < 3) setTimeout(function () { yearAutoCheck((tries || 0) + 1); }, 4000);
+        return;
+    }
+    const a = yearSeenList();
+    a.push(y);
+    try { localStorage.setItem(YEAR_SEEN_KEY, JSON.stringify(a)); } catch (e) {}
+    openYearSummary(y);
+}
+
+document.addEventListener('DOMContentLoaded', renderYearEntry);
+window.addEventListener('load', function () {
+    renderYearEntry();
+    setTimeout(function () { yearAutoCheck(0); }, 2200);
+});
+
+function openYearSummary(y) {
+    openYearWrapped(y || yearDefault());
+}
+
+function closeYearSummary() {
+    document.getElementById('yearModal').classList.add('hidden');
+}
+
+function yearStep(d) {
+    yearView += d;
+    renderYear();
+}
+
+function yearData(Y) {
+    const months = [];
+    for (let m = 1; m <= 12; m++) {
+        const r = getPayrollPeriodRange(new Date(Y, m - 1, 25));
+        let days = 0, hours = 0, daily = 0;
+        for (let d = new Date(r.startDate); d <= r.endDate; d.setDate(d.getDate() + 1)) {
+            const rec = attendanceDB[formatDateISO(d)];
+            if (rec && rec.shift !== 'OFF') {
+                const c = calculateSalary(rec.shift, rec.startTime, rec.endTime);
+                days++;
+                hours += c.totalHours || 0;
+                daily += c.totalPay || 0;
+            }
+        }
+        const past = pastMap[getPayrollPeriodKey(r.startDate, r.endDate)];
+        const manual = past ? (Number(past.amount) || 0) : 0;
+        const mdays = past ? (Number(past.days) || 0) : 0;
+        const other = getPayrollOtherIncomeTotal(r.startDate, r.endDate) || 0;
+        const total = daily + manual + other;
+        months.push({ m: m, range: r, days: days + mdays, hours: hours, daily: daily, manual: manual, other: other, total: total,
+            has: days > 0 || manual > 0 || other > 0,
+            src: (days > 0 ? 'chấm công' : '') + (manual > 0 ? (days > 0 ? ' + bổ sung' : 'bổ sung') : '') + (other > 0 && days === 0 && manual === 0 ? 'lương khác' : '') });
+    }
+    return months;
+}
+
+function renderYear() {
+    document.getElementById('yearLabel').textContent = 'Năm ' + yearView;
+    const ms = yearData(yearView);
+    const act = ms.filter(function (x) { return x.has; });
+    const body = document.getElementById('yearBody');
+    if (!act.length) {
+        body.innerHTML = '<div class="lk-card">Năm ' + yearView + ' chưa có dữ liệu. Hãy chấm công hoặc bấm <b>📚 Bổ sung lương</b> để nhập tổng lương và số ngày của các tháng trước nhé.</div>';
+        return;
+    }
+    const sum = act.reduce(function (s, x) { return s + x.total; }, 0);
+    const days = act.reduce(function (s, x) { return s + x.days; }, 0);
+    const hours = act.reduce(function (s, x) { return s + x.hours; }, 0);
+    const best = act.slice().sort(function (a, b) { return b.total - a.total; })[0];
+    const mx = Math.max.apply(null, ms.map(function (x) { return x.total; })) || 1;
+    const noDays = act.filter(function (x) { return x.days === 0 && x.total > 0; }).length;
+    body.innerHTML =
+        '<div class="year-hero"><div class="year-lb">TỔNG THU NHẬP NĂM ' + yearView + '</div><div class="year-big">' + formatVND(sum) + '</div>' +
+        '<div class="year-sub">' + act.length + ' tháng có dữ liệu</div></div>' +
+        '<div class="grid grid-cols-3 gap-2"><div class="fc-tile"><div class="fc-lb">Tổng ngày làm</div><div class="fc-amt">' + days + '</div><div class="fc-sub">ngày</div></div>' +
+        '<div class="fc-tile"><div class="fc-lb">Trung bình/tháng</div><div class="fc-amt">' + formatVND(Math.round(sum / act.length)) + '</div><div class="fc-sub">' + (Math.round(days / act.length * 10) / 10) + ' ngày</div></div>' +
+        '<div class="fc-tile hot"><div class="fc-lb">Tháng cao nhất</div><div class="fc-amt">T' + best.m + '</div><div class="fc-sub">' + formatVND(Math.round(best.total)) + '</div></div></div>' +
+        (hours > 0 ? '<div class="text-xs text-slate-300 text-center">Tổng giờ làm đã chấm công: <b class="text-white">' + (Math.round(hours * 10) / 10) + ' giờ</b></div>' : '') +
+        '<div class="year-bars">' + ms.map(function (x) {
+            return '<div class="yb"><span class="yb-v">' + (x.total > 0 ? (Math.round(x.total / 100000) / 10) + 'tr' : '') + '</span><i style="height:' + (x.total > 0 ? Math.max(6, Math.round(x.total / mx * 100)) : 3) + '%"' + (x === best ? ' class="top"' : '') + '></i><b>T' + x.m + '</b></div>';
+        }).join('') + '</div>' +
+        '<div class="text-xs font-black text-amber-300 uppercase">📋 Chi tiết từng tháng</div>' +
+        act.map(function (x) {
+            return '<div class="lk-card flex items-center justify-between gap-2"><div class="min-w-0"><b class="text-white">Tháng ' + x.m + '</b> <span class="text-xs text-slate-300">(' + wrDM(x.range.startDate) + '–' + wrDM(x.range.endDate) + ')</span>' +
+                '<div class="text-xs text-slate-300 mt-0.5">' + x.days + ' ngày · ' + x.src + '</div></div><div class="text-sm font-mono text-amber-300 text-right shrink-0">' + formatVND(Math.round(x.total)) + '</div></div>';
+        }).join('') +
+        (noDays ? '<p class="text-[11px] text-amber-200">Có ' + noDays + ' tháng chưa có số ngày làm. Vào 📚 Bổ sung lương, bấm ✏️ để nhập thêm.</p>' : '') +
+        '<p class="text-[10px] text-slate-400">Năm tính theo các kỳ lương kết thúc trong năm đó (kỳ 26 đến 25). Tổng gồm lương chấm công, lương bổ sung và lương khác.</p>';
+}
+
+// ==========================================
+// 🎞️ TỔNG KẾT NĂM KIỂU WRAPPED: dùng lại bộ máy Wrapped (cảnh, âm thanh, nhóm nhảy)
+// ==========================================
+WR.mode = 'period';
+WR.ys = null;
+
+function yearWrapStats(Y) {
+    const ms = yearData(Y);
+    const act = ms.filter(function (x) { return x.has; });
+    if (!act.length) return null;
+    const rs = wrappedStatsRange(new Date(ms[0].range.startDate), new Date(ms[11].range.endDate));
+    const sum = function (k) { return act.reduce(function (s, x) { return s + (x[k] || 0); }, 0); };
+    const total = sum('total'), days = sum('days');
+    const best = act.slice().sort(function (a, b) { return b.total - a.total; })[0];
+    return { year: Y, ms: ms, act: act, rs: rs, total: total, days: days, hours: rs.hours, best: best,
+        avgM: total / act.length, avgD: days / act.length, perDay: days ? total / days : 0,
+        start: ms[0].range.startDate, end: ms[11].range.endDate };
+}
+
+function wrYearPersona(ys) {
+    if (ys.days >= 260) return ['Huyền thoại bền bỉ', '🏆', 'Cả năm gần như ngày nào cũng có mặt. Quá đỉnh!'];
+    if (ys.days >= 200) return ['Chiến thần phòng vé', '🛡️', 'Một năm cày cuốc đáng nể, Galaxy tự hào về bạn!'];
+    if (ys.days >= 120) return ['Nhân viên cứng cựa', '💎', 'Đều đặn và đáng tin cậy suốt cả năm.'];
+    if (ys.days >= 60) return ['Ngôi sao đang lên', '⭐', 'Một năm nhiều nỗ lực, năm sau còn bứt phá hơn!'];
+    return ['Khởi đầu đầy hứa hẹn', '🌱', 'Năm sau chắc chắn sẽ rực rỡ hơn nữa!'];
+}
+
+function wrYearRange(ys) {
+    return wrDM(ys.start) + '/' + ys.start.getFullYear() + ' – ' + wrDM(ys.end) + '/' + ys.end.getFullYear();
+}
+
+function ywBuild(ys) {
+    const rs = ys.rs, Y = ys.year, pe = wrYearPersona(ys);
+    const sl = [];
+    sl.push({ bg: 'linear-gradient(160deg,#034ea2,#071a40)', fg: '#fff', emoji: '🎆', scene: 'intro', kicker: 'Tổng kết năm ' + Y, big: 'Cả năm của bạn', sub: wrYearRange(ys) + '. Cùng nhìn lại nhé!', deco: ['✨', '🍿', '🎟️', '⭐', '🎞️', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#fdb515,#f58020)', fg: '#071a40', emoji: '💰', scene: 'money', kicker: 'Cả năm ' + Y + ' bạn đã nhận', num: ys.total, fmt: 'money', unit: '', sub: 'qua ' + ys.act.length + ' tháng có dữ liệu. Quá xuất sắc!', deco: ['💵', '🪙', '✨', '💰', '🪙', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#5ca038,#00b7e6)', fg: '#fff', emoji: '📅', scene: 'ydays', kicker: 'Tổng số ngày đi làm', num: ys.days, fmt: 'int', unit: 'ngày', sub: 'Trung bình khoảng ' + (Math.round(ys.avgD * 10) / 10) + ' ngày mỗi tháng', deco: ['🌟', '📅', '✨', '💪', '🌟', '✨'] });
+    if (rs.hours > 0) sl.push({ bg: 'linear-gradient(160deg,#034ea2,#1a2f8a)', fg: '#fff', emoji: '⏱️', scene: 'hours', kicker: 'Giờ đứng quầy đã chấm công', num: rs.hours, fmt: 'dec1', unit: 'giờ', sub: 'bằng khoảng ' + Math.floor(rs.hours / 2) + ' bộ phim dài 2 tiếng! 🍿', deco: ['⏱️', '🎞️', '✨', '🍿', '🎬', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#f58020,#c8102e)', fg: '#fff', emoji: '🏆', scene: 'ybest', kicker: 'Tháng bạn kiếm nhiều nhất', num: ys.best.total, fmt: 'money', unit: '', sub: 'Tháng ' + ys.best.m + ' (' + wrDM(ys.best.range.startDate) + ' – ' + wrDM(ys.best.range.endDate) + ')', deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '📈', scene: 'ybars', kicker: 'Hành trình 12 tháng', big: 'Từng tháng một', sub: 'Cột vàng là tháng cao nhất của bạn', deco: ['📈', '✨', '💪', '⭐', '✨', '🚀'] });
+    sl.push({ bg: 'linear-gradient(160deg,#8dc63f,#00b7e6)', fg: '#071a40', emoji: '📊', scene: 'yavg', kicker: 'Trung bình mỗi tháng', num: ys.avgM, fmt: 'money', unit: '', sub: (Math.round(ys.avgD * 10) / 10) + ' ngày/tháng · khoảng ' + formatVND(Math.round(ys.perDay)) + ' mỗi ngày làm', deco: ['📊', '✨', '💡', '⭐', '✨', '💎'] });
+    if (rs.richest) sl.push({ bg: 'linear-gradient(160deg,#fdb515,#c8102e)', fg: '#fff', emoji: '🥇', scene: 'richest', kicker: 'Ca nhiều tiền nhất cả năm', num: rs.richest.pay, fmt: 'money', unit: '', sub: DOW_FULL[rs.richest.date.getDay()] + ' ' + wrDM(rs.richest.date) + ' · Ca ' + rs.richest.shift + ' (' + rs.richest.start + '–' + rs.richest.end + ')', deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
+    if (rs.longest) sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '🕰️', scene: 'longest', kicker: 'Ca làm lâu nhất cả năm', num: rs.longest.hours, fmt: 'dec1', unit: 'giờ', sub: DOW_FULL[rs.longest.date.getDay()] + ' ' + wrDM(rs.longest.date) + ' · Ca ' + rs.longest.shift + ' (' + rs.longest.start + '–' + rs.longest.end + ')', deco: ['🕰️', '💪', '✨', '😤', '💪', '✨'] });
+    if (rs.bestStreak > 1) sl.push({ bg: 'linear-gradient(160deg,#f58020,#9d0c23)', fg: '#fff', emoji: '🔥', scene: 'streak', kicker: 'Chuỗi làm dài nhất cả năm', num: rs.bestStreak, fmt: 'int', unit: 'ngày liên tiếp', sub: 'từ ' + wrDM(rs.bestStart) + ' đến ' + wrDM(rs.bestEnd) + ' · quá bền bỉ!', deco: ['🔥', '💥', '✨', '🔥', '⚡', '✨'] });
+    if (rs.days) sl.push({ bg: 'linear-gradient(160deg,#071a40,#034ea2 55%,#00b7e6)', fg: '#fff', emoji: '🌙', scene: 'fav', kicker: 'Ca bạn đi nhiều nhất năm nay', big: 'Ca ' + rs.favShift, sub: rs.byShift[rs.favShift] + ' lần · ngày hay đi nhất là ' + DOW_FULL[rs.busyDow], deco: ['🌙', '⭐', '✨', '🌟', '🌙', '✨'] });
+    if (rs.topMate) sl.push({ bg: 'linear-gradient(160deg,#8dc63f,#00b7e6)', fg: '#071a40', emoji: '🤝', scene: 'mate', kicker: 'Đồng đội ăn ý nhất năm', big: rs.topMate.name, sub: 'làm chung với bạn ' + rs.topMate.c + ' ca. Cảm ơn nhau nhé!', deco: ['🤝', '💛', '✨', '🙌', '💛', '✨'] });
+    sl.push({ bg: 'linear-gradient(160deg,#fdb515,#f58020)', fg: '#071a40', emoji: pe[1], scene: 'title', kicker: 'Danh hiệu của bạn năm ' + Y, big: pe[0], sub: pe[2], deco: ['👑', '✨', '🎉', '⭐', '🎊', '✨'] });
+    sl.push({ summary: true, bg: 'linear-gradient(160deg,#034ea2,#071a40)', fg: '#fff' });
+    return sl;
+}
+
+function wrSceneYear(s, ys) {
+    let bg = '', viz = '';
+    switch (s.scene) {
+        case 'ydays':
+            bg = wrRain(['🌟', '✨'], 8, 'rise');
+            viz = '<div class="wr-ym">' + ys.ms.map(function (x, i) {
+                return '<i class="' + (x.days > 0 ? 'on' : '') + '" style="animation-delay:' + (300 + i * 90) + 'ms"><b>T' + x.m + '</b><em>' + (x.days > 0 ? x.days + ' ngày' : '-') + '</em></i>';
+            }).join('') + '</div>';
+            break;
+        case 'ybest':
+            bg = '<div class="wr-rays"></div>' + wrConfetti(26) + wrRain(['🥇', '✨'], 8, 'fall');
+            viz = '<div class="wr-ticket">🎟️ Tháng ' + ys.best.m + ' · ' + ys.best.days + ' ngày làm</div>';
+            break;
+        case 'ybars': {
+            bg = wrRain(['✨', '⭐'], 10, 'twinkle');
+            const mx = Math.max.apply(null, ys.ms.map(function (x) { return x.total; })) || 1;
+            viz = '<div class="wr-yb">' + ys.ms.map(function (x, i) {
+                const h = x.total > 0 ? Math.max(8, Math.round(x.total / mx * 100)) : 3;
+                return '<div' + (x.m === ys.best.m ? ' class="top"' : '') + '><em>' + (x.total > 0 ? (Math.round(x.total / 100000) / 10) : '') + '</em><i style="--h:' + h + '%;animation-delay:' + (200 + i * 90) + 'ms"></i><b>T' + x.m + '</b></div>';
+            }).join('') + '</div><div class="wr-legend">đơn vị: triệu đồng</div>';
+            break;
+        }
+        case 'yavg':
+            bg = wrRain(['💡', '✨', '⭐'], 12, 'twinkle');
+            break;
+        default:
+            return wrScene(s, ys.rs);
+    }
+    return { bg: '<div class="wrap-scene-bg">' + bg + '</div>', viz: viz ? '<div class="wrap-viz">' + viz + '</div>' : '' };
+}
+
+function wrYearSummaryHtml(ys) {
+    const pe = wrYearPersona(ys), rs = ys.rs;
+    const row = function (e, l, v) { return '<div class="wrap-row"><span>' + e + ' ' + l + '</span><b>' + v + '</b></div>'; };
+    return '<div class="wrap-card"><div class="wrap-card-title">Tổng kết năm ' + ys.year + '</div>' +
+        row('💰', 'Tổng thu nhập', formatVND(Math.round(ys.total))) + row('📅', 'Tổng ngày làm', ys.days + ' ngày') +
+        row('📈', 'Trung bình/tháng', formatVND(Math.round(ys.avgM))) + row('🏆', 'Tháng cao nhất', 'T' + ys.best.m + ' · ' + formatVND(Math.round(ys.best.total))) +
+        (rs.hours > 0 ? row('⏱️', 'Giờ đã chấm công', wrFmt(rs.hours, 'dec1') + ' giờ') : '') +
+        (rs.bestStreak > 1 ? row('🔥', 'Chuỗi dài nhất', rs.bestStreak + ' ngày') : '') +
+        (rs.topMate ? row('🤝', 'Đồng đội ăn ý', escapeHtml(rs.topMate.name)) : '') +
+        '<div class="wrap-badge">' + pe[1] + ' ' + pe[0] + '</div></div>' +
+        '<div class="wrap-actions"><button onclick="wrappedShare()" class="wrap-btn">📤 Chia sẻ / lưu ảnh</button>' +
+        '<div class="wrap-yrow"><button onclick="yearWrapGo(-1)" class="wrap-btn ghost">‹ Năm ' + (ys.year - 1) + '</button><button onclick="yearWrapGo(1)" class="wrap-btn ghost">Năm ' + (ys.year + 1) + ' ›</button></div>' +
+        '<button onclick="wrappedGo(0)" class="wrap-btn ghost">↻ Xem lại</button></div>';
+}
+
+function openYearWrapped(Y) {
+    const ys = yearWrapStats(Y);
+    if (!ys) {
+        alert('Năm ' + Y + ' chưa có dữ liệu. Hãy chấm công hoặc bấm 📚 Bổ sung lương để thêm các tháng trước nhé! 🎬');
+        return false;
+    }
+    WR.mode = 'year';
+    WR.ys = ys;
+    WR.stats = ys.rs;
+    WR.slides = ywBuild(ys);
+    WR.i = 0;
+    document.getElementById('wrappedOverlay').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    WRS.unlock();
+    wrapSoundUi();
+    wrRender();
+    return true;
+}
+
+function yearWrapGo(d) {
+    const Y = WR.ys.year + d;
+    const ys = yearWrapStats(Y);
+    if (!ys) { alert('Năm ' + Y + ' chưa có dữ liệu để xem.'); return; }
+    openYearWrapped(Y);
+}
+
+
+function wrappedShareYear() {
+    const ys = WR.ys, pe = wrYearPersona(ys), rs = ys.rs;
+    const c = document.createElement('canvas');
+    c.width = 1080; c.height = 1350;
+    const x = c.getContext('2d');
+    const g = x.createLinearGradient(0, 0, 0, 1350);
+    g.addColorStop(0, '#034ea2'); g.addColorStop(1, '#071a40');
+    x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
+    const sg = x.createLinearGradient(0, 0, 1080, 0);
+    ['#f58020', '#fdb515', '#8dc63f', '#00b7e6', '#034ea2'].forEach(function (col, k) { sg.addColorStop(k / 4, col); });
+    x.fillStyle = sg; x.fillRect(0, 0, 1080, 14);
+    const logo = document.querySelector('img[alt="Galaxy Cinema GO!"]');
+    if (logo && logo.complete && logo.naturalWidth) { try { x.drawImage(logo, 440, 60, 200, 200); } catch (e) {} }
+    const F = '"Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif';
+    x.textAlign = 'center';
+    x.fillStyle = '#fdb515'; x.font = '800 44px ' + F; x.fillText('TỔNG KẾT NĂM ' + ys.year, 540, 340);
+    x.fillStyle = '#ffffff'; x.font = '600 32px ' + F; x.fillText(wrYearRange(ys), 540, 390);
+    const rows = [['💰 Tổng thu nhập', formatVND(Math.round(ys.total))], ['📅 Tổng ngày làm', ys.days + ' ngày'], ['📈 Trung bình/tháng', formatVND(Math.round(ys.avgM))],
+        ['🏆 Tháng cao nhất', 'T' + ys.best.m + ' · ' + formatVND(Math.round(ys.best.total))]];
+    if (rs.hours > 0) rows.push(['⏱️ Giờ đã chấm công', wrFmt(rs.hours, 'dec1') + ' giờ']);
+    if (rs.bestStreak > 1) rows.push(['🔥 Chuỗi dài nhất', rs.bestStreak + ' ngày']);
+    if (rs.topMate) rows.push(['🤝 Đồng đội ăn ý', rs.topMate.name]);
+    let y = 480;
+    rows.forEach(function (r) {
+        x.fillStyle = 'rgba(255,255,255,0.10)';
+        x.beginPath(); x.roundRect ? x.roundRect(90, y - 52, 900, 92, 26) : x.rect(90, y - 52, 900, 92); x.fill();
+        x.textAlign = 'left'; x.fillStyle = '#cfe0ff'; x.font = '700 34px ' + F; x.fillText(r[0], 124, y + 8);
+        x.textAlign = 'right'; x.fillStyle = '#ffffff'; x.font = '800 36px ' + F; x.fillText(r[1], 956, y + 8);
+        y += 112;
+    });
+    x.textAlign = 'center';
+    const bg = x.createLinearGradient(240, 0, 840, 0);
+    bg.addColorStop(0, '#f58020'); bg.addColorStop(1, '#fdb515');
+    x.fillStyle = bg;
+    x.beginPath(); x.roundRect ? x.roundRect(240, y + 10, 600, 96, 48) : x.rect(240, y + 10, 600, 96); x.fill();
+    x.fillStyle = '#071a40'; x.font = '800 40px ' + F; x.fillText(pe[1] + ' ' + pe[0], 540, y + 72);
+    x.fillStyle = '#b4cdf2'; x.font = '600 28px ' + F; x.fillText('Galaxy Cinema GO! An Lạc · Xuyên màn ảnh, chạm thiên hà', 540, 1290);
+    c.toBlob(function (blob) {
+        if (!blob) return;
+        const file = new File([blob], 'tong-ket-nam-' + ys.year + '.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({ files: [file], title: 'Tổng kết năm ' + ys.year }).catch(function () {});
+        } else {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'tong-ket-nam-' + ys.year + '.png';
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+        }
+    }, 'image/png');
+}
 
 function escapeHtml(text) {
 
@@ -3552,7 +4017,7 @@ function submitWelcomeName() {
 const HOWTO_SEEN_KEY = 'galaxy_cinema_howto_seen_v1';
 
 let howToCurrentSlide = 0;
-const HOWTO_TOTAL_SLIDES = 9;
+const HOWTO_TOTAL_SLIDES = 13;
 
 function openHowToUse() {
     const modal = document.getElementById('howToUseModal');
