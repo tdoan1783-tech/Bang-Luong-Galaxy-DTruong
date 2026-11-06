@@ -1817,7 +1817,11 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
 
             for (let m = startMins; m < endMins; m++) {
                 let hourOfDay = Math.floor(m / 60) % 24;
-                if (hourOfDay >= 22 || hourOfDay < 6) {
+                // OT bắt đầu từ 22:00. Nếu ca đã bắt đầu trước nửa đêm
+                // và kéo dài qua 00:00, phần sau nửa đêm vẫn là OT.
+                // Ca bắt đầu mới lúc 00:00–05:59 không tự động thành OT.
+                const isAfterMidnightContinuation = hourOfDay < 6 && endMins > 24 * 60;
+                if (hourOfDay >= 22 || isAfterMidnightContinuation) {
                     otMins++;
                 } else {
                     regMins++;
@@ -5055,11 +5059,22 @@ renderPayrollOtherIncome();
         }
 
         function exportBackupJSON() {
+            let otherIncome = {};
+            try {
+                otherIncome = JSON.parse(localStorage.getItem(OTHER_INCOME_STORAGE_KEY) || '{}');
+                if (!otherIncome || typeof otherIncome !== 'object' || Array.isArray(otherIncome)) {
+                    otherIncome = {};
+                }
+            } catch (error) {
+                console.warn('Không đọc được dữ liệu thu nhập khác khi sao lưu:', error);
+            }
+
             const data = {
                 settings: appSettings,
                 attendanceDB: attendanceDB,
                 mates: matesList,
                 pastMonths: pastMap,
+                otherIncome: otherIncome,
                 exportDate: new Date().toISOString()
             };
             downloadFile(JSON.stringify(data, null, 2), `GalaxyCinema_Backup_${formatDateISO(new Date())}.json`, 'application/json');
@@ -5079,9 +5094,12 @@ renderPayrollOtherIncome();
                         if (Array.isArray(parsed.mates)) {
                             parsed.mates.forEach(function (n) { addMateName(n); });
                         }
-                        if (parsed.pastMonths && typeof parsed.pastMonths === 'object') {
-                            Object.keys(parsed.pastMonths).forEach(function (k) { pastMap[k] = parsed.pastMonths[k]; });
+                        if (parsed.pastMonths && typeof parsed.pastMonths === 'object' && !Array.isArray(parsed.pastMonths)) {
+                            pastMap = parsed.pastMonths;
                             savePast();
+                        }
+                        if (parsed.otherIncome && typeof parsed.otherIncome === 'object' && !Array.isArray(parsed.otherIncome)) {
+                            localStorage.setItem(OTHER_INCOME_STORAGE_KEY, JSON.stringify(parsed.otherIncome));
                         }
                         saveDataToStorage();
                         updateGreetingHeader();
@@ -5128,13 +5146,21 @@ renderPayrollOtherIncome();
       function resetAllAppData() {
     if (!confirm('Bạn có chắc muốn xóa toàn bộ dữ liệu không?')) return;
 
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(SETTINGS_KEY);
+    // Xóa toàn bộ dữ liệu do ứng dụng quản lý, không chỉ dữ liệu chấm công.
+    [
+        STORAGE_KEY,
+        SETTINGS_KEY,
+        OTHER_INCOME_STORAGE_KEY,
+        PAST_KEY,
+        MATES_KEY
+    ].forEach(function (key) {
+        localStorage.removeItem(key);
+    });
 
     attendanceDB = {};
-    appSettings = {
-        userName: ''
-    };
+    appSettings = { userName: '' };
+    pastMap = {};
+    matesList = [];
 
     document.getElementById('settingsModal').classList.add('hidden');
 
