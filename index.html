@@ -812,6 +812,28 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
         </div>
     </div>
 </div>
+<div class="mt-3 rounded-xl border border-orange-500/30 bg-slate-950/70 p-3 space-y-3">
+    <div class="flex items-center justify-between gap-2">
+        <div><div class="text-xs font-black text-slate-200">CHẾ ĐỘ CHẤM CÔNG</div><div class="text-[10px] text-slate-500">Có thể chọn loại ca riêng cho từng buổi</div></div>
+        <div class="flex rounded-lg bg-slate-900 p-1 gap-1">
+            <button type="button" id="todaySingleModeBtn" onclick="setTodayWorkMode('single')" class="px-3 py-1.5 rounded-md text-[10px] font-black">1 CA</button>
+            <button type="button" id="todayDoubleModeBtn" onclick="setTodayWorkMode('double')" class="px-3 py-1.5 rounded-md text-[10px] font-black">2 CA</button>
+        </div>
+    </div>
+    <div id="todaySecondSession" class="hidden border-t border-slate-800 pt-3 space-y-3">
+        <div class="flex items-center justify-between"><span class="text-xs font-black text-orange-300">CA LÀM THỨ HAI</span><span class="text-[10px] text-slate-500">Sau thời gian nghỉ</span></div>
+        <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="selectSecondShift('CO')" id="todaySecondCO" class="py-2 rounded-lg border text-xs font-black">CO</button>
+            <button type="button" onclick="selectSecondShift('US')" id="todaySecondUS" class="py-2 rounded-lg border text-xs font-black">US</button>
+            <button type="button" onclick="selectSecondShift('LB')" id="todaySecondLB" class="py-2 rounded-lg border text-xs font-black">LB</button>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+            <div><label class="block text-[10px] font-bold text-slate-400 mb-1">Bắt đầu ca 2</label><input type="time" id="todaySecondStart" value="17:00" onchange="calculateAndDisplayToday()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2.5 text-white font-mono"></div>
+            <div><label class="block text-[10px] font-bold text-slate-400 mb-1">Kết thúc ca 2</label><input type="time" id="todaySecondEnd" value="22:00" onchange="calculateAndDisplayToday()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2.5 text-white font-mono"></div>
+        </div>
+        <p class="text-[10px] text-slate-500">Thời gian nghỉ giữa hai ca không được tính lương.</p>
+    </div>
+</div>
                         <!-- Quick Presets -->
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-400 mb-1.5">Mẫu ca phổ biến (Bấm chọn nhanh):</label>
@@ -1444,6 +1466,15 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
                     <input type="time" id="retroEndTime" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-sm focus:outline-none focus:border-orange-500">
                 </div>
             </div>
+            <div class="rounded-xl border border-orange-500/30 bg-slate-950/70 p-3 space-y-3">
+                <div class="flex items-center justify-between"><span class="text-xs font-black text-slate-200">CHẾ ĐỘ CA</span><div class="flex gap-1 bg-slate-900 p-1 rounded-lg"><button type="button" id="retroSingleModeBtn" onclick="setRetroWorkMode('single')" class="px-3 py-1.5 rounded text-[10px] font-black">1 CA</button><button type="button" id="retroDoubleModeBtn" onclick="setRetroWorkMode('double')" class="px-3 py-1.5 rounded text-[10px] font-black">2 CA</button></div></div>
+                <div id="retroSecondSession" class="hidden border-t border-slate-800 pt-3 space-y-3">
+                    <div class="text-xs font-black text-orange-300">CA LÀM THỨ HAI</div>
+                    <div class="grid grid-cols-3 gap-2"><button type="button" onclick="selectRetroSecondShift('CO')" id="retroSecondCO" class="py-2 rounded-lg border text-xs font-black">CO</button><button type="button" onclick="selectRetroSecondShift('US')" id="retroSecondUS" class="py-2 rounded-lg border text-xs font-black">US</button><button type="button" onclick="selectRetroSecondShift('LB')" id="retroSecondLB" class="py-2 rounded-lg border text-xs font-black">LB</button></div>
+                    <div class="grid grid-cols-2 gap-3"><div><label class="block text-[10px] font-bold text-slate-400 mb-1">Bắt đầu ca 2</label><input type="time" id="retroSecondStart" value="17:00" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2.5 text-white font-mono"></div><div><label class="block text-[10px] font-bold text-slate-400 mb-1">Kết thúc ca 2</label><input type="time" id="retroSecondEnd" value="22:00" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2.5 text-white font-mono"></div></div>
+                    <p class="text-[10px] text-slate-500">Thời gian nghỉ giữa hai ca không được tính lương.</p>
+                </div>
+            </div>
 
             <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-2">👥 Làm chung với ai?</label>
@@ -1739,6 +1770,10 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
         let selectedDate = new Date(); // Date object currently in focus
         let selectedPayrollDate = new Date(); // Anchor date for Payroll period logic
         let selectedShift = 'CO';
+        let selectedSecondShift = 'US';
+        let todayWorkMode = 'single';
+        let retroSecondShift = 'US';
+        let retroWorkMode = 'single';
 
         let retroModalActiveDateStr = '';
         let retroModalShift = 'OFF';
@@ -1747,7 +1782,7 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
             userName: ''
         };
 
-        // Attendance Database: { "YYYY-MM-DD": { shift: 'CO'|'US'|'LB'|'OFF', startTime: '18:00', endTime: '00:30' } }
+        // Attendance Database supports legacy single sessions and sessions[] for split shifts.
         let attendanceDB = {};
 
        function getDefaultSampleData() {
@@ -1806,6 +1841,40 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
                 totalPay
             };
         }
+        // Tính lương cho một ngày có thể gồm một hoặc nhiều phiên làm việc.
+        // Dữ liệu cũ (startTime/endTime) vẫn được hỗ trợ nguyên vẹn.
+        function calculateRecordSalary(record) {
+            if (!record || record.shift === 'OFF') return calculateSalary('OFF');
+            const sessions = Array.isArray(record.sessions) && record.sessions.length
+                ? record.sessions
+                : [{ shift: record.shift, startTime: record.startTime, endTime: record.endTime }];
+            return sessions.reduce((sum, session) => {
+                const part = calculateSalary(session.shift || record.shift, session.startTime, session.endTime);
+                sum.totalHours += part.totalHours;
+                sum.regularHours += part.regularHours;
+                sum.otHours += part.otHours;
+                sum.regularPay += part.regularPay;
+                sum.otPay += part.otPay;
+                sum.totalPay += part.totalPay;
+                return sum;
+            }, { totalHours: 0, regularHours: 0, otHours: 0, regularPay: 0, otPay: 0, totalPay: 0 });
+        }
+
+        function getRecordShiftLabel(record) {
+            if (!record || record.shift === 'OFF') return 'OFF';
+            return Array.isArray(record.sessions) && record.sessions.length > 1
+                ? record.sessions.map(x => x.shift).join(' + ')
+                : record.shift;
+        }
+
+        function getRecordTimeLabel(record) {
+            if (!record || record.shift === 'OFF') return '00:00';
+            const sessions = Array.isArray(record.sessions) && record.sessions.length
+                ? record.sessions
+                : [{ startTime: record.startTime, endTime: record.endTime }];
+            return sessions.map(x => `${x.startTime}–${x.endTime}`).join(' | ');
+        }
+
 // ==========================================
 // BIỂU ĐỒ LƯƠNG 4 THÁNG GẦN NHẤT
 // ==========================================
@@ -1846,11 +1915,7 @@ function getLast4PayrollPeriods() {
 
             if (record && record.shift !== 'OFF') {
 
-                const calc = calculateSalary(
-                    record.shift,
-                    record.startTime,
-                    record.endTime
-                );
+                const calc = calculateRecordSalary(record);
 
                 totalPay += calc.totalPay;
                 totalHours += calc.totalHours;
@@ -2625,7 +2690,7 @@ function wrappedStatsRange(s, e) {
         const r = attendanceDB[formatDateISO(d)];
         st.flags.push(!!(r && r.shift !== 'OFF'));
         if (r && r.shift !== 'OFF') {
-            const c = calculateSalary(r.shift, r.startTime, r.endTime);
+            const c = calculateRecordSalary(r);
             const info = { date: new Date(d), shift: r.shift, start: r.startTime, end: r.endTime, pay: c.totalPay || 0, hours: c.totalHours || 0 };
             st.days++; st.hours += info.hours; st.ot += c.otHours || 0; st.pay += info.pay;
             if (!st.richest || info.pay > st.richest.pay) st.richest = info;
@@ -3594,7 +3659,7 @@ function yearData(Y) {
         for (let d = new Date(r.startDate); d <= r.endDate; d.setDate(d.getDate() + 1)) {
             const rec = attendanceDB[formatDateISO(d)];
             if (rec && rec.shift !== 'OFF') {
-                const c = calculateSalary(rec.shift, rec.startTime, rec.endTime);
+                const c = calculateRecordSalary(rec);
                 days++;
                 hours += c.totalHours || 0;
                 daily += c.totalPay || 0;
@@ -3846,11 +3911,7 @@ function calculatePayrollGalaxyTotal(startDate, endDate) {
             endTime: '00:00'
         };
 
-        const calc = calculateSalary(
-            record.shift,
-            record.startTime,
-            record.endTime
-        );
+        const calc = calculateRecordSalary(record);
 
         totalPay += calc.totalPay;
 
@@ -4187,6 +4248,44 @@ document.addEventListener('touchend', function(e) {
             else if (activeTab === 'PAYROLL') renderPayrollView();
         }
 
+        function setTodayWorkMode(mode) {
+            todayWorkMode = mode;
+            document.getElementById('todaySecondSession').classList.toggle('hidden', mode !== 'double');
+            document.getElementById('todaySingleModeBtn').className = `px-3 py-1.5 rounded-md text-[10px] font-black ${mode === 'single' ? 'bg-orange-500 text-slate-950' : 'text-slate-400'}`;
+            document.getElementById('todayDoubleModeBtn').className = `px-3 py-1.5 rounded-md text-[10px] font-black ${mode === 'double' ? 'bg-orange-500 text-slate-950' : 'text-slate-400'}`;
+            calculateAndDisplayToday();
+        }
+        function selectSecondShift(shift) {
+            selectedSecondShift = shift;
+            ['CO','US','LB'].forEach(k => { const el=document.getElementById('todaySecond'+k); el.className=`py-2 rounded-lg border text-xs font-black ${k===shift ? (k==='CO'?'bg-amber-500/20 text-amber-300 border-amber-500':k==='US'?'bg-rose-500/20 text-rose-300 border-rose-500':'bg-purple-500/20 text-purple-300 border-purple-500') : 'border-slate-700 text-slate-400'}`; });
+            calculateAndDisplayToday();
+        }
+        function getTodaySessionsFromForm() {
+            const sessions=[{shift:selectedShift,startTime:document.getElementById('todayStartTime').value,endTime:document.getElementById('todayEndTime').value}];
+            if(todayWorkMode==='double') sessions.push({shift:selectedSecondShift,startTime:document.getElementById('todaySecondStart').value,endTime:document.getElementById('todaySecondEnd').value});
+            return sessions;
+        }
+        function validateSessions(sessions) {
+            for (const x of sessions) if (!x.shift || !x.startTime || !x.endTime || x.startTime===x.endTime) return 'Vui lòng nhập đầy đủ giờ bắt đầu và kết thúc cho từng ca.';
+            if (sessions.length===2) {
+                const mins=x=>{const [h,m]=x.split(':').map(Number);return h*60+m;};
+                let a=mins(sessions[0].startTime), b=mins(sessions[0].endTime), c=mins(sessions[1].startTime), d=mins(sessions[1].endTime);
+                if(b<=a)b+=1440; if(d<=c)d+=1440; if(c<a)c+=1440; if(d<=a)d+=1440;
+                if(Math.max(a,c)<Math.min(b,d)) return 'Hai ca đang bị trùng giờ. Vui lòng kiểm tra lại.';
+            }
+            return '';
+        }
+        function setRetroWorkMode(mode) {
+            retroWorkMode=mode;
+            document.getElementById('retroSecondSession').classList.toggle('hidden',mode!=='double');
+            document.getElementById('retroSingleModeBtn').className=`px-3 py-1.5 rounded text-[10px] font-black ${mode==='single'?'bg-orange-500 text-slate-950':'text-slate-400'}`;
+            document.getElementById('retroDoubleModeBtn').className=`px-3 py-1.5 rounded text-[10px] font-black ${mode==='double'?'bg-orange-500 text-slate-950':'text-slate-400'}`;
+        }
+        function selectRetroSecondShift(shift) {
+            retroSecondShift=shift;
+            ['CO','US','LB'].forEach(k=>{const el=document.getElementById('retroSecond'+k);el.className=`py-2 rounded-lg border text-xs font-black ${k===shift?(k==='CO'?'bg-amber-500/20 text-amber-300 border-amber-500':k==='US'?'bg-rose-500/20 text-rose-300 border-rose-500':'bg-purple-500/20 text-purple-300 border-purple-500'):'border-slate-700 text-slate-400'}`;});
+        }
+
         function renderTodayView() {
             const dateStr = formatDateISO(selectedDate);
             const dayName = getDayOfWeekName(selectedDate);
@@ -4205,11 +4304,16 @@ document.addEventListener('touchend', function(e) {
                 selectedShift = 'CO';
                 document.getElementById('todayStartTime').value = '18:00';
                 document.getElementById('todayEndTime').value = '00:30';
+                selectedSecondShift='US'; document.getElementById('todaySecondStart').value='17:00'; document.getElementById('todaySecondEnd').value='22:00'; setTodayWorkMode('single');
                 showDetailedForm(true);
             } else {
                 selectedShift = record.shift;
                 document.getElementById('todayStartTime').value = record.startTime || '18:00';
                 document.getElementById('todayEndTime').value = record.endTime || '00:30';
+                const savedSessions = Array.isArray(record.sessions) ? record.sessions : [];
+                const isDouble = savedSessions.length > 1;
+                if (isDouble) { selectedShift=savedSessions[0].shift || record.shift; selectedSecondShift=savedSessions[1].shift || 'US'; document.getElementById('todayStartTime').value=savedSessions[0].startTime; document.getElementById('todayEndTime').value=savedSessions[0].endTime; document.getElementById('todaySecondStart').value=savedSessions[1].startTime; document.getElementById('todaySecondEnd').value=savedSessions[1].endTime; }
+                setTodayWorkMode(isDouble ? 'double' : 'single');
 
                 if (record.shift === 'OFF') {
                     badge.className = "px-3 py-1 rounded-full text-xs font-black tracking-wider bg-slate-800 text-slate-300 border-slate-700";
@@ -4220,7 +4324,7 @@ document.addEventListener('touchend', function(e) {
                     if (record.shift === 'US') shiftClass = "bg-rose-500/20 text-rose-300 border-rose-500/50";
                     if (record.shift === 'LB') shiftClass = "bg-purple-500/20 text-purple-300 border-purple-500/50";
                     badge.className = `px-3 py-1 rounded-full text-xs font-black tracking-wider border ${shiftClass}`;
-                    badge.innerText = `CA ${record.shift}`;
+                    badge.innerText = `CA ${getRecordShiftLabel(record)}`;
                     showDetailedForm(true);
                 }
             }
@@ -4296,7 +4400,8 @@ showDetailedForm(true);
             const dateStr = formatDateISO(selectedDate);
             const isOff = attendanceDB[dateStr] && attendanceDB[dateStr].shift === 'OFF';
 
-            const calc = calculateSalary(isOff ? 'OFF' : selectedShift, start, end);
+            const previewRecord = isOff ? {shift:'OFF'} : {shift:selectedShift, sessions:getTodaySessionsFromForm()};
+            const calc = calculateRecordSalary(previewRecord);
 
             document.getElementById('todayDisplayTotalHours').innerText = `${calc.totalHours.toFixed(1)}h`;
             document.getElementById('todayDisplayRegHours').innerText = `${calc.regularHours.toFixed(1)}h`;
@@ -4309,7 +4414,7 @@ showDetailedForm(true);
             if (isOff) {
                 document.getElementById('todayCalcTimeRange').innerText = 'OFF';
             } else {
-                document.getElementById('todayCalcTimeRange').innerText = `${start} → ${end}`;
+                document.getElementById('todayCalcTimeRange').innerText = getTodaySessionsFromForm().map(x => `${x.shift}: ${x.startTime} → ${x.endTime}`).join(' | ');
             }
         }
 
@@ -4323,19 +4428,18 @@ showDetailedForm(true);
                 errorEl.classList.remove('hidden');
                 return;
             }
-            if (!start || !end) {
-                errorEl.innerText = "Vui lòng nhập giờ bắt đầu và kết thúc!";
-                errorEl.classList.remove('hidden');
-                return;
-            }
+            const sessions = getTodaySessionsFromForm();
+            const sessionError = validateSessions(sessions);
+            if (sessionError) { errorEl.innerText=sessionError; errorEl.classList.remove('hidden'); return; }
 
             errorEl.classList.add('hidden');
 
             const dateStr = formatDateISO(selectedDate);
             attendanceDB[dateStr] = {
-                shift: selectedShift,
-                startTime: start,
-                endTime: end,
+                shift: sessions[0].shift,
+                startTime: sessions[0].startTime,
+                endTime: sessions[0].endTime,
+                sessions: sessions,
                 mates: todayMatesSel.slice()
             };
 
@@ -4390,7 +4494,7 @@ renderTodayView();
                 const dateNumStr = `${String(temp.getDate()).padStart(2, '0')}/${String(temp.getMonth() + 1).padStart(2, '0')}`;
 
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+                const calc = calculateRecordSalary(record);
 
                 if (record.shift !== 'OFF') workDays++;
 
@@ -4417,10 +4521,10 @@ renderTodayView();
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-sm text-white">${dayName}</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : getRecordShiftLabel(record)}</span>
                             </div>
                             <div class="text-xs text-slate-400 font-mono mt-0.5">
-                                ${record.shift === 'OFF' ? 'Không đi làm' : `${record.startTime} → ${record.endTime}`}
+                                ${record.shift === 'OFF' ? 'Không đi làm' : getRecordTimeLabel(record)}
                             </div>
                         </div>
                     </div>
@@ -4493,11 +4597,7 @@ function renderMonthView() {
 
         // Chưa đăng ký = OFF, không tự cộng lương
         if (record && record.shift !== 'OFF') {
-            const calc = calculateSalary(
-                record.shift,
-                record.startTime,
-                record.endTime
-            );
+            const calc = calculateRecordSalary(record);
 
             monthWorkDays++;
             monthTotalPay += calc.totalPay;
@@ -4590,11 +4690,7 @@ function renderMonthView() {
             const startTime = record ? record.startTime : '00:00';
             const endTime = record ? record.endTime : '00:00';
 
-            const calc = calculateSalary(
-                shift,
-                startTime,
-                endTime
-            );
+            const calc = calculateRecordSalary(record || { shift, startTime, endTime });
 
             if (record && shift !== 'OFF') {
                 weekRowPayInMonth += calc.totalPay;
@@ -4709,7 +4805,7 @@ function renderMonthView() {
                 const dateNumStr = `${String(temp.getDate()).padStart(2, '0')}/${String(temp.getMonth() + 1).padStart(2, '0')}/${temp.getFullYear()}`;
 
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+                const calc = calculateRecordSalary(record);
 
                 if (record.shift !== 'OFF') workDays++;
 
@@ -4736,10 +4832,10 @@ function renderMonthView() {
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-sm text-white">${dayName}</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : getRecordShiftLabel(record)}</span>
                             </div>
                             <div class="text-xs text-slate-400 font-mono mt-0.5">
-                                ${record.shift === 'OFF' ? 'Không đi làm' : `${record.startTime} → ${record.endTime}`}
+                                ${record.shift === 'OFF' ? 'Không đi làm' : getRecordTimeLabel(record)}
                             </div>
                         </div>
                     </div>
@@ -4812,6 +4908,11 @@ renderPayrollOtherIncome();
 
             document.getElementById('retroStartTime').value = record.startTime || '18:00';
             document.getElementById('retroEndTime').value = record.endTime || '00:30';
+            const savedSessions = Array.isArray(record.sessions) ? record.sessions : [];
+            retroWorkMode = savedSessions.length > 1 ? 'double' : 'single';
+            if (savedSessions.length > 1) { retroModalShift=savedSessions[0].shift || record.shift; document.getElementById('retroStartTime').value=savedSessions[0].startTime; document.getElementById('retroEndTime').value=savedSessions[0].endTime; retroSecondShift=savedSessions[1].shift || 'US'; document.getElementById('retroSecondStart').value=savedSessions[1].startTime; document.getElementById('retroSecondEnd').value=savedSessions[1].endTime; }
+            else { retroSecondShift='US'; document.getElementById('retroSecondStart').value='17:00'; document.getElementById('retroSecondEnd').value='22:00'; }
+            setRetroWorkMode(retroWorkMode); selectRetroSecondShift(retroSecondShift);
 
             document.getElementById('retroModalError').classList.add('hidden');
             retroMatesSel = Array.isArray(record.mates) ? record.mates.slice() : [];
@@ -4860,18 +4961,18 @@ renderPayrollOtherIncome();
             const end = document.getElementById('retroEndTime').value;
             const errorEl = document.getElementById('retroModalError');
 
-            if (retroModalShift !== 'OFF' && (!start || !end)) {
-                errorEl.innerText = "Vui lòng nhập đầy đủ giờ làm!";
-                errorEl.classList.remove('hidden');
-                return;
-            }
+            const sessions = retroModalShift === 'OFF' ? [] : [{shift:retroModalShift,startTime:start,endTime:end}];
+            if (retroModalShift !== 'OFF' && retroWorkMode === 'double') sessions.push({shift:retroSecondShift,startTime:document.getElementById('retroSecondStart').value,endTime:document.getElementById('retroSecondEnd').value});
+            const sessionError = retroModalShift === 'OFF' ? '' : validateSessions(sessions);
+            if (sessionError) { errorEl.innerText=sessionError; errorEl.classList.remove('hidden'); return; }
 
             errorEl.classList.add('hidden');
 
             attendanceDB[retroModalActiveDateStr] = {
                 shift: retroModalShift,
-                startTime: retroModalShift === 'OFF' ? '00:00' : start,
-                endTime: retroModalShift === 'OFF' ? '00:00' : end,
+                startTime: retroModalShift === 'OFF' ? '00:00' : sessions[0].startTime,
+                endTime: retroModalShift === 'OFF' ? '00:00' : sessions[0].endTime,
+                sessions: sessions,
                 mates: retroModalShift === 'OFF' ? [] : retroMatesSel.slice()
             };
 
@@ -4895,10 +4996,10 @@ renderPayrollOtherIncome();
                 const dateStr = formatDateISO(temp);
                 const dayName = getDayOfWeekName(temp);
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+                const calc = calculateRecordSalary(record);
 
                 totalPaySum += calc.totalPay;
-                csv += `"${dateStr}","${dayName}","${record.shift}","${record.startTime}","${record.endTime}",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
+                csv += `"${dateStr}","${dayName}","${getRecordShiftLabel(record)}","${getRecordTimeLabel(record)}","",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
 
                 temp.setDate(temp.getDate() + 1);
             }
@@ -4920,10 +5021,10 @@ renderPayrollOtherIncome();
                 const dateStr = formatDateISO(d);
                 const dayName = getDayOfWeekName(d);
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+                const calc = calculateRecordSalary(record);
 
                 monthTotalPay += calc.totalPay;
-                csv += `"${dateStr}","${dayName}","${record.shift}","${record.startTime}","${record.endTime}",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
+                csv += `"${dateStr}","${dayName}","${getRecordShiftLabel(record)}","${getRecordTimeLabel(record)}","",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
             }
 
             csv += `\n"TỔNG THÁNG",,,,,,,,,${monthTotalPay}\n`;
@@ -4941,10 +5042,10 @@ renderPayrollOtherIncome();
                 const dateStr = formatDateISO(temp);
                 const dayName = getDayOfWeekName(temp);
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateSalary(record.shift, record.startTime, record.endTime);
+                const calc = calculateRecordSalary(record);
 
                 totalPaySum += calc.totalPay;
-                csv += `"${dateStr}","${dayName}","${record.shift}","${record.startTime}","${record.endTime}",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
+                csv += `"${dateStr}","${dayName}","${getRecordShiftLabel(record)}","${getRecordTimeLabel(record)}","",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
 
                 temp.setDate(temp.getDate() + 1);
             }
