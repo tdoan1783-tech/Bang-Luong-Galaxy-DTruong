@@ -484,6 +484,25 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
 @media (prefers-reduced-motion:reduce){.wr-ym i{animation:none}.wr-yb div i{animation:none;height:calc(var(--h) * .78)}}
 .wrap-big.sm{font-size:clamp(34px,11.5vw,56px);white-space:nowrap}
 .wrap-big.xs{font-size:clamp(30px,9.6vw,48px);white-space:nowrap}
+/* ===== LÀM ĐÚP ===== */
+.dbl-box{border-radius:14px;border:1px dashed rgba(253,181,21,.6);background:rgba(3,14,40,.35);padding:8px}
+.dbl-toggle{width:100%;padding:10px;border-radius:10px;font-size:13px;font-weight:900;color:#fdb515;text-align:center;background:transparent;border:0;-webkit-tap-highlight-color:transparent}
+.dbl-toggle.on{color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515)}
+.dbl-body{padding:6px 2px 2px}
+.dbl-lb{font-size:11px;font-weight:800;color:#b4cdf2;margin-bottom:4px}
+.dbl-shifts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.dbl-sh{padding:9px;border-radius:10px;font-size:13px;font-weight:900;color:#dbe8ff;background:rgba(3,14,40,.6);border:1px solid rgba(255,255,255,.2)}
+.dbl-sh.on{color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515);border-color:#fff}
+.dbl-in{width:100%;min-width:0;box-sizing:border-box;border-radius:12px;padding:10px 8px;font-size:15px;font-family:ui-monospace,Menlo,monospace;color:#fff;background:rgba(3,14,40,.65);border:1px solid rgba(255,255,255,.22);color-scheme:dark}
+.dbl-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.dbl-chip{padding:6px 10px;border-radius:999px;font-size:11.5px;font-weight:800;color:#dbe8ff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
+.dbl-chip:active{transform:scale(.95)}
+.dbl-sum{margin-top:8px;font-size:12px;color:#ffe9a8;font-weight:700}
+.dbl-item{margin-bottom:10px;padding:8px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
+.dbl-ih{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#fdb515}
+.dbl-x{font-size:11px;font-weight:800;padding:5px 9px;border-radius:10px;color:#fda4af;background:rgba(244,63,94,.15);border:1px solid rgba(244,63,94,.4)}
+.dbl-add{width:100%;padding:10px;border-radius:10px;font-size:13px;font-weight:900;color:#071a40;background:linear-gradient(90deg,#00b7e6,#8dc63f)}
+.dbl-add:active{transform:scale(.98)}
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white pb-12">
@@ -812,28 +831,6 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
         </div>
     </div>
 </div>
-<div class="mt-3 rounded-xl border border-orange-500/30 bg-slate-950/70 p-3 space-y-3">
-    <div class="flex items-center justify-between gap-2">
-        <div><div class="text-xs font-black text-slate-200">CHẾ ĐỘ CHẤM CÔNG</div><div class="text-[10px] text-slate-500">Có thể chọn loại ca riêng cho từng buổi</div></div>
-        <div class="flex rounded-lg bg-slate-900 p-1 gap-1">
-            <button type="button" id="todaySingleModeBtn" onclick="setTodayWorkMode('single')" class="px-3 py-1.5 rounded-md text-[10px] font-black">1 CA</button>
-            <button type="button" id="todayDoubleModeBtn" onclick="setTodayWorkMode('double')" class="px-3 py-1.5 rounded-md text-[10px] font-black">2 CA</button>
-        </div>
-    </div>
-    <div id="todaySecondSession" class="hidden border-t border-slate-800 pt-3 space-y-3">
-        <div class="flex items-center justify-between"><span class="text-xs font-black text-orange-300">CA LÀM THỨ HAI</span><span class="text-[10px] text-slate-500">Sau thời gian nghỉ</span></div>
-        <div class="grid grid-cols-3 gap-2">
-            <button type="button" onclick="selectSecondShift('CO')" id="todaySecondCO" class="py-2 rounded-lg border text-xs font-black">CO</button>
-            <button type="button" onclick="selectSecondShift('US')" id="todaySecondUS" class="py-2 rounded-lg border text-xs font-black">US</button>
-            <button type="button" onclick="selectSecondShift('LB')" id="todaySecondLB" class="py-2 rounded-lg border text-xs font-black">LB</button>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-            <div><label class="block text-[10px] font-bold text-slate-400 mb-1">Bắt đầu ca 2</label><input type="time" id="todaySecondStart" value="17:00" onchange="calculateAndDisplayToday()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2.5 text-white font-mono"></div>
-            <div><label class="block text-[10px] font-bold text-slate-400 mb-1">Kết thúc ca 2</label><input type="time" id="todaySecondEnd" value="22:00" onchange="calculateAndDisplayToday()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2.5 text-white font-mono"></div>
-        </div>
-        <p class="text-[10px] text-slate-500">Thời gian nghỉ giữa hai ca không được tính lương.</p>
-    </div>
-</div>
                         <!-- Quick Presets -->
                         <div>
                             <label class="block text-[11px] font-semibold text-slate-400 mb-1.5">Mẫu ca phổ biến (Bấm chọn nhanh):</label>
@@ -851,6 +848,14 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
                                     18:00 → 00:00 (6h)
                                 </button>
                             </div>
+                        </div>
+                    </div>
+
+                    <div id="todayDbl" class="dbl-box">
+                        <button type="button" id="todayDblBtn" class="dbl-toggle" onclick="toggleDouble('today')"><span id="todayDblIc">➕</span> <span id="todayDblTx">Làm đúp / nhiều ca (thêm ca 2, 3, 4, 5)</span></button>
+                        <div id="todayDblBody" class="dbl-body" style="display:none">
+                            <div id="todayDblList"></div>
+                            <button type="button" id="todayDblAdd" class="dbl-add" onclick="dblAdd('today')">➕ Thêm ca thứ 3</button>
                         </div>
                     </div>
 
@@ -1466,17 +1471,16 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
                     <input type="time" id="retroEndTime" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white font-mono text-sm focus:outline-none focus:border-orange-500">
                 </div>
             </div>
-            <div class="rounded-xl border border-orange-500/30 bg-slate-950/70 p-3 space-y-3">
-                <div class="flex items-center justify-between"><span class="text-xs font-black text-slate-200">CHẾ ĐỘ CA</span><div class="flex gap-1 bg-slate-900 p-1 rounded-lg"><button type="button" id="retroSingleModeBtn" onclick="setRetroWorkMode('single')" class="px-3 py-1.5 rounded text-[10px] font-black">1 CA</button><button type="button" id="retroDoubleModeBtn" onclick="setRetroWorkMode('double')" class="px-3 py-1.5 rounded text-[10px] font-black">2 CA</button></div></div>
-                <div id="retroSecondSession" class="hidden border-t border-slate-800 pt-3 space-y-3">
-                    <div class="text-xs font-black text-orange-300">CA LÀM THỨ HAI</div>
-                    <div class="grid grid-cols-3 gap-2"><button type="button" onclick="selectRetroSecondShift('CO')" id="retroSecondCO" class="py-2 rounded-lg border text-xs font-black">CO</button><button type="button" onclick="selectRetroSecondShift('US')" id="retroSecondUS" class="py-2 rounded-lg border text-xs font-black">US</button><button type="button" onclick="selectRetroSecondShift('LB')" id="retroSecondLB" class="py-2 rounded-lg border text-xs font-black">LB</button></div>
-                    <div class="grid grid-cols-2 gap-3"><div><label class="block text-[10px] font-bold text-slate-400 mb-1">Bắt đầu ca 2</label><input type="time" id="retroSecondStart" value="17:00" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2.5 text-white font-mono"></div><div><label class="block text-[10px] font-bold text-slate-400 mb-1">Kết thúc ca 2</label><input type="time" id="retroSecondEnd" value="22:00" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-2.5 text-white font-mono"></div></div>
-                    <p class="text-[10px] text-slate-500">Thời gian nghỉ giữa hai ca không được tính lương.</p>
-                </div>
-            </div>
 
-            <div>
+            <div id="retroDbl" class="dbl-box">
+                        <button type="button" id="retroDblBtn" class="dbl-toggle" onclick="toggleDouble('retro')"><span id="retroDblIc">➕</span> <span id="retroDblTx">Làm đúp / nhiều ca (thêm ca 2, 3, 4, 5)</span></button>
+                        <div id="retroDblBody" class="dbl-body" style="display:none">
+                            <div id="retroDblList"></div>
+                            <button type="button" id="retroDblAdd" class="dbl-add" onclick="dblAdd('retro')">➕ Thêm ca thứ 3</button>
+                        </div>
+                    </div>
+
+                    <div>
                         <label class="block text-xs font-bold text-slate-300 uppercase mb-2">👥 Làm chung với ai?</label>
                         <div id="retroMates"></div>
                     </div>
@@ -1531,7 +1535,7 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
 <div class="text-[10px] font-black tracking-widest text-orange-400 uppercase">01 • HÔM NAY</div>
 <h3 class="text-xl font-black text-white mt-1">Chấm công trong 4 bước</h3>
 <p class="text-xs text-slate-300 mt-1">Vào tab <b>Hôm Nay</b>, làm lần lượt theo số:</p>
-<div class="tg-phone"><div class="tg-row"><span class="tg-n">1</span><div class="tg-b go">CÓ (ĐI LÀM)</div><div class="tg-b off">KHÔNG (OFF ⚪)</div></div><div class="tg-row"><span class="tg-n">2</span><div class="tg-b ">CO<br>Concession</div><div class="tg-b ">US<br>Usher</div><div class="tg-b ">LB<br>Lobby</div></div><div class="tg-row"><span class="tg-n">3</span><div class="tg-b ">09:00 → 14:00</div><div class="tg-b ">14:00 → 18:00</div><div class="tg-b ">18:00 → 23:00</div></div><div class="tg-row"><span class="tg-n">4</span><div class="tg-b ok">XÁC NHẬN CHẤM CÔNG</div></div><div class="tg-tap p2" style="left:26%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm <em>CÓ (ĐI LÀM)</em>. Hôm nay nghỉ thì bấm KHÔNG (OFF)</span></li><li><b>2</b><span>Chọn ca của bạn: <em>CO</em>, <em>US</em> hoặc <em>LB</em></span></li><li><b>3</b><span>Bấm một khung giờ có sẵn, hoặc tự nhập giờ bắt đầu và kết thúc</span></li><li><b>4</b><span>Bấm <em>XÁC NHẬN CHẤM CÔNG</em> để lưu</span></li></ol><div class="tg-tip">Bấm NGÀY TRƯỚC hoặc NGÀY SAU để chấm cho ngày khác.</div>
+<div class="tg-phone"><div class="tg-row"><span class="tg-n">1</span><div class="tg-b go">CÓ (ĐI LÀM)</div><div class="tg-b off">KHÔNG (OFF ⚪)</div></div><div class="tg-row"><span class="tg-n">2</span><div class="tg-b ">CO<br>Concession</div><div class="tg-b ">US<br>Usher</div><div class="tg-b ">LB<br>Lobby</div></div><div class="tg-row"><span class="tg-n">3</span><div class="tg-b ">09:00 → 14:00</div><div class="tg-b ">14:00 → 18:00</div><div class="tg-b ">18:00 → 23:00</div></div><div class="tg-row"><span class="tg-n">4</span><div class="tg-b ok">XÁC NHẬN CHẤM CÔNG</div></div><div class="tg-tap p2" style="left:26%;top:34px"><i class="tg-rip"></i><span class="tg-fing">👆</span></div></div><ol class="tg-steps"><li><b>1</b><span>Bấm <em>CÓ (ĐI LÀM)</em>. Hôm nay nghỉ thì bấm KHÔNG (OFF)</span></li><li><b>2</b><span>Chọn ca của bạn: <em>CO</em>, <em>US</em> hoặc <em>LB</em></span></li><li><b>3</b><span>Bấm một khung giờ có sẵn, hoặc tự nhập giờ bắt đầu và kết thúc</span></li><li><b>4</b><span>Bấm <em>XÁC NHẬN CHẤM CÔNG</em> để lưu</span></li></ol><div class="tg-tip">Bấm NGÀY TRƯỚC hoặc NGÀY SAU để chấm cho ngày khác.<br>✌️ Làm nhiều ca trong một ngày (tối đa 5 ca)? Bấm <b>➕ Làm đúp / nhiều ca</b>, rồi <b>➕ Thêm ca</b>. Ví dụ CO 09:00–14:00 + US 18:00–22:30.</div>
 </div>
 
 
@@ -1770,10 +1774,6 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
         let selectedDate = new Date(); // Date object currently in focus
         let selectedPayrollDate = new Date(); // Anchor date for Payroll period logic
         let selectedShift = 'CO';
-        let selectedSecondShift = 'US';
-        let todayWorkMode = 'single';
-        let retroSecondShift = 'US';
-        let retroWorkMode = 'single';
 
         let retroModalActiveDateStr = '';
         let retroModalShift = 'OFF';
@@ -1782,7 +1782,7 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
             userName: ''
         };
 
-        // Attendance Database supports legacy single sessions and sessions[] for split shifts.
+        // Attendance Database: { "YYYY-MM-DD": { shift: 'CO'|'US'|'LB'|'OFF', startTime: '18:00', endTime: '00:30' } }
         let attendanceDB = {};
 
        function getDefaultSampleData() {
@@ -1817,11 +1817,7 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
 
             for (let m = startMins; m < endMins; m++) {
                 let hourOfDay = Math.floor(m / 60) % 24;
-                // OT bắt đầu từ 22:00. Nếu ca đã bắt đầu trước nửa đêm
-                // và kéo dài qua 00:00, phần sau nửa đêm vẫn là OT.
-                // Ca bắt đầu mới lúc 00:00–05:59 không tự động thành OT.
-                const isAfterMidnightContinuation = hourOfDay < 6 && endMins > 24 * 60;
-                if (hourOfDay >= 22 || isAfterMidnightContinuation) {
+                if (hourOfDay >= 22 || hourOfDay < 6) {
                     otMins++;
                 } else {
                     regMins++;
@@ -1845,40 +1841,6 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
                 totalPay
             };
         }
-        // Tính lương cho một ngày có thể gồm một hoặc nhiều phiên làm việc.
-        // Dữ liệu cũ (startTime/endTime) vẫn được hỗ trợ nguyên vẹn.
-        function calculateRecordSalary(record) {
-            if (!record || record.shift === 'OFF') return calculateSalary('OFF');
-            const sessions = Array.isArray(record.sessions) && record.sessions.length
-                ? record.sessions
-                : [{ shift: record.shift, startTime: record.startTime, endTime: record.endTime }];
-            return sessions.reduce((sum, session) => {
-                const part = calculateSalary(session.shift || record.shift, session.startTime, session.endTime);
-                sum.totalHours += part.totalHours;
-                sum.regularHours += part.regularHours;
-                sum.otHours += part.otHours;
-                sum.regularPay += part.regularPay;
-                sum.otPay += part.otPay;
-                sum.totalPay += part.totalPay;
-                return sum;
-            }, { totalHours: 0, regularHours: 0, otHours: 0, regularPay: 0, otPay: 0, totalPay: 0 });
-        }
-
-        function getRecordShiftLabel(record) {
-            if (!record || record.shift === 'OFF') return 'OFF';
-            return Array.isArray(record.sessions) && record.sessions.length > 1
-                ? record.sessions.map(x => x.shift).join(' + ')
-                : record.shift;
-        }
-
-        function getRecordTimeLabel(record) {
-            if (!record || record.shift === 'OFF') return '00:00';
-            const sessions = Array.isArray(record.sessions) && record.sessions.length
-                ? record.sessions
-                : [{ startTime: record.startTime, endTime: record.endTime }];
-            return sessions.map(x => `${x.startTime}–${x.endTime}`).join(' | ');
-        }
-
 // ==========================================
 // BIỂU ĐỒ LƯƠNG 4 THÁNG GẦN NHẤT
 // ==========================================
@@ -1919,7 +1881,7 @@ function getLast4PayrollPeriods() {
 
             if (record && record.shift !== 'OFF') {
 
-                const calc = calculateRecordSalary(record);
+                const calc = calculateRecord(record);
 
                 totalPay += calc.totalPay;
                 totalHours += calc.totalHours;
@@ -2588,7 +2550,7 @@ function fmtDMY(ds) {
 }
 
 function shiftDesc(r) {
-    return r.shift === 'OFF' ? 'Nghỉ (OFF)' : ('Ca ' + r.shift + ' · ' + r.startTime + '–' + r.endTime);
+    return r.shift === 'OFF' ? 'Nghỉ (OFF)' : recSegments(r).map(function (s) { return 'Ca ' + s.shift + ' · ' + s.start + '–' + s.end; }).join(' + ');
 }
 
 function mateChipsHtml(arr) {
@@ -2694,12 +2656,12 @@ function wrappedStatsRange(s, e) {
         const r = attendanceDB[formatDateISO(d)];
         st.flags.push(!!(r && r.shift !== 'OFF'));
         if (r && r.shift !== 'OFF') {
-            const c = calculateRecordSalary(r);
-            const info = { date: new Date(d), shift: r.shift, start: r.startTime, end: r.endTime, pay: c.totalPay || 0, hours: c.totalHours || 0 };
+            const c = calculateRecord(r);
+            const info = { date: new Date(d), shift: recShiftCode(r), start: r.startTime, end: r.endTime, text: recSegments(r).length > 1 ? recSegments(r).map(function (sg) { return 'Ca ' + sg.shift + ' (' + sg.start + '–' + sg.end + ')'; }).join(' + ') : '', pay: c.totalPay || 0, hours: c.totalHours || 0 };
             st.days++; st.hours += info.hours; st.ot += c.otHours || 0; st.pay += info.pay;
             if (!st.richest || info.pay > st.richest.pay) st.richest = info;
             if (!st.longest || info.hours > st.longest.hours || (info.hours === st.longest.hours && info.pay > st.longest.pay)) st.longest = info;
-            if (st.byShift[r.shift] !== undefined) st.byShift[r.shift]++;
+            recSegments(r).forEach(function (sg) { if (st.byShift[sg.shift] !== undefined) st.byShift[sg.shift]++; });
             st.byDow[d.getDay()]++;
             (Array.isArray(r.mates) ? r.mates : []).forEach(function (n) {
                 const k = String(n).toLowerCase();
@@ -2745,8 +2707,8 @@ function wrappedBuild(st) {
     const films = Math.floor(st.hours / 2);
     sl.push({ bg: 'linear-gradient(160deg,#034ea2,#1a2f8a)', fg: '#fff', emoji: '⏱️', scene: 'hours', kicker: 'Tổng thời gian đứng quầy', num: st.hours, fmt: 'dec1', unit: 'giờ', sub: 'bằng khoảng ' + films + ' bộ phim dài 2 tiếng! 🍿', deco: ['⏱️', '🎞️', '✨', '🍿', '🎬', '✨'] });
     sl.push({ bg: 'linear-gradient(160deg,#fdb515,#f58020)', fg: '#071a40', emoji: '💰', scene: 'money', kicker: 'Thu nhập kỳ này', num: st.total, fmt: 'money', unit: '', sub: st.goalPct !== null ? 'Đạt ' + st.goalPct + '% mục tiêu của bạn ' + (st.goalPct >= 100 ? '🎉' : '💪') : 'Mỗi đồng đều là mồ hôi của bạn!', deco: ['💵', '🪙', '✨', '💰', '🪙', '✨'] });
-    if (st.richest) sl.push({ bg: 'linear-gradient(160deg,#f58020,#c8102e)', fg: '#fff', emoji: '🏆', scene: 'richest', kicker: 'Ca nhiều tiền nhất', num: st.richest.pay, fmt: 'money', unit: '', sub: DOW_FULL[st.richest.date.getDay()] + ' ' + wrDM(st.richest.date) + ' · Ca ' + st.richest.shift + ' (' + st.richest.start + '–' + st.richest.end + ')', deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
-    if (st.longest) sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '🕰️', scene: 'longest', kicker: 'Ca làm lâu nhất', num: st.longest.hours, fmt: 'dec1', unit: 'giờ', sub: DOW_FULL[st.longest.date.getDay()] + ' ' + wrDM(st.longest.date) + ' · Ca ' + st.longest.shift + ' (' + st.longest.start + '–' + st.longest.end + ')', deco: ['🕰️', '💪', '✨', '😤', '💪', '✨'] });
+    if (st.richest) sl.push({ bg: 'linear-gradient(160deg,#f58020,#c8102e)', fg: '#fff', emoji: '🏆', scene: 'richest', kicker: 'Ca nhiều tiền nhất', num: st.richest.pay, fmt: 'money', unit: '', sub: DOW_FULL[st.richest.date.getDay()] + ' ' + wrDM(st.richest.date) + ' · ' + wrShiftTxt(st.richest), deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
+    if (st.longest) sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '🕰️', scene: 'longest', kicker: 'Ca làm lâu nhất', num: st.longest.hours, fmt: 'dec1', unit: 'giờ', sub: DOW_FULL[st.longest.date.getDay()] + ' ' + wrDM(st.longest.date) + ' · ' + wrShiftTxt(st.longest), deco: ['🕰️', '💪', '✨', '😤', '💪', '✨'] });
     if (st.bestStreak) sl.push({ bg: 'linear-gradient(160deg,#f58020,#9d0c23)', fg: '#fff', emoji: '🔥', scene: 'streak', kicker: 'Chuỗi làm dài nhất', num: st.bestStreak, fmt: 'int', unit: 'ngày liên tiếp', sub: st.bestStreak > 1 ? 'từ ' + wrDM(st.bestStart) + ' đến ' + wrDM(st.bestEnd) + ' · quá bền bỉ!' : 'Kỳ sau thử nối dài hơn nhé!', deco: ['🔥', '💥', '✨', '🔥', '⚡', '✨'] });
     if (st.days) sl.push({ bg: 'linear-gradient(160deg,#071a40,#034ea2 55%,#00b7e6)', fg: '#fff', emoji: '🌙', scene: 'fav', kicker: 'Ca bạn đi nhiều nhất', big: 'Ca ' + st.favShift, sub: st.byShift[st.favShift] + ' lần · ngày hay đi nhất là ' + DOW_FULL[st.busyDow] + ' · ' + Math.round(st.ot * 10) / 10 + ' giờ làm đêm', deco: ['🌙', '⭐', '✨', '🌟', '🌙', '✨'] });
     if (st.topMate) sl.push({ bg: 'linear-gradient(160deg,#8dc63f,#00b7e6)', fg: '#071a40', emoji: '🤝', scene: 'mate', kicker: 'Đồng đội ăn ý nhất', big: st.topMate.name, sub: 'làm chung với bạn ' + st.topMate.c + ' ca. Cảm ơn nhau nhé!', deco: ['🤝', '💛', '✨', '🙌', '💛', '✨'] });
@@ -2805,7 +2767,7 @@ function wrScene(s, st) {
             break;
         case 'richest':
             bg = '<div class="wr-rays"></div>' + wrConfetti(26) + wrRain(['🥇', '✨'], 8, 'fall');
-            viz = '<div class="wr-ticket">🎟️ Ca ' + st.richest.shift + ' · ' + st.richest.start + '–' + st.richest.end + '</div>';
+            viz = '<div class="wr-ticket">🎟️ ' + (st.richest.text || ('Ca ' + st.richest.shift + ' · ' + st.richest.start + '–' + st.richest.end)) + '</div>';
             break;
         case 'longest': {
             bg = wrRain(['💦', '😤'], 8, 'fall');
@@ -3663,7 +3625,7 @@ function yearData(Y) {
         for (let d = new Date(r.startDate); d <= r.endDate; d.setDate(d.getDate() + 1)) {
             const rec = attendanceDB[formatDateISO(d)];
             if (rec && rec.shift !== 'OFF') {
-                const c = calculateRecordSalary(rec);
+                const c = calculateRecord(rec);
                 days++;
                 hours += c.totalHours || 0;
                 daily += c.totalPay || 0;
@@ -3756,8 +3718,8 @@ function ywBuild(ys) {
     sl.push({ bg: 'linear-gradient(160deg,#f58020,#c8102e)', fg: '#fff', emoji: '🏆', scene: 'ybest', kicker: 'Tháng bạn kiếm nhiều nhất', num: ys.best.total, fmt: 'money', unit: '', sub: 'Tháng ' + ys.best.m + ' (' + wrDM(ys.best.range.startDate) + ' – ' + wrDM(ys.best.range.endDate) + ')', deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
     sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '📈', scene: 'ybars', kicker: 'Hành trình 12 tháng', big: 'Từng tháng một', sub: 'Cột vàng là tháng cao nhất của bạn', deco: ['📈', '✨', '💪', '⭐', '✨', '🚀'] });
     sl.push({ bg: 'linear-gradient(160deg,#8dc63f,#00b7e6)', fg: '#071a40', emoji: '📊', scene: 'yavg', kicker: 'Trung bình mỗi tháng', num: ys.avgM, fmt: 'money', unit: '', sub: (Math.round(ys.avgD * 10) / 10) + ' ngày/tháng · khoảng ' + formatVND(Math.round(ys.perDay)) + ' mỗi ngày làm', deco: ['📊', '✨', '💡', '⭐', '✨', '💎'] });
-    if (rs.richest) sl.push({ bg: 'linear-gradient(160deg,#fdb515,#c8102e)', fg: '#fff', emoji: '🥇', scene: 'richest', kicker: 'Ca nhiều tiền nhất cả năm', num: rs.richest.pay, fmt: 'money', unit: '', sub: DOW_FULL[rs.richest.date.getDay()] + ' ' + wrDM(rs.richest.date) + ' · Ca ' + rs.richest.shift + ' (' + rs.richest.start + '–' + rs.richest.end + ')', deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
-    if (rs.longest) sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '🕰️', scene: 'longest', kicker: 'Ca làm lâu nhất cả năm', num: rs.longest.hours, fmt: 'dec1', unit: 'giờ', sub: DOW_FULL[rs.longest.date.getDay()] + ' ' + wrDM(rs.longest.date) + ' · Ca ' + rs.longest.shift + ' (' + rs.longest.start + '–' + rs.longest.end + ')', deco: ['🕰️', '💪', '✨', '😤', '💪', '✨'] });
+    if (rs.richest) sl.push({ bg: 'linear-gradient(160deg,#fdb515,#c8102e)', fg: '#fff', emoji: '🥇', scene: 'richest', kicker: 'Ca nhiều tiền nhất cả năm', num: rs.richest.pay, fmt: 'money', unit: '', sub: DOW_FULL[rs.richest.date.getDay()] + ' ' + wrDM(rs.richest.date) + ' · ' + wrShiftTxt(rs.richest), deco: ['🏆', '🥇', '✨', '🎉', '🥇', '✨'] });
+    if (rs.longest) sl.push({ bg: 'linear-gradient(160deg,#00b7e6,#034ea2)', fg: '#fff', emoji: '🕰️', scene: 'longest', kicker: 'Ca làm lâu nhất cả năm', num: rs.longest.hours, fmt: 'dec1', unit: 'giờ', sub: DOW_FULL[rs.longest.date.getDay()] + ' ' + wrDM(rs.longest.date) + ' · ' + wrShiftTxt(rs.longest), deco: ['🕰️', '💪', '✨', '😤', '💪', '✨'] });
     if (rs.bestStreak > 1) sl.push({ bg: 'linear-gradient(160deg,#f58020,#9d0c23)', fg: '#fff', emoji: '🔥', scene: 'streak', kicker: 'Chuỗi làm dài nhất cả năm', num: rs.bestStreak, fmt: 'int', unit: 'ngày liên tiếp', sub: 'từ ' + wrDM(rs.bestStart) + ' đến ' + wrDM(rs.bestEnd) + ' · quá bền bỉ!', deco: ['🔥', '💥', '✨', '🔥', '⚡', '✨'] });
     if (rs.days) sl.push({ bg: 'linear-gradient(160deg,#071a40,#034ea2 55%,#00b7e6)', fg: '#fff', emoji: '🌙', scene: 'fav', kicker: 'Ca bạn đi nhiều nhất năm nay', big: 'Ca ' + rs.favShift, sub: rs.byShift[rs.favShift] + ' lần · ngày hay đi nhất là ' + DOW_FULL[rs.busyDow], deco: ['🌙', '⭐', '✨', '🌟', '🌙', '✨'] });
     if (rs.topMate) sl.push({ bg: 'linear-gradient(160deg,#8dc63f,#00b7e6)', fg: '#071a40', emoji: '🤝', scene: 'mate', kicker: 'Đồng đội ăn ý nhất năm', big: rs.topMate.name, sub: 'làm chung với bạn ' + rs.topMate.c + ' ca. Cảm ơn nhau nhé!', deco: ['🤝', '💛', '✨', '🙌', '💛', '✨'] });
@@ -3891,6 +3853,194 @@ function wrappedShareYear() {
     }, 'image/png');
 }
 
+// ==========================================
+// ✌️ LÀM ĐÚP: một ngày có thể có ca thứ 2 (record.shift2)
+// ==========================================
+function recSegments(rec) {
+    if (!rec || rec.shift === 'OFF' || !rec.startTime || !rec.endTime) return [];
+    const a = [{ shift: rec.shift, start: rec.startTime, end: rec.endTime }];
+    const ex = Array.isArray(rec.extra) ? rec.extra : (rec.shift2 ? [rec.shift2] : []);
+    ex.forEach(function (e) {
+        if (e && e.startTime && e.endTime) a.push({ shift: e.shift || rec.shift, start: e.startTime, end: e.endTime });
+    });
+    return a;
+}
+
+function calculateRecord(rec) {
+    const z = { totalHours: 0, regularHours: 0, otHours: 0, regularPay: 0, otPay: 0, totalPay: 0 };
+    recSegments(rec).forEach(function (s) {
+        const c = calculateSalary(s.shift, s.start, s.end);
+        Object.keys(z).forEach(function (k) { z[k] = Math.round((z[k] + (c[k] || 0)) * 100) / 100; });
+    });
+    return z;
+}
+
+function recTimeText(rec, sep) {
+    const segs = recSegments(rec);
+    if (!segs.length) return (rec && rec.startTime ? rec.startTime + (sep || ' → ') + rec.endTime : '');
+    return segs.map(function (s) { return s.start + (sep || ' → ') + s.end; }).join(' + ');
+}
+
+function recShiftCode(rec) {
+    const segs = recSegments(rec);
+    return segs.length ? segs.map(function (s) { return s.shift; }).join('+') : (rec ? rec.shift : 'OFF');
+}
+
+function recStartTxt(rec) {
+    const segs = recSegments(rec);
+    return segs.length ? segs.map(function (s) { return s.start; }).join(' + ') : (rec ? rec.startTime : '');
+}
+
+function recEndTxt(rec) {
+    const segs = recSegments(rec);
+    return segs.length ? segs.map(function (s) { return s.end; }).join(' + ') : (rec ? rec.endTime : '');
+}
+
+function wrShiftTxt(x) {
+    return x.text || ('Ca ' + x.shift + ' (' + x.start + '–' + x.end + ')');
+}
+
+function dblMins(h) {
+    const p = String(h).split(':');
+    return (parseInt(p[0], 10) || 0) * 60 + (parseInt(p[1], 10) || 0);
+}
+
+// Ghép ca 1 với các ca thêm (tối đa 5 ca/ngày), ca sớm nhất đứng đầu. Trả về {rec} hoặc {err}
+function dblBuild(base, extras) {
+    if (!extras || !extras.length) return { rec: base };
+    const all = [{ shift: base.shift, startTime: base.startTime, endTime: base.endTime }].concat(extras);
+    for (let i = 0; i < all.length; i++) {
+        if (!all[i].startTime || !all[i].endTime) return { err: 'Hãy nhập đủ giờ bắt đầu và kết thúc của ca thứ ' + (i + 1) + '.' };
+    }
+    const iv = all.map(function (s) { const a = dblMins(s.startTime); let b = dblMins(s.endTime); if (b <= a) b += 1440; return [a, b]; });
+    for (let i = 0; i < all.length; i++) {
+        for (let j = i + 1; j < all.length; j++) {
+            if (iv[i][0] < iv[j][1] && iv[j][0] < iv[i][1]) return { err: 'Ca thứ ' + (i + 1) + ' và ca thứ ' + (j + 1) + ' bị chồng giờ lên nhau, hãy kiểm tra lại giờ.' };
+        }
+    }
+    all.sort(function (a, b) { return dblMins(a.startTime) - dblMins(b.startTime); });
+    const rec = Object.assign({}, base, { shift: all[0].shift, startTime: all[0].startTime, endTime: all[0].endTime });
+    rec.extra = all.slice(1);
+    rec.shift2 = rec.extra[0];
+    return { rec: rec };
+}
+
+const DBL_MAX_EXTRA = 4;
+const DBL = {
+    today: { on: false, list: [] },
+    retro: { on: false, list: [] }
+};
+const DBL_PRESETS = [['06:00', '09:00'], ['09:00', '14:00'], ['14:00', '18:00'], ['17:00', '22:00'], ['18:00', '22:30']];
+
+function dblNextDefault(w) {
+    const l = DBL[w].list;
+    if (!l.length) return { shift: 'US', start: '18:00', end: '22:30' };
+    const last = l[l.length - 1];
+    const s = dblMins(last.end);
+    const e = Math.min(s + 180, 23 * 60 + 59);
+    const f = function (m) { return String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0'); };
+    return { shift: last.shift, start: f(s), end: f(e) };
+}
+
+function dblGet(w) {
+    const d = DBL[w];
+    if (!d.on || !d.list.length) return null;
+    return d.list.map(function (x) { return { shift: x.shift, startTime: x.start, endTime: x.end }; });
+}
+
+function dblItemSum(w, i) {
+    const x = DBL[w].list[i], el = document.getElementById(w + 'Sum_' + i);
+    if (!el || !x) return;
+    if (!x.start || !x.end) { el.textContent = ''; return; }
+    const c = calculateSalary(x.shift, x.start, x.end);
+    el.innerHTML = 'Ca ' + (i + 2) + ': <b>' + x.start + ' → ' + x.end + '</b> · ' + c.totalHours.toFixed(1) + ' giờ · <b>' + formatVND(c.totalPay) + '</b>';
+}
+
+function dblRender(w) {
+    const d = DBL[w];
+    const box = document.getElementById(w + 'Dbl');
+    if (!box) return;
+    const isOff = w === 'retro' && retroModalShift === 'OFF';
+    box.style.display = isOff ? 'none' : '';
+    const body = document.getElementById(w + 'DblBody');
+    body.style.display = d.on ? 'block' : 'none';
+    const btn = document.getElementById(w + 'DblBtn');
+    btn.classList.toggle('on', d.on);
+    document.getElementById(w + 'DblIc').textContent = d.on ? '✌️' : '➕';
+    document.getElementById(w + 'DblTx').textContent = d.on ? 'Đang làm ' + (d.list.length + 1) + ' ca trong ngày (bấm để tắt)' : 'Làm đúp / nhiều ca (thêm ca 2, 3, 4, 5)';
+    if (!d.on) return;
+    document.getElementById(w + 'DblList').innerHTML = d.list.map(function (x, i) {
+        const shifts = ['CO', 'US', 'LB'].map(function (k) {
+            return '<button type="button" class="dbl-sh' + (x.shift === k ? ' on' : '') + '" onclick="dblShift(\'' + w + '\',' + i + ',\'' + k + '\')">' + k + '</button>';
+        }).join('');
+        const chips = DBL_PRESETS.map(function (p) {
+            return '<button type="button" class="dbl-chip" onclick="dblPreset(\'' + w + '\',' + i + ',\'' + p[0] + '\',\'' + p[1] + '\')">' + p[0] + '–' + p[1] + '</button>';
+        }).join('');
+        return '<div class="dbl-item"><div class="dbl-ih"><b>Ca thứ ' + (i + 2) + '</b><button type="button" class="dbl-x" onclick="dblRemove(\'' + w + '\',' + i + ')">✕ Xóa ca này</button></div>' +
+            '<div class="dbl-shifts">' + shifts + '</div>' +
+            '<div class="grid grid-cols-2 gap-2 mt-2"><div><div class="dbl-lb">Giờ bắt đầu</div><input type="time" id="' + w + 'S_' + i + '" value="' + x.start + '" onchange="dblTime(\'' + w + '\',' + i + ')" class="dbl-in"></div>' +
+            '<div><div class="dbl-lb">Giờ kết thúc</div><input type="time" id="' + w + 'E_' + i + '" value="' + x.end + '" onchange="dblTime(\'' + w + '\',' + i + ')" class="dbl-in"></div></div>' +
+            '<div class="dbl-chips">' + chips + '</div><div id="' + w + 'Sum_' + i + '" class="dbl-sum"></div></div>';
+    }).join('');
+    d.list.forEach(function (_, i) { dblItemSum(w, i); });
+    const add = document.getElementById(w + 'DblAdd');
+    add.style.display = d.list.length >= DBL_MAX_EXTRA ? 'none' : '';
+    add.textContent = '➕ Thêm ca thứ ' + (d.list.length + 2) + (d.list.length >= DBL_MAX_EXTRA - 1 ? ' (tối đa 5 ca)' : '');
+}
+
+function dblRefresh(w) {
+    dblRender(w);
+    if (w === 'today') calculateAndDisplayToday();
+}
+
+function toggleDouble(w) {
+    const d = DBL[w];
+    d.on = !d.on;
+    if (d.on && !d.list.length) d.list.push(dblNextDefault(w));
+    dblRefresh(w);
+}
+
+function dblAdd(w) {
+    if (DBL[w].list.length >= DBL_MAX_EXTRA) return;
+    DBL[w].list.push(dblNextDefault(w));
+    dblRefresh(w);
+}
+
+function dblRemove(w, i) {
+    DBL[w].list.splice(i, 1);
+    if (!DBL[w].list.length) DBL[w].on = false;
+    dblRefresh(w);
+}
+
+function dblShift(w, i, k) {
+    DBL[w].list[i].shift = k;
+    dblRefresh(w);
+}
+
+function dblTime(w, i) {
+    const x = DBL[w].list[i];
+    x.start = document.getElementById(w + 'S_' + i).value;
+    x.end = document.getElementById(w + 'E_' + i).value;
+    dblItemSum(w, i);
+    if (w === 'today') calculateAndDisplayToday();
+}
+
+function dblPreset(w, i, a, b) {
+    DBL[w].list[i].start = a;
+    DBL[w].list[i].end = b;
+    dblRefresh(w);
+}
+
+function dblLoad(w, rec) {
+    const ex = rec && rec.shift !== 'OFF' ? (Array.isArray(rec.extra) ? rec.extra : (rec.shift2 ? [rec.shift2] : [])) : [];
+    const list = ex.filter(function (e) { return e && e.startTime && e.endTime; }).slice(0, DBL_MAX_EXTRA)
+        .map(function (e) { return { shift: e.shift || 'US', start: e.startTime, end: e.endTime }; });
+    DBL[w].list = list;
+    DBL[w].on = list.length > 0;
+    dblRender(w);
+}
+
+
 function escapeHtml(text) {
 
     const div =
@@ -3915,7 +4065,7 @@ function calculatePayrollGalaxyTotal(startDate, endDate) {
             endTime: '00:00'
         };
 
-        const calc = calculateRecordSalary(record);
+        const calc = calculateRecord(record);
 
         totalPay += calc.totalPay;
 
@@ -4252,44 +4402,6 @@ document.addEventListener('touchend', function(e) {
             else if (activeTab === 'PAYROLL') renderPayrollView();
         }
 
-        function setTodayWorkMode(mode) {
-            todayWorkMode = mode;
-            document.getElementById('todaySecondSession').classList.toggle('hidden', mode !== 'double');
-            document.getElementById('todaySingleModeBtn').className = `px-3 py-1.5 rounded-md text-[10px] font-black ${mode === 'single' ? 'bg-orange-500 text-slate-950' : 'text-slate-400'}`;
-            document.getElementById('todayDoubleModeBtn').className = `px-3 py-1.5 rounded-md text-[10px] font-black ${mode === 'double' ? 'bg-orange-500 text-slate-950' : 'text-slate-400'}`;
-            calculateAndDisplayToday();
-        }
-        function selectSecondShift(shift) {
-            selectedSecondShift = shift;
-            ['CO','US','LB'].forEach(k => { const el=document.getElementById('todaySecond'+k); el.className=`py-2 rounded-lg border text-xs font-black ${k===shift ? (k==='CO'?'bg-amber-500/20 text-amber-300 border-amber-500':k==='US'?'bg-rose-500/20 text-rose-300 border-rose-500':'bg-purple-500/20 text-purple-300 border-purple-500') : 'border-slate-700 text-slate-400'}`; });
-            calculateAndDisplayToday();
-        }
-        function getTodaySessionsFromForm() {
-            const sessions=[{shift:selectedShift,startTime:document.getElementById('todayStartTime').value,endTime:document.getElementById('todayEndTime').value}];
-            if(todayWorkMode==='double') sessions.push({shift:selectedSecondShift,startTime:document.getElementById('todaySecondStart').value,endTime:document.getElementById('todaySecondEnd').value});
-            return sessions;
-        }
-        function validateSessions(sessions) {
-            for (const x of sessions) if (!x.shift || !x.startTime || !x.endTime || x.startTime===x.endTime) return 'Vui lòng nhập đầy đủ giờ bắt đầu và kết thúc cho từng ca.';
-            if (sessions.length===2) {
-                const mins=x=>{const [h,m]=x.split(':').map(Number);return h*60+m;};
-                let a=mins(sessions[0].startTime), b=mins(sessions[0].endTime), c=mins(sessions[1].startTime), d=mins(sessions[1].endTime);
-                if(b<=a)b+=1440; if(d<=c)d+=1440; if(c<a)c+=1440; if(d<=a)d+=1440;
-                if(Math.max(a,c)<Math.min(b,d)) return 'Hai ca đang bị trùng giờ. Vui lòng kiểm tra lại.';
-            }
-            return '';
-        }
-        function setRetroWorkMode(mode) {
-            retroWorkMode=mode;
-            document.getElementById('retroSecondSession').classList.toggle('hidden',mode!=='double');
-            document.getElementById('retroSingleModeBtn').className=`px-3 py-1.5 rounded text-[10px] font-black ${mode==='single'?'bg-orange-500 text-slate-950':'text-slate-400'}`;
-            document.getElementById('retroDoubleModeBtn').className=`px-3 py-1.5 rounded text-[10px] font-black ${mode==='double'?'bg-orange-500 text-slate-950':'text-slate-400'}`;
-        }
-        function selectRetroSecondShift(shift) {
-            retroSecondShift=shift;
-            ['CO','US','LB'].forEach(k=>{const el=document.getElementById('retroSecond'+k);el.className=`py-2 rounded-lg border text-xs font-black ${k===shift?(k==='CO'?'bg-amber-500/20 text-amber-300 border-amber-500':k==='US'?'bg-rose-500/20 text-rose-300 border-rose-500':'bg-purple-500/20 text-purple-300 border-purple-500'):'border-slate-700 text-slate-400'}`;});
-        }
-
         function renderTodayView() {
             const dateStr = formatDateISO(selectedDate);
             const dayName = getDayOfWeekName(selectedDate);
@@ -4308,16 +4420,11 @@ document.addEventListener('touchend', function(e) {
                 selectedShift = 'CO';
                 document.getElementById('todayStartTime').value = '18:00';
                 document.getElementById('todayEndTime').value = '00:30';
-                selectedSecondShift='US'; document.getElementById('todaySecondStart').value='17:00'; document.getElementById('todaySecondEnd').value='22:00'; setTodayWorkMode('single');
                 showDetailedForm(true);
             } else {
                 selectedShift = record.shift;
                 document.getElementById('todayStartTime').value = record.startTime || '18:00';
                 document.getElementById('todayEndTime').value = record.endTime || '00:30';
-                const savedSessions = Array.isArray(record.sessions) ? record.sessions : [];
-                const isDouble = savedSessions.length > 1;
-                if (isDouble) { selectedShift=savedSessions[0].shift || record.shift; selectedSecondShift=savedSessions[1].shift || 'US'; document.getElementById('todayStartTime').value=savedSessions[0].startTime; document.getElementById('todayEndTime').value=savedSessions[0].endTime; document.getElementById('todaySecondStart').value=savedSessions[1].startTime; document.getElementById('todaySecondEnd').value=savedSessions[1].endTime; }
-                setTodayWorkMode(isDouble ? 'double' : 'single');
 
                 if (record.shift === 'OFF') {
                     badge.className = "px-3 py-1 rounded-full text-xs font-black tracking-wider bg-slate-800 text-slate-300 border-slate-700";
@@ -4328,7 +4435,7 @@ document.addEventListener('touchend', function(e) {
                     if (record.shift === 'US') shiftClass = "bg-rose-500/20 text-rose-300 border-rose-500/50";
                     if (record.shift === 'LB') shiftClass = "bg-purple-500/20 text-purple-300 border-purple-500/50";
                     badge.className = `px-3 py-1 rounded-full text-xs font-black tracking-wider border ${shiftClass}`;
-                    badge.innerText = `CA ${getRecordShiftLabel(record)}`;
+                    badge.innerText = `CA ${record.shift}`;
                     showDetailedForm(true);
                 }
             }
@@ -4338,6 +4445,8 @@ document.addEventListener('touchend', function(e) {
             renderSalary4MonthChart();
             todayMatesSel = Array.isArray((record || {}).mates) ? record.mates.slice() : [];
             renderMatesPicker('today');
+            dblLoad('today', record);
+            calculateAndDisplayToday();
         }
 
         function showDetailedForm(show) {
@@ -4404,8 +4513,12 @@ showDetailedForm(true);
             const dateStr = formatDateISO(selectedDate);
             const isOff = attendanceDB[dateStr] && attendanceDB[dateStr].shift === 'OFF';
 
-            const previewRecord = isOff ? {shift:'OFF'} : {shift:selectedShift, sessions:getTodaySessionsFromForm()};
-            const calc = calculateRecordSalary(previewRecord);
+            const calc = calculateSalary(isOff ? 'OFF' : selectedShift, start, end);
+            const extras = !isOff ? (dblGet('today') || []).filter(function (e) { return e.startTime && e.endTime; }) : [];
+            extras.forEach(function (e) {
+                const c2 = calculateSalary(e.shift, e.startTime, e.endTime);
+                Object.keys(calc).forEach(function (k) { calc[k] = Math.round((calc[k] + (c2[k] || 0)) * 100) / 100; });
+            });
 
             document.getElementById('todayDisplayTotalHours').innerText = `${calc.totalHours.toFixed(1)}h`;
             document.getElementById('todayDisplayRegHours').innerText = `${calc.regularHours.toFixed(1)}h`;
@@ -4418,7 +4531,7 @@ showDetailedForm(true);
             if (isOff) {
                 document.getElementById('todayCalcTimeRange').innerText = 'OFF';
             } else {
-                document.getElementById('todayCalcTimeRange').innerText = getTodaySessionsFromForm().map(x => `${x.shift}: ${x.startTime} → ${x.endTime}`).join(' | ');
+                document.getElementById('todayCalcTimeRange').innerText = `${start} → ${end}` + extras.map(function (e) { return ` + ${e.startTime} → ${e.endTime}`; }).join('');
             }
         }
 
@@ -4432,20 +4545,22 @@ showDetailedForm(true);
                 errorEl.classList.remove('hidden');
                 return;
             }
-            const sessions = getTodaySessionsFromForm();
-            const sessionError = validateSessions(sessions);
-            if (sessionError) { errorEl.innerText=sessionError; errorEl.classList.remove('hidden'); return; }
+            if (!start || !end) {
+                errorEl.innerText = "Vui lòng nhập giờ bắt đầu và kết thúc!";
+                errorEl.classList.remove('hidden');
+                return;
+            }
 
             errorEl.classList.add('hidden');
 
             const dateStr = formatDateISO(selectedDate);
-            attendanceDB[dateStr] = {
-                shift: sessions[0].shift,
-                startTime: sessions[0].startTime,
-                endTime: sessions[0].endTime,
-                sessions: sessions,
-                mates: todayMatesSel.slice()
-            };
+            const built = dblBuild({ shift: selectedShift, startTime: start, endTime: end, mates: todayMatesSel.slice() }, dblGet('today'));
+            if (built.err) {
+                errorEl.innerText = built.err;
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            attendanceDB[dateStr] = built.rec;
 
             saveDataToStorage();
 renderTodayView();
@@ -4498,7 +4613,7 @@ renderTodayView();
                 const dateNumStr = `${String(temp.getDate()).padStart(2, '0')}/${String(temp.getMonth() + 1).padStart(2, '0')}`;
 
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateRecordSalary(record);
+                const calc = calculateRecord(record);
 
                 if (record.shift !== 'OFF') workDays++;
 
@@ -4525,10 +4640,10 @@ renderTodayView();
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-sm text-white">${dayName}</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : getRecordShiftLabel(record)}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
                             </div>
                             <div class="text-xs text-slate-400 font-mono mt-0.5">
-                                ${record.shift === 'OFF' ? 'Không đi làm' : getRecordTimeLabel(record)}
+                                ${record.shift === 'OFF' ? 'Không đi làm' : `${recTimeText(record)}`}
                             </div>
                         </div>
                     </div>
@@ -4601,7 +4716,7 @@ function renderMonthView() {
 
         // Chưa đăng ký = OFF, không tự cộng lương
         if (record && record.shift !== 'OFF') {
-            const calc = calculateRecordSalary(record);
+            const calc = calculateRecord(record);
 
             monthWorkDays++;
             monthTotalPay += calc.totalPay;
@@ -4694,7 +4809,7 @@ function renderMonthView() {
             const startTime = record ? record.startTime : '00:00';
             const endTime = record ? record.endTime : '00:00';
 
-            const calc = calculateRecordSalary(record || { shift, startTime, endTime });
+            const calc = calculateRecord(record);
 
             if (record && shift !== 'OFF') {
                 weekRowPayInMonth += calc.totalPay;
@@ -4736,7 +4851,7 @@ function renderMonthView() {
                 <div class="text-[10px] font-mono text-slate-300">
                     ${shift === 'OFF'
                         ? '---'
-                        : `${startTime}-${endTime}`}
+                        : recTimeText(record, '-')}
                 </div>
 
                 <div class="text-[10px] font-mono font-bold mt-1 text-emerald-400">
@@ -4809,7 +4924,7 @@ function renderMonthView() {
                 const dateNumStr = `${String(temp.getDate()).padStart(2, '0')}/${String(temp.getMonth() + 1).padStart(2, '0')}/${temp.getFullYear()}`;
 
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateRecordSalary(record);
+                const calc = calculateRecord(record);
 
                 if (record.shift !== 'OFF') workDays++;
 
@@ -4836,10 +4951,10 @@ function renderMonthView() {
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-sm text-white">${dayName}</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : getRecordShiftLabel(record)}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
                             </div>
                             <div class="text-xs text-slate-400 font-mono mt-0.5">
-                                ${record.shift === 'OFF' ? 'Không đi làm' : getRecordTimeLabel(record)}
+                                ${record.shift === 'OFF' ? 'Không đi làm' : `${recTimeText(record)}`}
                             </div>
                         </div>
                     </div>
@@ -4912,19 +5027,16 @@ renderPayrollOtherIncome();
 
             document.getElementById('retroStartTime').value = record.startTime || '18:00';
             document.getElementById('retroEndTime').value = record.endTime || '00:30';
-            const savedSessions = Array.isArray(record.sessions) ? record.sessions : [];
-            retroWorkMode = savedSessions.length > 1 ? 'double' : 'single';
-            if (savedSessions.length > 1) { retroModalShift=savedSessions[0].shift || record.shift; document.getElementById('retroStartTime').value=savedSessions[0].startTime; document.getElementById('retroEndTime').value=savedSessions[0].endTime; retroSecondShift=savedSessions[1].shift || 'US'; document.getElementById('retroSecondStart').value=savedSessions[1].startTime; document.getElementById('retroSecondEnd').value=savedSessions[1].endTime; }
-            else { retroSecondShift='US'; document.getElementById('retroSecondStart').value='17:00'; document.getElementById('retroSecondEnd').value='22:00'; }
-            setRetroWorkMode(retroWorkMode); selectRetroSecondShift(retroSecondShift);
 
             document.getElementById('retroModalError').classList.add('hidden');
             retroMatesSel = Array.isArray(record.mates) ? record.mates.slice() : [];
             renderMatesPicker('retro');
+            dblLoad('retro', record);
             document.getElementById('retroEditModal').classList.remove('hidden');
         }
 
         function retroUpdateShiftButtons(shift) {
+            setTimeout(function () { dblRender('retro'); }, 0);
             const shifts = [
                 { key: 'CO', btn: 'retroBtnCO', active: 'bg-amber-500/20 text-amber-300 border-amber-500' },
                 { key: 'US', btn: 'retroBtnUS', active: 'bg-rose-500/20 text-rose-300 border-rose-500' },
@@ -4965,20 +5077,23 @@ renderPayrollOtherIncome();
             const end = document.getElementById('retroEndTime').value;
             const errorEl = document.getElementById('retroModalError');
 
-            const sessions = retroModalShift === 'OFF' ? [] : [{shift:retroModalShift,startTime:start,endTime:end}];
-            if (retroModalShift !== 'OFF' && retroWorkMode === 'double') sessions.push({shift:retroSecondShift,startTime:document.getElementById('retroSecondStart').value,endTime:document.getElementById('retroSecondEnd').value});
-            const sessionError = retroModalShift === 'OFF' ? '' : validateSessions(sessions);
-            if (sessionError) { errorEl.innerText=sessionError; errorEl.classList.remove('hidden'); return; }
+            if (retroModalShift !== 'OFF' && (!start || !end)) {
+                errorEl.innerText = "Vui lòng nhập đầy đủ giờ làm!";
+                errorEl.classList.remove('hidden');
+                return;
+            }
 
             errorEl.classList.add('hidden');
 
-            attendanceDB[retroModalActiveDateStr] = {
-                shift: retroModalShift,
-                startTime: retroModalShift === 'OFF' ? '00:00' : sessions[0].startTime,
-                endTime: retroModalShift === 'OFF' ? '00:00' : sessions[0].endTime,
-                sessions: sessions,
-                mates: retroModalShift === 'OFF' ? [] : retroMatesSel.slice()
-            };
+            const built = retroModalShift === 'OFF'
+                ? { rec: { shift: 'OFF', startTime: '00:00', endTime: '00:00', mates: [] } }
+                : dblBuild({ shift: retroModalShift, startTime: start, endTime: end, mates: retroMatesSel.slice() }, dblGet('retro'));
+            if (built.err) {
+                errorEl.innerText = built.err;
+                errorEl.classList.remove('hidden');
+                return;
+            }
+            attendanceDB[retroModalActiveDateStr] = built.rec;
 
             saveDataToStorage();
             closeRetroEditModal();
@@ -5000,10 +5115,10 @@ renderPayrollOtherIncome();
                 const dateStr = formatDateISO(temp);
                 const dayName = getDayOfWeekName(temp);
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateRecordSalary(record);
+                const calc = calculateRecord(record);
 
                 totalPaySum += calc.totalPay;
-                csv += `"${dateStr}","${dayName}","${getRecordShiftLabel(record)}","${getRecordTimeLabel(record)}","",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
+                csv += `"${dateStr}","${dayName}","${recShiftCode(record)}","${recStartTxt(record)}","${recEndTxt(record)}",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
 
                 temp.setDate(temp.getDate() + 1);
             }
@@ -5025,10 +5140,10 @@ renderPayrollOtherIncome();
                 const dateStr = formatDateISO(d);
                 const dayName = getDayOfWeekName(d);
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateRecordSalary(record);
+                const calc = calculateRecord(record);
 
                 monthTotalPay += calc.totalPay;
-                csv += `"${dateStr}","${dayName}","${getRecordShiftLabel(record)}","${getRecordTimeLabel(record)}","",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
+                csv += `"${dateStr}","${dayName}","${recShiftCode(record)}","${recStartTxt(record)}","${recEndTxt(record)}",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
             }
 
             csv += `\n"TỔNG THÁNG",,,,,,,,,${monthTotalPay}\n`;
@@ -5046,10 +5161,10 @@ renderPayrollOtherIncome();
                 const dateStr = formatDateISO(temp);
                 const dayName = getDayOfWeekName(temp);
                 const record = attendanceDB[dateStr] || { shift: 'OFF', startTime: '00:00', endTime: '00:00' };
-                const calc = calculateRecordSalary(record);
+                const calc = calculateRecord(record);
 
                 totalPaySum += calc.totalPay;
-                csv += `"${dateStr}","${dayName}","${getRecordShiftLabel(record)}","${getRecordTimeLabel(record)}","",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
+                csv += `"${dateStr}","${dayName}","${recShiftCode(record)}","${recStartTxt(record)}","${recEndTxt(record)}",${calc.totalHours},${calc.regularHours},${calc.otHours},${calc.regularPay},${calc.otPay},${calc.totalPay}\n`;
 
                 temp.setDate(temp.getDate() + 1);
             }
@@ -5059,22 +5174,11 @@ renderPayrollOtherIncome();
         }
 
         function exportBackupJSON() {
-            let otherIncome = {};
-            try {
-                otherIncome = JSON.parse(localStorage.getItem(OTHER_INCOME_STORAGE_KEY) || '{}');
-                if (!otherIncome || typeof otherIncome !== 'object' || Array.isArray(otherIncome)) {
-                    otherIncome = {};
-                }
-            } catch (error) {
-                console.warn('Không đọc được dữ liệu thu nhập khác khi sao lưu:', error);
-            }
-
             const data = {
                 settings: appSettings,
                 attendanceDB: attendanceDB,
                 mates: matesList,
                 pastMonths: pastMap,
-                otherIncome: otherIncome,
                 exportDate: new Date().toISOString()
             };
             downloadFile(JSON.stringify(data, null, 2), `GalaxyCinema_Backup_${formatDateISO(new Date())}.json`, 'application/json');
@@ -5094,12 +5198,9 @@ renderPayrollOtherIncome();
                         if (Array.isArray(parsed.mates)) {
                             parsed.mates.forEach(function (n) { addMateName(n); });
                         }
-                        if (parsed.pastMonths && typeof parsed.pastMonths === 'object' && !Array.isArray(parsed.pastMonths)) {
-                            pastMap = parsed.pastMonths;
+                        if (parsed.pastMonths && typeof parsed.pastMonths === 'object') {
+                            Object.keys(parsed.pastMonths).forEach(function (k) { pastMap[k] = parsed.pastMonths[k]; });
                             savePast();
-                        }
-                        if (parsed.otherIncome && typeof parsed.otherIncome === 'object' && !Array.isArray(parsed.otherIncome)) {
-                            localStorage.setItem(OTHER_INCOME_STORAGE_KEY, JSON.stringify(parsed.otherIncome));
                         }
                         saveDataToStorage();
                         updateGreetingHeader();
@@ -5146,21 +5247,13 @@ renderPayrollOtherIncome();
       function resetAllAppData() {
     if (!confirm('Bạn có chắc muốn xóa toàn bộ dữ liệu không?')) return;
 
-    // Xóa toàn bộ dữ liệu do ứng dụng quản lý, không chỉ dữ liệu chấm công.
-    [
-        STORAGE_KEY,
-        SETTINGS_KEY,
-        OTHER_INCOME_STORAGE_KEY,
-        PAST_KEY,
-        MATES_KEY
-    ].forEach(function (key) {
-        localStorage.removeItem(key);
-    });
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(SETTINGS_KEY);
 
     attendanceDB = {};
-    appSettings = { userName: '' };
-    pastMap = {};
-    matesList = [];
+    appSettings = {
+        userName: ''
+    };
 
     document.getElementById('settingsModal').classList.add('hidden');
 
