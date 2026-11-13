@@ -498,6 +498,23 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
 .dbl-chip{padding:6px 10px;border-radius:999px;font-size:11.5px;font-weight:800;color:#dbe8ff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2)}
 .dbl-chip:active{transform:scale(.95)}
 .dbl-sum{margin-top:8px;font-size:12px;color:#ffe9a8;font-weight:700}
+/* Sửa ô giờ bị tràn/chồng nhau trên iPhone (làm đúp + chấm công bù) */
+.dbl-item .grid,#retroTimeInputsArea{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.dbl-item .grid>div,#retroTimeInputsArea>div{min-width:0}
+.dbl-in,#retroEditModal input[type=time]{display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;-webkit-appearance:none;appearance:none;text-align:center}
+.dbl-item{overflow:hidden}
+/* ===== NGÀY LỄ x4 ===== */
+.hol-box{border-radius:14px;border:1px dashed rgba(244,63,94,.55);background:rgba(3,14,40,.35);padding:10px 12px}
+.hol-box.on{border-style:solid;border-color:#f43f5e;background:rgba(244,63,94,.12)}
+.hol-row{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.hol-t{font-size:13px;font-weight:900;color:#fda4af}
+.hol-s{font-size:11px;font-weight:600;color:#b4cdf2;margin-top:2px;line-height:1.35}
+.hol-sw{position:relative;flex:none;width:48px;height:28px}
+.hol-sw input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer;z-index:2}
+.hol-sw i{position:absolute;inset:0;border-radius:999px;background:#334155;transition:background .2s}
+.hol-sw i::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.4);transition:transform .2s}
+.hol-sw input:checked + i{background:linear-gradient(90deg,#f43f5e,#f58020)}
+.hol-sw input:checked + i::after{transform:translateX(20px)}
 .dbl-item{margin-bottom:10px;padding:8px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14)}
 .dbl-ih{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;font-size:13px;color:#fdb515}
 .dbl-x{font-size:11px;font-weight:800;padding:5px 9px;border-radius:10px;color:#fda4af;background:rgba(244,63,94,.15);border:1px solid rgba(244,63,94,.4)}
@@ -851,6 +868,16 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
                         </div>
                     </div>
 
+                    <div id="todayHolidayBox" class="hol-box">
+                        <label class="hol-row">
+                            <div>
+                                <div class="hol-t">🎉 Ngày lễ — nhân 4 lương</div>
+                                <div class="hol-s">Mọi giờ làm × 4 lương 26k. Giờ OT chỉ cộng thêm 7.800đ/giờ, không nhân.</div>
+                            </div>
+                            <span class="hol-sw"><input type="checkbox" id="todayHoliday" onchange="toggleHoliday('today')"><i></i></span>
+                        </label>
+                    </div>
+
                     <div id="todayDbl" class="dbl-box">
                         <button type="button" id="todayDblBtn" class="dbl-toggle" onclick="toggleDouble('today')"><span id="todayDblIc">➕</span> <span id="todayDblTx">Làm đúp / nhiều ca (thêm ca 2, 3, 4, 5)</span></button>
                         <div id="todayDblBody" class="dbl-body" style="display:none">
@@ -894,17 +921,17 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
                                 <span id="todayDisplayRegHours" class="text-base font-bold font-mono text-emerald-400">0.0 giờ</span>
                             </div>
                             <div class="flex justify-between items-center py-2 border-b border-slate-800/80">
-                                <span class="text-sm text-slate-300">Giờ OT (<span class="text-xs text-amber-400">Sau 22h @33.8k</span>):</span>
+                                <span class="text-sm text-slate-300">Giờ OT (<span id="todayOtRateLabel" class="text-xs text-amber-400">Sau 22h @33.8k</span>):</span>
                                 <span id="todayDisplayOtHours" class="text-base font-bold font-mono text-amber-400">0.0 giờ</span>
                             </div>
 
                             <div class="pt-2 space-y-1.5">
                                 <div class="flex justify-between text-xs text-slate-400">
-                                    <span>Lương thường:</span>
+                                    <span id="todayRegPayLabel">Lương thường:</span>
                                     <span id="todayDisplayRegPay" class="font-mono text-slate-200">0 ₫</span>
                                 </div>
                                 <div class="flex justify-between text-xs text-slate-400">
-                                    <span>Lương OT (130%):</span>
+                                    <span id="todayOtPayLabel">Lương OT (130%):</span>
                                     <span id="todayDisplayOtPay" class="font-mono text-amber-300">0 ₫</span>
                                 </div>
                             </div>
@@ -1472,6 +1499,16 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
                 </div>
             </div>
 
+            <div id="retroHolidayBox" class="hol-box">
+                <label class="hol-row">
+                    <div>
+                        <div class="hol-t">🎉 Ngày lễ — nhân 4 lương</div>
+                        <div class="hol-s">Mọi giờ làm × 4 lương 26k. Giờ OT chỉ cộng thêm 7.800đ/giờ, không nhân.</div>
+                    </div>
+                    <span class="hol-sw"><input type="checkbox" id="retroHoliday" onchange="toggleHoliday('retro')"><i></i></span>
+                </label>
+            </div>
+
             <div id="retroDbl" class="dbl-box">
                         <button type="button" id="retroDblBtn" class="dbl-toggle" onclick="toggleDouble('retro')"><span id="retroDblIc">➕</span> <span id="retroDblTx">Làm đúp / nhiều ca (thêm ca 2, 3, 4, 5)</span></button>
                         <div id="retroDblBody" class="dbl-body" style="display:none">
@@ -1765,6 +1802,7 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
         const BASE_HOURLY_RATE = 26000;
         const OT_MULTIPLIER = 1.30;
         const OT_HOURLY_RATE = BASE_HOURLY_RATE * OT_MULTIPLIER; // 33,800 VND
+        const HOLIDAY_MULTIPLIER = 4; // Ngày lễ: 26k gốc nhân 4 cho mọi giờ; phần cộng thêm 30% của OT không nhân
 
         const STORAGE_KEY = 'galaxy_cinema_payroll_db_v2';
         const SETTINGS_KEY = 'galaxy_cinema_settings_v2';
@@ -1789,7 +1827,7 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
     return {};
 }
 
-        function calculateSalary(shift, startTimeStr, endTimeStr) {
+        function calculateSalary(shift, startTimeStr, endTimeStr, isHoliday) {
             if (shift === 'OFF' || !startTimeStr || !endTimeStr) {
                 return {
                     totalHours: 0,
@@ -1828,8 +1866,11 @@ const OTHER_INCOME_STORAGE_KEY = 'galaxy_cinema_other_income_v1';
             const otHours = Math.round((otMins / 60) * 100) / 100;
             const totalHours = Math.round(((regMins + otMins) / 60) * 100) / 100;
 
-            const regularPay = Math.round(regularHours * BASE_HOURLY_RATE);
-            const otPay = Math.round(otHours * OT_HOURLY_RATE);
+            // Ngày lễ: 'Lương lễ' = tất cả giờ làm x 26k x4 (kể cả giờ OT); 'Lương OT' chỉ là phần cộng thêm 7.8k mỗi giờ OT
+            const regularPay = isHoliday ? Math.round(totalHours * BASE_HOURLY_RATE * HOLIDAY_MULTIPLIER) : Math.round(regularHours * BASE_HOURLY_RATE);
+            // Ngày lễ: 26k gốc của giờ OT cũng nhân 4, riêng phần cộng thêm 30% (7.800đ) giữ nguyên, không nhân
+            const otRate = isHoliday ? (BASE_HOURLY_RATE * (OT_MULTIPLIER - 1)) : OT_HOURLY_RATE;
+            const otPay = Math.round(otHours * otRate);
             const totalPay = regularPay + otPay;
 
             return {
@@ -3869,7 +3910,7 @@ function recSegments(rec) {
 function calculateRecord(rec) {
     const z = { totalHours: 0, regularHours: 0, otHours: 0, regularPay: 0, otPay: 0, totalPay: 0 };
     recSegments(rec).forEach(function (s) {
-        const c = calculateSalary(s.shift, s.start, s.end);
+        const c = calculateSalary(s.shift, s.start, s.end, !!rec.holiday);
         Object.keys(z).forEach(function (k) { z[k] = Math.round((z[k] + (c[k] || 0)) * 100) / 100; });
     });
     return z;
@@ -3925,6 +3966,34 @@ function dblBuild(base, extras) {
     return { rec: rec };
 }
 
+// ==========================================
+// 🎉 NGÀY LỄ x4 (chỉ nhân 4 lương giờ thường, không nhân OT)
+// ==========================================
+const HOLIDAY = { today: false, retro: false };
+
+function holidayRender(w) {
+    const cb = document.getElementById(w + 'Holiday');
+    const box = document.getElementById(w + 'HolidayBox');
+    if (cb) cb.checked = !!HOLIDAY[w];
+    if (box) {
+        box.classList.toggle('on', !!HOLIDAY[w]);
+        if (w === 'retro') box.style.display = retroModalShift === 'OFF' ? 'none' : '';
+    }
+}
+
+function toggleHoliday(w) {
+    const cb = document.getElementById(w + 'Holiday');
+    HOLIDAY[w] = !!(cb && cb.checked);
+    holidayRender(w);
+    dblRender(w);
+    if (w === 'today') calculateAndDisplayToday();
+}
+
+function holidayLoad(w, rec) {
+    HOLIDAY[w] = !!(rec && rec.shift !== 'OFF' && rec.holiday);
+    holidayRender(w);
+}
+
 const DBL_MAX_EXTRA = 4;
 const DBL = {
     today: { on: false, list: [] },
@@ -3952,7 +4021,7 @@ function dblItemSum(w, i) {
     const x = DBL[w].list[i], el = document.getElementById(w + 'Sum_' + i);
     if (!el || !x) return;
     if (!x.start || !x.end) { el.textContent = ''; return; }
-    const c = calculateSalary(x.shift, x.start, x.end);
+    const c = calculateSalary(x.shift, x.start, x.end, !!HOLIDAY[w]);
     el.innerHTML = 'Ca ' + (i + 2) + ': <b>' + x.start + ' → ' + x.end + '</b> · ' + c.totalHours.toFixed(1) + ' giờ · <b>' + formatVND(c.totalPay) + '</b>';
 }
 
@@ -4435,7 +4504,7 @@ document.addEventListener('touchend', function(e) {
                     if (record.shift === 'US') shiftClass = "bg-rose-500/20 text-rose-300 border-rose-500/50";
                     if (record.shift === 'LB') shiftClass = "bg-purple-500/20 text-purple-300 border-purple-500/50";
                     badge.className = `px-3 py-1 rounded-full text-xs font-black tracking-wider border ${shiftClass}`;
-                    badge.innerText = `CA ${record.shift}`;
+                    badge.innerText = `CA ${record.shift}` + (record.holiday ? ' · LỄ ×4 🎉' : '');
                     showDetailedForm(true);
                 }
             }
@@ -4445,6 +4514,7 @@ document.addEventListener('touchend', function(e) {
             renderSalary4MonthChart();
             todayMatesSel = Array.isArray((record || {}).mates) ? record.mates.slice() : [];
             renderMatesPicker('today');
+            holidayLoad('today', record);
             dblLoad('today', record);
             calculateAndDisplayToday();
         }
@@ -4513,10 +4583,10 @@ showDetailedForm(true);
             const dateStr = formatDateISO(selectedDate);
             const isOff = attendanceDB[dateStr] && attendanceDB[dateStr].shift === 'OFF';
 
-            const calc = calculateSalary(isOff ? 'OFF' : selectedShift, start, end);
+            const calc = calculateSalary(isOff ? 'OFF' : selectedShift, start, end, !isOff && HOLIDAY.today);
             const extras = !isOff ? (dblGet('today') || []).filter(function (e) { return e.startTime && e.endTime; }) : [];
             extras.forEach(function (e) {
-                const c2 = calculateSalary(e.shift, e.startTime, e.endTime);
+                const c2 = calculateSalary(e.shift, e.startTime, e.endTime, HOLIDAY.today);
                 Object.keys(calc).forEach(function (k) { calc[k] = Math.round((calc[k] + (c2[k] || 0)) * 100) / 100; });
             });
 
@@ -4525,6 +4595,9 @@ showDetailedForm(true);
             document.getElementById('todayDisplayOtHours').innerText = `${calc.otHours.toFixed(1)}h`;
 
             document.getElementById('todayDisplayRegPay').innerText = formatVND(calc.regularPay);
+            document.getElementById('todayOtRateLabel').innerText = (!isOff && HOLIDAY.today) ? 'Sau 22h +7.8k/giờ' : 'Sau 22h @33.8k';
+            document.getElementById('todayOtPayLabel').innerText = (!isOff && HOLIDAY.today) ? 'Lương OT:' : 'Lương OT (130%):';
+            document.getElementById('todayRegPayLabel').innerText = (!isOff && HOLIDAY.today) ? 'Lương lễ:' : 'Lương thường:';
             document.getElementById('todayDisplayOtPay').innerText = formatVND(calc.otPay);
             document.getElementById('todayDisplayTotalPay').innerText = formatVND(calc.totalPay);
 
@@ -4554,7 +4627,7 @@ showDetailedForm(true);
             errorEl.classList.add('hidden');
 
             const dateStr = formatDateISO(selectedDate);
-            const built = dblBuild({ shift: selectedShift, startTime: start, endTime: end, mates: todayMatesSel.slice() }, dblGet('today'));
+            const built = dblBuild({ shift: selectedShift, startTime: start, endTime: end, mates: todayMatesSel.slice(), holiday: !!HOLIDAY.today }, dblGet('today'));
             if (built.err) {
                 errorEl.innerText = built.err;
                 errorEl.classList.remove('hidden');
@@ -4640,7 +4713,7 @@ renderTodayView();
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-sm text-white">${dayName}</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}${record.shift !== 'OFF' && record.holiday ? ' 🎉×4' : ''}</span>
                             </div>
                             <div class="text-xs text-slate-400 font-mono mt-0.5">
                                 ${record.shift === 'OFF' ? 'Không đi làm' : `${recTimeText(record)}`}
@@ -4844,7 +4917,7 @@ function renderMonthView() {
                     </span>
 
                     <span class="px-1.5 py-0.2 rounded text-[9px] font-extrabold border ${badgeColor}">
-                        ${shift === 'OFF' ? 'OFF ⚪' : shift}
+                        ${shift === 'OFF' ? 'OFF ⚪' : shift}${record && record.holiday && shift !== 'OFF' ? ' 🎉' : ''}
                     </span>
                 </div>
 
@@ -4951,7 +5024,7 @@ function renderMonthView() {
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-sm text-white">${dayName}</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}${record.shift !== 'OFF' && record.holiday ? ' 🎉×4' : ''}</span>
                             </div>
                             <div class="text-xs text-slate-400 font-mono mt-0.5">
                                 ${record.shift === 'OFF' ? 'Không đi làm' : `${recTimeText(record)}`}
@@ -5031,12 +5104,13 @@ renderPayrollOtherIncome();
             document.getElementById('retroModalError').classList.add('hidden');
             retroMatesSel = Array.isArray(record.mates) ? record.mates.slice() : [];
             renderMatesPicker('retro');
+            holidayLoad('retro', record);
             dblLoad('retro', record);
             document.getElementById('retroEditModal').classList.remove('hidden');
         }
 
         function retroUpdateShiftButtons(shift) {
-            setTimeout(function () { dblRender('retro'); }, 0);
+            setTimeout(function () { dblRender('retro'); holidayRender('retro'); }, 0);
             const shifts = [
                 { key: 'CO', btn: 'retroBtnCO', active: 'bg-amber-500/20 text-amber-300 border-amber-500' },
                 { key: 'US', btn: 'retroBtnUS', active: 'bg-rose-500/20 text-rose-300 border-rose-500' },
@@ -5087,7 +5161,7 @@ renderPayrollOtherIncome();
 
             const built = retroModalShift === 'OFF'
                 ? { rec: { shift: 'OFF', startTime: '00:00', endTime: '00:00', mates: [] } }
-                : dblBuild({ shift: retroModalShift, startTime: start, endTime: end, mates: retroMatesSel.slice() }, dblGet('retro'));
+                : dblBuild({ shift: retroModalShift, startTime: start, endTime: end, mates: retroMatesSel.slice(), holiday: !!HOLIDAY.retro }, dblGet('retro'));
             if (built.err) {
                 errorEl.innerText = built.err;
                 errorEl.classList.remove('hidden');
