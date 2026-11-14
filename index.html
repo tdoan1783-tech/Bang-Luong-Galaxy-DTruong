@@ -1759,6 +1759,33 @@ html body :is(button,[role=button],a):focus-visible{outline:2px solid #fdb515;ou
                 <p class="text-xs text-slate-400">Galaxy Cinema • GO! An Lạc Personal Payroll</p>
             </div>
 
+            <div class="border border-amber-400/30 rounded-xl p-4 bg-slate-950/50 space-y-3">
+                <div class="flex items-center justify-between gap-3">
+                    <div>
+                        <div class="text-sm font-black text-white">🔔 Nhắc Check in / Check out</div>
+                        <div class="text-[11px] text-slate-400 leading-snug">Dựa theo ca đã chấm công. Phải bấm xác nhận mới tắt nhắc.</div>
+                    </div>
+                    <label class="hol-sw"><input type="checkbox" id="remOn" onchange="remSaveCfg()"><i></i></label>
+                </div>
+                <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-300 font-bold">
+                    <label>Nhắc check in trước
+                        <select id="remLead" onchange="remSaveCfg()" class="w-full mt-1 bg-slate-950 border border-slate-700 rounded-lg p-2 text-white text-sm">
+                            <option value="10">10 phút</option><option value="15">15 phút</option><option value="20">20 phút</option><option value="30">30 phút</option>
+                        </select>
+                    </label>
+                    <label>Nhắc check out sau giờ ra
+                        <select id="remOut" onchange="remSaveCfg()" class="w-full mt-1 bg-slate-950 border border-slate-700 rounded-lg p-2 text-white text-sm">
+                            <option value="0">0 phút</option><option value="5">5 phút</option><option value="10">10 phút</option><option value="15">15 phút</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="remAskPermission()" class="flex-1 py-2 rounded-lg text-xs font-black bg-slate-800 text-amber-300 border border-amber-400/30 active:scale-95 transition">🔔 Bật thông báo hệ thống</button>
+                    <button onclick="remTest()" class="flex-1 py-2 rounded-lg text-xs font-black bg-slate-800 text-amber-300 border border-amber-400/30 active:scale-95 transition">🧪 Thử nhắc</button>
+                </div>
+                <div id="remStatus" class="text-[11px] text-slate-400 leading-snug"></div>
+            </div>
+
             <!-- Profile Name -->
             <div>
                 <label class="block text-xs font-bold text-slate-300 uppercase mb-1">Tên nhân viên:</label>
@@ -6082,8 +6109,11 @@ function closeGameScreen(){
    Mỗi lần cập nhật app: (1) đổi APP_VERSION, (2) thêm 1 mục LÊN ĐẦU danh sách CHANGELOG.
    Lần đầu mở app sau khi cập nhật sẽ tự hiện popup liệt kê các mục mới.
    ========================================================== */
-var APP_VERSION = '1.4';
+var APP_VERSION = '1.5';
 var CHANGELOG = [
+    { v: '1.5', date: '15/11/2026', items: [
+        '🔔 Thêm nhắc Check in / Check out theo ca đã chấm công: trước giờ vào ca hiện nhắc check in, sau giờ ra ca nhắc check out, phải bấm xác nhận mới tắt. Chỉnh giờ nhắc trong Cài đặt.'
+    ] },
     { v: '1.4', date: '14/11/2026', items: [
         '🎉 Cập nhật tính lương ngày lễ nhân 4: gạt công tắc "Ngày lễ" khi chấm công hoặc chấm công bù. Mọi giờ làm được nhân 4 lương 26k, riêng giờ OT chỉ cộng thêm 7.8k/giờ (không nhân). Thẻ lương hiện rõ hai dòng "Lương lễ" và "Lương OT".'
     ] }
@@ -6154,6 +6184,137 @@ setTimeout(checkForUpdate, 1500);
 (function () {
     var run = function () { setTimeout(checkWhatsNew, 500); };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
+})();
+</script>
+<script>
+/* ==========================================================
+   🔔 NHẮC CHECK IN / CHECK OUT (dựa theo ca đã chấm công)
+   ========================================================== */
+var REM_CFG_KEY = 'galaxy_cinema_remind_cfg_v1', REM_DONE_KEY = 'galaxy_cinema_checkins_v1';
+function remLoad(k, def) { try { var v = JSON.parse(localStorage.getItem(k) || 'null'); return v || def; } catch (e) { return def; } }
+function remSave(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+var remCfg = Object.assign({ on: true, lead: 15, out: 5 }, remLoad(REM_CFG_KEY, {}));
+var remDone = remLoad(REM_DONE_KEY, {});
+var remLast = {}, remBaseTitle = document.title, remTestOn = false;
+var REM_IN = ['Sắp tới giờ vào ca rồi nè! Check in thôi bạn ơi 🎬', 'Bắp rang chuẩn bị xong chưa? Check in nào 🍿', 'Ca mới tới rồi, nhớ check in nha ☀️'];
+var REM_OUT = ['Hết ca rồi nè! Check out thôi bạn ơi 🥳', 'Làm tốt lắm! Nhớ check out kẻo quên nha 🍿', 'Xong phim rồi~ check out về nghỉ thôi 🌙'];
+
+function remDT(key, hhmm, addDays) { var p = key.split('-'), t = hhmm.split(':'); return new Date(+p[0], +p[1] - 1, +p[2] + (addDays || 0), +t[0], +t[1], 0); }
+
+function remPending(now, db, done, cfg) {
+    var out = [];
+    [-1, 0].forEach(function (off) {
+        var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + off);
+        var key = formatDateISO(d);
+        recSegments(db[key]).forEach(function (sg, i) {
+            var st = remDT(key, sg.start), en = remDT(key, sg.end);
+            if (en <= st) en = remDT(key, sg.end, 1);
+            var dn = (done[key] && done[key][i]) || {};
+            var inFrom = new Date(st.getTime() - cfg.lead * 60000);
+            var outFrom = new Date(en.getTime() + cfg.out * 60000);
+            var base = { key: key, idx: i, shift: sg.shift, start: sg.start, end: sg.end, st: st, en: en };
+            if (!dn.i && now >= inFrom && now < en) out.push(Object.assign({ type: 'in' }, base));
+            else if (!dn.o && now >= outFrom && now < new Date(en.getTime() + 6 * 3600000)) out.push(Object.assign({ type: 'out' }, base));
+        });
+    });
+    out.sort(function (a, b) { return a.st - b.st; });
+    return out;
+}
+
+function remBanner() {
+    var b = document.getElementById('remBanner');
+    if (!b) {
+        b = document.createElement('div');
+        b.id = 'remBanner';
+        b.className = 'fixed left-2 right-2 z-[65] max-w-md mx-auto hidden';
+        b.style.top = 'calc(env(safe-area-inset-top, 0px) + 8px)';
+        document.body.appendChild(b);
+    }
+    return b;
+}
+
+function remShow(p, now) {
+    var isIn = p.type === 'in';
+    var msgs = isIn ? REM_IN : REM_OUT;
+    var msg = msgs[(now.getHours() * 60 + now.getMinutes()) % msgs.length];
+    var diff = Math.round(((isIn ? p.st : p.en) - now) / 60000);
+    var when = isIn ? (diff > 0 ? 'Còn ' + diff + ' phút nữa vào ca' : 'Đã trễ ' + (-diff) + ' phút so với giờ vào ca')
+                    : 'Đã qua giờ ra ca ' + Math.max(0, -diff) + ' phút';
+    var grad = isIn ? 'from-galaxy-orange to-galaxy-yellow' : 'from-sky-400 to-emerald-400';
+    var b = remBanner();
+    b.innerHTML = '<div class="bg-gradient-to-r ' + grad + ' text-slate-950 rounded-3xl p-4 shadow-2xl border-2 border-white/70">' +
+        '<div class="flex items-start gap-3"><div class="text-4xl animate-bounce">' + (isIn ? '🍿' : '🥳') + '</div>' +
+        '<div class="flex-1 min-w-0"><div class="text-[11px] font-black uppercase tracking-wider opacity-80">' + (isIn ? 'Nhắc check in' : 'Nhắc check out') + ' • Ca ' + p.shift + ' • ' + p.start + ' → ' + p.end + '</div>' +
+        '<div class="text-sm font-black leading-snug mt-0.5">' + msg + '</div>' +
+        '<div class="text-[11px] font-bold opacity-80 mt-0.5">' + when + '</div></div></div>' +
+        '<button onclick="remConfirm(\'' + p.key + '\',' + p.idx + ',\'' + p.type + '\')" class="w-full mt-3 py-3 bg-white text-slate-950 font-black rounded-2xl shadow-md active:scale-95 transition">' +
+        (isIn ? '✅ Đã check in rồi nè!' : '✅ Đã check out rồi nè!') + '</button></div>';
+    b.classList.remove('hidden');
+    document.title = (isIn ? '🔔 Check in nào! ' : '🔔 Check out nào! ') + remBaseTitle;
+    var id = p.key + '|' + p.idx + '|' + p.type;
+    if (!remLast[id] || now - remLast[id] >= 5 * 60000) {
+        remLast[id] = now.getTime();
+        try { if (window.Notification && Notification.permission === 'granted') new Notification(isIn ? '🍿 Check in nào!' : '🥳 Check out nào!', { body: msg + ' (' + p.start + ' → ' + p.end + ')', tag: id, requireInteraction: true }); } catch (e) {}
+        try { if (navigator.vibrate) navigator.vibrate([200, 100, 200]); } catch (e) {}
+    }
+}
+
+function remHide() {
+    var b = document.getElementById('remBanner');
+    if (b) b.classList.add('hidden');
+    document.title = remBaseTitle;
+}
+
+function remTick() {
+    if (remTestOn) return;
+    if (!remCfg.on) { remHide(); return; }
+    var list = remPending(new Date(), attendanceDB || {}, remDone, remCfg);
+    if (list.length) remShow(list[0], new Date()); else remHide();
+}
+
+function remConfirm(key, idx, type) {
+    if (key === 'test') { remTestOn = false; remHide(); return; }
+    remDone[key] = remDone[key] || {};
+    remDone[key][idx] = remDone[key][idx] || {};
+    remDone[key][idx][type === 'in' ? 'i' : 'o'] = Date.now();
+    remSave(REM_DONE_KEY, remDone);
+    var b = remBanner();
+    b.innerHTML = '<div class="bg-white text-slate-950 rounded-3xl p-4 shadow-2xl text-center font-black">🎉 Ghi nhận rồi nha! ' + (type === 'in' ? 'Làm việc vui vẻ nè 💪' : 'Về nghỉ ngơi thôi 🌙') + '</div>';
+    document.title = remBaseTitle;
+    setTimeout(remTick, 2200);
+}
+
+function remSaveCfg() {
+    remCfg.on = document.getElementById('remOn').checked;
+    remCfg.lead = +document.getElementById('remLead').value;
+    remCfg.out = +document.getElementById('remOut').value;
+    remSave(REM_CFG_KEY, remCfg);
+    remTick();
+}
+
+function remStatus(t) { var e = document.getElementById('remStatus'); if (e) e.textContent = t; }
+
+function remAskPermission() {
+    if (!window.Notification) { remStatus('Trình duyệt này không hỗ trợ thông báo hệ thống. Nhắc vẫn hiện trong app khi đang mở.'); return; }
+    Notification.requestPermission().then(function (r) {
+        remStatus(r === 'granted' ? '✅ Đã bật thông báo hệ thống (hiện khi app còn đang mở hoặc chạy nền).' : 'Chưa được bật. Bạn cần cho phép thông báo trong trình duyệt.');
+    });
+}
+
+function remTest() {
+    var n = new Date();
+    remTestOn = true;
+    remShow({ type: 'in', key: 'test', idx: 0, shift: 'CO', start: '09:00', end: '14:00', st: new Date(n.getTime() + 15 * 60000), en: n }, n);
+    remStatus('Đây là nhắc thử. Bấm "Đã check in" để tắt.');
+}
+
+(function () {
+    var g = function (id) { return document.getElementById(id); };
+    if (g('remOn')) { g('remOn').checked = !!remCfg.on; g('remLead').value = String(remCfg.lead); g('remOut').value = String(remCfg.out); }
+    remStatus('Lưu ý: app phải đang mở (hoặc chạy nền) mới nhắc được. Muốn nhắc cả khi tắt app, nhờ Claude tạo lời nhắc trong app Nhắc nhở của điện thoại.');
+    setInterval(remTick, 20000);
+    document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') remTick(); });
+    setTimeout(remTick, 1500);
 })();
 </script>
 </body>
