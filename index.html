@@ -902,6 +902,11 @@ html body :is(button,[role=button],a):focus-visible{outline:2px solid #fdb515;ou
                         <i class="fa-solid fa-floppy-disk"></i> XÁC NHẬN CHẤM CÔNG
                     </button>
 
+                    <button onclick="addToCalendar()" class="w-full py-3 rounded-2xl text-sm font-black text-amber-300 bg-slate-950/70 border border-amber-400/40 active:scale-95 transition">
+                        📅 Thêm nhắc vào Lịch (các ca sắp tới)
+                    </button>
+                    <p class="text-[11px] text-slate-400 -mt-2 px-1 leading-snug">Chấm công xong bấm nút này: điện thoại hỏi thêm vào Lịch, kèm chuông nhắc check in trước giờ vào ca và check out sau giờ ra ca.</p>
+
                     <div class="grid grid-cols-2 gap-2">
                         <button onclick="openMatesManager()" class="mate-btn">👥 Đồng nghiệp</button>
                         <button onclick="openMateLookup()" class="mate-btn">🔎 Tra cứu làm chung</button>
@@ -6109,8 +6114,11 @@ function closeGameScreen(){
    Mỗi lần cập nhật app: (1) đổi APP_VERSION, (2) thêm 1 mục LÊN ĐẦU danh sách CHANGELOG.
    Lần đầu mở app sau khi cập nhật sẽ tự hiện popup liệt kê các mục mới.
    ========================================================== */
-var APP_VERSION = '1.5';
+var APP_VERSION = '1.6';
 var CHANGELOG = [
+    { v: '1.6', date: '15/11/2026', items: [
+        '📅 Thêm nút "Thêm nhắc vào Lịch": chấm công xong bấm một lần, điện thoại hiện hộp thêm các ca sắp tới vào Lịch kèm chuông nhắc check in trước giờ vào ca và check out sau giờ ra ca (hiện cả ngoài màn hình khóa).'
+    ] },
     { v: '1.5', date: '15/11/2026', items: [
         '🔔 Thêm nhắc Check in / Check out theo ca đã chấm công: trước giờ vào ca hiện nhắc check in, sau giờ ra ca nhắc check out, phải bấm xác nhận mới tắt. Chỉnh giờ nhắc trong Cài đặt.'
     ] },
@@ -6311,11 +6319,79 @@ function remTest() {
 (function () {
     var g = function (id) { return document.getElementById(id); };
     if (g('remOn')) { g('remOn').checked = !!remCfg.on; g('remLead').value = String(remCfg.lead); g('remOut').value = String(remCfg.out); }
-    remStatus('Lưu ý: app phải đang mở (hoặc chạy nền) mới nhắc được. Muốn nhắc cả khi tắt app, nhờ Claude tạo lời nhắc trong app Nhắc nhở của điện thoại.');
+    remStatus('Lưu ý: thẻ nhắc trong app chỉ hiện khi app đang mở. Muốn nhắc cả khi tắt app, chấm công xong bấm nút 📅 Thêm nhắc vào Lịch.');
     setInterval(remTick, 20000);
     document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') remTick(); });
     setTimeout(remTick, 1500);
 })();
+</script>
+<script>
+/* 📅 THÊM NHẮC VÀO LỊCH (file .ics): lịch làm hôm qua → 14 ngày tới.
+   Mỗi ca có mã riêng (UID) nên bấm lại sau khi đổi giờ thì sự kiện cũ được cập nhật. */
+function remIcsEsc(t) { return String(t).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n'); }
+function remIcsFold(l) {
+    var c = Array.from(l); if (c.length <= 24) return l;
+    var o = []; for (var i = 0; i < c.length; i += 24) o.push(c.slice(i, i + 24).join(''));
+    return o.join('\r\n ');
+}
+function remUtc(d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+
+function remBuildICS(now, db, cfg, url) {
+    var lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Galaxy Cinema GO An Lac//Cham Cong//VI', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH'];
+    var n = 0, stamp = remUtc(now), seq = Math.floor(now.getTime() / 1000);
+    var ins = [cfg.lead, cfg.lead - 5, cfg.lead - 10].filter(function (m) { return m >= 5; });
+    var outs = [cfg.out, cfg.out + 5, cfg.out + 10];
+    function alarm(trig, text) { return ['BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + remIcsEsc(text), 'TRIGGER:' + trig, 'END:VALARM']; }
+    function ev(uid, sum, desc, st, en, alarms) {
+        n++;
+        lines.push('BEGIN:VEVENT', 'UID:' + uid, 'DTSTAMP:' + stamp, 'SEQUENCE:' + seq,
+            'DTSTART:' + remUtc(st), 'DTEND:' + remUtc(en), 'SUMMARY:' + remIcsEsc(sum),
+            'DESCRIPTION:' + remIcsEsc(desc + (url ? '\nMở app: ' + url : '')));
+        if (url) lines.push('URL:' + url);
+        alarms.forEach(function (a) { Array.prototype.push.apply(lines, a); });
+        lines.push('END:VEVENT');
+    }
+    for (var off = -1; off <= 14; off++) {
+        var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + off), key = formatDateISO(d);
+        recSegments(db[key]).forEach(function (sg, i) {
+            var st = remDT(key, sg.start), en = remDT(key, sg.end);
+            if (en <= st) en = remDT(key, sg.end, 1);
+            var tag = 'Ca ' + sg.shift + ' ' + sg.start + '→' + sg.end;
+            if (st > now) ev('galaxy-in-' + key + '-' + i + '@galaxy-cinema-go', '🍿 Check in nào! ' + tag, 'Sắp tới giờ vào ca rồi, nhớ check in nha.', st, new Date(st.getTime() + 15 * 60000),
+                ins.map(function (m) { return alarm('-PT' + m + 'M', '🍿 Check in nào! ' + tag); }));
+            if (new Date(en.getTime() + 15 * 60000) > now) ev('galaxy-out-' + key + '-' + i + '@galaxy-cinema-go', '🥳 Check out thôi! ' + tag, 'Hết ca rồi, nhớ check out nha.', en, new Date(en.getTime() + 15 * 60000),
+                outs.map(function (m) { return alarm(m === 0 ? 'PT0S' : 'PT' + m + 'M', '🥳 Check out thôi! ' + tag); }));
+        });
+    }
+    lines.push('END:VCALENDAR');
+    return n ? lines.map(remIcsFold).join('\r\n') + '\r\n' : '';
+}
+
+function remToast(t) {
+    var e = document.getElementById('remToast');
+    if (!e) {
+        e = document.createElement('div'); e.id = 'remToast';
+        e.className = 'fixed left-4 right-4 bottom-6 z-[80] max-w-md mx-auto bg-white text-slate-950 rounded-2xl p-3 text-sm font-black text-center shadow-2xl';
+        document.body.appendChild(e);
+    }
+    e.textContent = t; e.style.display = 'block';
+    clearTimeout(e._t); e._t = setTimeout(function () { e.style.display = 'none'; }, 5000);
+}
+
+function addToCalendar() {
+    var ics = remBuildICS(new Date(), attendanceDB || {}, remCfg, location.href.split('#')[0]);
+    if (!ics) { remToast('Chưa có ca nào sắp tới để thêm. Chấm công xong rồi bấm lại nha.'); return; }
+    var url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var w = null;
+    if (isIOS) { try { w = window.open(url, '_blank'); } catch (e) {} }
+    if (!w) {
+        var a = document.createElement('a'); a.href = url; a.download = 'ca-lam-galaxy.ics';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
+    setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+    remToast('📅 Đã tạo lịch! Nếu điện thoại hỏi "Thêm tất cả", bấm xác nhận nha.');
+}
 </script>
 </body>
 </html>
