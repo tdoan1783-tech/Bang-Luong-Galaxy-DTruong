@@ -524,6 +524,11 @@ img[alt="Galaxy Cinema GO!"]{filter:drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0
 /* chỉ sửa lỗi: modal dài cuộn được, viền khi bấm bàn phím */
 #retroEditModal>div,#settingsModal>div,#welcomeOverlay>div{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
 html body :is(button,[role=button],a):focus-visible{outline:2px solid #fdb515;outline-offset:2px}
+.dbl-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:8px}
+.dbl-grid>div{min-width:0}
+.dbl-in{-webkit-appearance:none;appearance:none;display:block;max-width:100%;min-height:46px;text-align:left}
+#todayHolidayBody,#retroHolidayBody{margin-top:10px}
+.dbl-chip.hon{color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515);border-color:#fff}
 </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white pb-12">
@@ -881,6 +886,11 @@ html body :is(button,[role=button],a):focus-visible{outline:2px solid #fdb515;ou
                             </div>
                             <span class="hol-sw"><input type="checkbox" id="todayHoliday" onchange="toggleHoliday('today')"><i></i></span>
                         </label>
+                        <div id="todayHolidayBody" style="display:none">
+                            <div class="dbl-lb">Hôm nay là lễ gì?</div>
+                            <input type="text" id="todayHolName" maxlength="40" placeholder="VD: Quốc khánh 2/9" oninput="holidayNameInput('today')" class="dbl-in" style="font-family:inherit">
+                            <div id="todayHolChips" class="dbl-chips"></div>
+                        </div>
                     </div>
 
                     <div id="todayDbl" class="dbl-box">
@@ -1517,6 +1527,11 @@ html body :is(button,[role=button],a):focus-visible{outline:2px solid #fdb515;ou
                     </div>
                     <span class="hol-sw"><input type="checkbox" id="retroHoliday" onchange="toggleHoliday('retro')"><i></i></span>
                 </label>
+                        <div id="retroHolidayBody" style="display:none">
+                            <div class="dbl-lb">Hôm nay là lễ gì?</div>
+                            <input type="text" id="retroHolName" maxlength="40" placeholder="VD: Quốc khánh 2/9" oninput="holidayNameInput('retro')" class="dbl-in" style="font-family:inherit">
+                            <div id="retroHolChips" class="dbl-chips"></div>
+                        </div>
             </div>
 
             <div id="retroDbl" class="dbl-box">
@@ -2645,7 +2660,7 @@ function fmtDMY(ds) {
 }
 
 function shiftDesc(r) {
-    return r.shift === 'OFF' ? 'Nghỉ (OFF)' : recSegments(r).map(function (s) { return 'Ca ' + s.shift + ' · ' + s.start + '–' + s.end; }).join(' + ');
+    return r.shift === 'OFF' ? 'Nghỉ (OFF)' : recSegments(r).map(function (s) { return 'Ca ' + s.shift + ' · ' + s.start + '–' + s.end; }).join(' + ') + (r.holiday ? ' · 🎉 ' + (r.holidayName || 'Lễ') + ' ×4' : '');
 }
 
 function mateChipsHtml(arr) {
@@ -2752,7 +2767,7 @@ function wrappedStatsRange(s, e) {
         st.flags.push(!!(r && r.shift !== 'OFF'));
         if (r && r.shift !== 'OFF') {
             const c = calculateRecord(r);
-            const info = { date: new Date(d), shift: recShiftCode(r), start: r.startTime, end: r.endTime, text: recSegments(r).length > 1 ? recSegments(r).map(function (sg) { return 'Ca ' + sg.shift + ' (' + sg.start + '–' + sg.end + ')'; }).join(' + ') : '', pay: c.totalPay || 0, hours: c.totalHours || 0 };
+            const info = { date: new Date(d), shift: recShiftCode(r), start: r.startTime, end: r.endTime, text: recWrText(r), pay: c.totalPay || 0, hours: c.totalHours || 0 };
             st.days++; st.hours += info.hours; st.ot += c.otHours || 0; st.pay += info.pay;
             if (!st.richest || info.pay > st.richest.pay) st.richest = info;
             if (!st.longest || info.hours > st.longest.hours || (info.hours === st.longest.hours && info.pay > st.longest.pay)) st.longest = info;
@@ -4024,6 +4039,23 @@ function dblBuild(base, extras) {
 // 🎉 NGÀY LỄ x4 (chỉ nhân 4 lương giờ thường, không nhân OT)
 // ==========================================
 const HOLIDAY = { today: false, retro: false };
+const HOLIDAY_NAME = { today: '', retro: '' };
+const HOL_PRESETS = ['Tết Dương lịch', 'Tết Nguyên đán', 'Giỗ Tổ Hùng Vương', 'Giải phóng miền Nam 30/4', 'Quốc tế Lao động 1/5', 'Quốc khánh 2/9'];
+
+function holAuto(ds) {
+    const md = String(ds || '').slice(5);
+    const m = { '01-01': 'Tết Dương lịch', '04-30': 'Giải phóng miền Nam 30/4', '05-01': 'Quốc tế Lao động 1/5', '09-01': 'Quốc khánh 2/9', '09-02': 'Quốc khánh 2/9' };
+    return m[md] || '';
+}
+
+function holDate(w) {
+    return w === 'today' ? formatDateISO(selectedDate) : retroModalActiveDateStr;
+}
+
+function holNameFor(w) {
+    if (!HOLIDAY[w]) return '';
+    return cleanMateName(HOLIDAY_NAME[w]) || holAuto(holDate(w)) || 'Ngày lễ';
+}
 
 function holidayRender(w) {
     const cb = document.getElementById(w + 'Holiday');
@@ -4033,19 +4065,52 @@ function holidayRender(w) {
         box.classList.toggle('on', !!HOLIDAY[w]);
         if (w === 'retro') box.style.display = retroModalShift === 'OFF' ? 'none' : '';
     }
+    const body = document.getElementById(w + 'HolidayBody');
+    if (!body) return;
+    body.style.display = HOLIDAY[w] ? 'block' : 'none';
+    if (!HOLIDAY[w]) return;
+    document.getElementById(w + 'HolName').value = HOLIDAY_NAME[w];
+    const auto = holAuto(holDate(w));
+    const list = (auto && HOL_PRESETS.indexOf(auto) < 0 ? [auto] : []).concat(HOL_PRESETS);
+    const cur = cleanMateName(HOLIDAY_NAME[w]).toLowerCase();
+    const ch = document.getElementById(w + 'HolChips');
+    ch.setAttribute('data-list', JSON.stringify(list));
+    ch.innerHTML = list.map(function (n, i) {
+        return '<button type="button" class="dbl-chip' + (cur === n.toLowerCase() ? ' hon' : '') + '" onclick="holidayPreset(\'' + w + '\',' + i + ')">' + escapeHtml(n) + '</button>';
+    }).join('');
 }
 
 function toggleHoliday(w) {
     const cb = document.getElementById(w + 'Holiday');
     HOLIDAY[w] = !!(cb && cb.checked);
+    if (HOLIDAY[w] && !cleanMateName(HOLIDAY_NAME[w])) HOLIDAY_NAME[w] = holAuto(holDate(w));
     holidayRender(w);
     dblRender(w);
     if (w === 'today') calculateAndDisplayToday();
 }
 
+function holidayNameInput(w) {
+    HOLIDAY_NAME[w] = document.getElementById(w + 'HolName').value;
+}
+
+function holidayPreset(w, i) {
+    let list = [];
+    try { list = JSON.parse(document.getElementById(w + 'HolChips').getAttribute('data-list') || '[]'); } catch (e) {}
+    if (list[i]) HOLIDAY_NAME[w] = list[i];
+    holidayRender(w);
+}
+
 function holidayLoad(w, rec) {
     HOLIDAY[w] = !!(rec && rec.shift !== 'OFF' && rec.holiday);
+    HOLIDAY_NAME[w] = HOLIDAY[w] ? ((rec && rec.holidayName) || '') : '';
     holidayRender(w);
+}
+
+function recWrText(r) {
+    const segs = recSegments(r);
+    if (segs.length <= 1 && !(r && r.holiday)) return '';
+    const base = segs.map(function (sg) { return 'Ca ' + sg.shift + ' (' + sg.start + '–' + sg.end + ')'; }).join(' + ');
+    return base + (r.holiday ? ' · 🎉 ' + (r.holidayName || 'Lễ') + ' ×4' : '');
 }
 
 const DBL_MAX_EXTRA = 4;
@@ -4101,7 +4166,7 @@ function dblRender(w) {
         }).join('');
         return '<div class="dbl-item"><div class="dbl-ih"><b>Ca thứ ' + (i + 2) + '</b><button type="button" class="dbl-x" onclick="dblRemove(\'' + w + '\',' + i + ')">✕ Xóa ca này</button></div>' +
             '<div class="dbl-shifts">' + shifts + '</div>' +
-            '<div class="grid grid-cols-2 gap-2 mt-2"><div><div class="dbl-lb">Giờ bắt đầu</div><input type="time" id="' + w + 'S_' + i + '" value="' + x.start + '" onchange="dblTime(\'' + w + '\',' + i + ')" class="dbl-in"></div>' +
+            '<div class="dbl-grid"><div><div class="dbl-lb">Giờ bắt đầu</div><input type="time" id="' + w + 'S_' + i + '" value="' + x.start + '" onchange="dblTime(\'' + w + '\',' + i + ')" class="dbl-in"></div>' +
             '<div><div class="dbl-lb">Giờ kết thúc</div><input type="time" id="' + w + 'E_' + i + '" value="' + x.end + '" onchange="dblTime(\'' + w + '\',' + i + ')" class="dbl-in"></div></div>' +
             '<div class="dbl-chips">' + chips + '</div><div id="' + w + 'Sum_' + i + '" class="dbl-sum"></div></div>';
     }).join('');
@@ -4558,7 +4623,7 @@ document.addEventListener('touchend', function(e) {
                     if (record.shift === 'US') shiftClass = "bg-rose-500/20 text-rose-300 border-rose-500/50";
                     if (record.shift === 'LB') shiftClass = "bg-purple-500/20 text-purple-300 border-purple-500/50";
                     badge.className = `px-3 py-1 rounded-full text-xs font-black tracking-wider border ${shiftClass}`;
-                    badge.innerText = `CA ${record.shift}` + (record.holiday ? ' · LỄ ×4 🎉' : '');
+                    badge.innerText = `CA ${record.shift}` + (record.holiday ? ' · ' + (record.holidayName || 'LỄ') + ' ×4 🎉' : '');
                     showDetailedForm(true);
                 }
             }
@@ -4681,7 +4746,7 @@ showDetailedForm(true);
             errorEl.classList.add('hidden');
 
             const dateStr = formatDateISO(selectedDate);
-            const built = dblBuild({ shift: selectedShift, startTime: start, endTime: end, mates: todayMatesSel.slice(), holiday: !!HOLIDAY.today }, dblGet('today'));
+            const built = dblBuild({ shift: selectedShift, startTime: start, endTime: end, mates: todayMatesSel.slice(), holiday: !!HOLIDAY.today, holidayName: holNameFor('today') }, dblGet('today'));
             if (built.err) {
                 errorEl.innerText = built.err;
                 errorEl.classList.remove('hidden');
@@ -4767,7 +4832,7 @@ renderTodayView();
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-sm text-white">${dayName}</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}${record.shift !== 'OFF' && record.holiday ? ' 🎉×4' : ''}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}${record.shift !== 'OFF' && record.holiday ? ' 🎉×4' : ''}</span>${record.shift !== 'OFF' && record.holiday && record.holidayName ? '<span class="text-[10px] text-amber-300 font-bold">' + escapeHtml(record.holidayName) + '</span>' : ''}
                             </div>
                             <div class="text-xs text-slate-400 font-mono mt-0.5">
                                 ${record.shift === 'OFF' ? 'Không đi làm' : `${recTimeText(record)}`}
@@ -5078,7 +5143,7 @@ function renderMonthView() {
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-bold text-sm text-white">${dayName}</span>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}${record.shift !== 'OFF' && record.holiday ? ' 🎉×4' : ''}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold border ${badgeClass}">${record.shift === 'OFF' ? 'OFF ⚪' : record.shift}${record.shift !== 'OFF' && record.holiday ? ' 🎉×4' : ''}</span>${record.shift !== 'OFF' && record.holiday && record.holidayName ? '<span class="text-[10px] text-amber-300 font-bold">' + escapeHtml(record.holidayName) + '</span>' : ''}
                             </div>
                             <div class="text-xs text-slate-400 font-mono mt-0.5">
                                 ${record.shift === 'OFF' ? 'Không đi làm' : `${recTimeText(record)}`}
@@ -5215,7 +5280,7 @@ renderPayrollOtherIncome();
 
             const built = retroModalShift === 'OFF'
                 ? { rec: { shift: 'OFF', startTime: '00:00', endTime: '00:00', mates: [] } }
-                : dblBuild({ shift: retroModalShift, startTime: start, endTime: end, mates: retroMatesSel.slice(), holiday: !!HOLIDAY.retro }, dblGet('retro'));
+                : dblBuild({ shift: retroModalShift, startTime: start, endTime: end, mates: retroMatesSel.slice(), holiday: !!HOLIDAY.retro, holidayName: holNameFor('retro') }, dblGet('retro'));
             if (built.err) {
                 errorEl.innerText = built.err;
                 errorEl.classList.remove('hidden');
@@ -6114,8 +6179,13 @@ function closeGameScreen(){
    Mỗi lần cập nhật app: (1) đổi APP_VERSION, (2) thêm 1 mục LÊN ĐẦU danh sách CHANGELOG.
    Lần đầu mở app sau khi cập nhật sẽ tự hiện popup liệt kê các mục mới.
    ========================================================== */
-var APP_VERSION = '1.6';
+var APP_VERSION = '1.7';
 var CHANGELOG = [
+    { v: '1.7', date: '15/11/2026', items: [
+        '🎉 Ngày lễ giờ ghi rõ lễ gì: gạt công tắc "Ngày lễ" rồi gõ tên hoặc chạm gợi ý (Quốc khánh, 30/4, Tết...). Những ngày lễ cố định tự gợi ý tên. Tên lễ hiện ở thẻ tuần, tra cứu làm chung và Wrapped.',
+        '🛠️ Sửa lỗi ô giờ của ca thứ 2, 3, 4, 5 bị lệch ra ngoài khung trên điện thoại.',
+        '📅 Sửa nút "Thêm nhắc vào Lịch" bị trang trắng trên iPhone: giờ mở bảng chia sẻ, bạn chọn "Lịch" là thêm được các ca kèm chuông nhắc.'
+    ] },
     { v: '1.6', date: '15/11/2026', items: [
         '📅 Thêm nút "Thêm nhắc vào Lịch": chấm công xong bấm một lần, điện thoại hiện hộp thêm các ca sắp tới vào Lịch kèm chuông nhắc check in trước giờ vào ca và check out sau giờ ra ca (hiện cả ngoài màn hình khóa).'
     ] },
@@ -6381,16 +6451,36 @@ function remToast(t) {
 function addToCalendar() {
     var ics = remBuildICS(new Date(), attendanceDB || {}, remCfg, location.href.split('#')[0]);
     if (!ics) { remToast('Chưa có ca nào sắp tới để thêm. Chấm công xong rồi bấm lại nha.'); return; }
-    var url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
-    var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    var w = null;
-    if (isIOS) { try { w = window.open(url, '_blank'); } catch (e) {} }
-    if (!w) {
-        var a = document.createElement('a'); a.href = url; a.download = 'ca-lam-galaxy.ics';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    }
-    setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
-    remToast('📅 Đã tạo lịch! Nếu điện thoại hỏi "Thêm tất cả", bấm xác nhận nha.');
+    // Cách 1 (iPhone/Android): mở bảng chia sẻ kèm file .ics, người dùng chọn "Lịch" là xong
+    try {
+        var file = new File([ics], 'ca-lam-galaxy.ics', { type: 'text/calendar' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({ files: [file], title: 'Ca làm Galaxy Cinema' }).then(function () {
+                remToast('📅 Trong bảng chia sẻ, chọn "Lịch" để thêm các ca và chuông nhắc nhé.');
+            }).catch(function (e) {
+                if (!e || e.name !== 'AbortError') remIcsFallback(ics);
+            });
+            return;
+        }
+    } catch (e) {}
+    // Cách 2: máy không chia sẻ được file thì hiện hộp hướng dẫn kèm nút mở file lịch
+    remIcsFallback(ics);
+}
+
+function remIcsFallback(ics) {
+    var old = document.getElementById('remIcsBox');
+    if (old) old.remove();
+    var href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    var box = document.createElement('div');
+    box.id = 'remIcsBox';
+    box.style.cssText = 'position:fixed;inset:0;z-index:99990;background:rgba(5,16,44,.78);display:flex;align-items:center;justify-content:center;padding:16px';
+    box.innerHTML = '<div style="width:100%;max-width:380px;border-radius:20px;padding:18px;color:#fff;background:linear-gradient(135deg,#0d4a9a,#072a66);border:1px solid rgba(253,181,21,.6);box-shadow:0 14px 40px rgba(0,0,0,.5);max-height:88vh;overflow:auto">' +
+        '<div style="font-size:16px;font-weight:900;margin-bottom:6px">📅 Thêm nhắc vào Lịch</div>' +
+        '<div style="font-size:12.5px;line-height:1.5;color:#dbe8ff;margin-bottom:12px">Bấm nút bên dưới. Điện thoại sẽ hiện bảng <b>Thêm tất cả</b> vào Lịch, bạn bấm xác nhận là xong.</div>' +
+        '<a href="' + href + '" download="ca-lam-galaxy.ics" style="display:block;text-align:center;padding:13px;border-radius:14px;font-weight:900;font-size:14px;color:#071a40;background:linear-gradient(90deg,#f58020,#fdb515);text-decoration:none">📥 Mở file lịch (.ics)</a>' +
+        '<div style="margin-top:12px;font-size:11.5px;line-height:1.5;color:#b4cdf2">Nếu bấm mà trang cứ trắng hoặc không nhảy sang Lịch: bạn đang mở app trong trình duyệt của ứng dụng khác (Claude, Zalo, Messenger...). Hãy bấm biểu tượng <b>la bàn</b> hoặc nút <b>⋯</b> rồi chọn <b>Mở trong Safari</b>, sau đó bấm lại nút này.</div>' +
+        '<button type="button" onclick="document.getElementById(\'remIcsBox\').remove()" style="width:100%;margin-top:12px;padding:11px;border-radius:12px;font-weight:800;font-size:13px;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3)">Đóng</button></div>';
+    document.body.appendChild(box);
 }
 </script>
 </body>
